@@ -1,4 +1,4 @@
 
-public class Patrol {
+public class Patrol{
 
 }

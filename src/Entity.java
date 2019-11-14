@@ -1,7 +1,7 @@
 
 public class Entity {
 
-	int currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY;
+	private int currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY;
 	
 	//Constructor
 	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY) {
