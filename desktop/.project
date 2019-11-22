@@ -20,11 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>assets</name>
-			<type>2</type>
-			<location>C:/Users/ryanv/OneDrive/Documents/GitHub/Kroy/core/assets</location>
-		</link>
-	</linkedResources>
 </projectDescription>
