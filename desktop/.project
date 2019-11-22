@@ -24,7 +24,7 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<location>C:/Users/Cam/Documents/GitHub/Kroy/core/assets</location>
+			<location>../core/assets</location>
 		</link>
 	</linkedResources>
 </projectDescription>
