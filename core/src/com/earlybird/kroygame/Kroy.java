@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Kroy extends ApplicationAdapter {
+	
+	//Used in desktop build to set screen size and title
+	public static final int WITDH = 1024;
+	public static final int HEIGHT = 768;
+	public static final String TITLE = "Kroy";
+	
 	SpriteBatch batch;
 	Texture img;
 	

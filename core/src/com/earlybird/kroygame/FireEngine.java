@@ -2,15 +2,16 @@ package com.earlybird.kroygame;
 public class FireEngine extends Unit{
 
 	private int currentVolume, maxVolume;
-	public boolean isRefilling;
+	public boolean isRefilling, isSelected;
 	
 	//Constructor
 	public FireEngine(int currentHealth, int maxHealth, int range, int damage, int currentLocationX,
-			int currentLocationY, int moveLocationX, int moveLocationY, int speed, int currentVolume, int maxVolume, boolean isRefilling) {
+			int currentLocationY, int moveLocationX, int moveLocationY, int speed, int currentVolume, int maxVolume, boolean isRefilling, boolean isSelected) {
 		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, moveLocationX, moveLocationY, speed);
 		this.currentVolume = currentVolume;
 		this.maxVolume = maxVolume;
 		this.isRefilling = isRefilling;
+		this.isSelected = isSelected;
 	}
 
 	//Getters and Setters
@@ -36,6 +37,14 @@ public class FireEngine extends Unit{
 
 	public void setRefilling(boolean isRefilling) {
 		this.isRefilling = isRefilling;
+	}
+	
+	public boolean isSelected() {
+		return isSelected;
+	}
+	
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 
 	//Methods

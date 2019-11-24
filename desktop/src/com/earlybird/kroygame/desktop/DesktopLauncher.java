@@ -7,6 +7,12 @@ import com.earlybird.kroygame.Kroy;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		//Sets window size and title
+		config.width = Kroy.WITDH;
+		config.height = Kroy.HEIGHT;
+		config.title = Kroy.TITLE;
+		
 		new LwjglApplication(new Kroy(), config);
 	}
 }
