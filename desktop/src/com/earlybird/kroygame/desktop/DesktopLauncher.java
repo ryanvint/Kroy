@@ -12,6 +12,9 @@ public class DesktopLauncher {
 		config.width = Kroy.WITDH;
 		config.height = Kroy.HEIGHT;
 		config.title = Kroy.TITLE;
+		config.foregroundFPS = 60;
+		config.backgroundFPS = 20;
+		
 		
 		new LwjglApplication(new Kroy(), config);
 	}
