@@ -26,8 +26,11 @@ public class Kroy extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		if Gdx.input.isKeyPressed(UP);
+		
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, 1, 1);
 		batch.end();
 	}
 	
