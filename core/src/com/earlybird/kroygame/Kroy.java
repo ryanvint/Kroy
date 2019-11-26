@@ -34,7 +34,7 @@ public class Kroy extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("firetruck.png");
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -70,7 +70,7 @@ public class Kroy extends ApplicationAdapter {
 		renderer.render();
 		
 		batch.begin();
-		batch.draw(img, x, y);
+		batch.draw(img, x, y, 21, 21, 0, 0, 32, 32, false, false);
 		batch.end();
 	}
 	

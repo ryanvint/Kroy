@@ -13,6 +13,7 @@ public class Entity {
 		this.currentLocationY = currentLocationY;
 	}
 
+	
 	//Getters and Setters
 	public int getCurrentHealth() {
 		return currentHealth;
