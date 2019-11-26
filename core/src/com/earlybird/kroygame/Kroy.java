@@ -41,7 +41,7 @@ public class Kroy extends ApplicationAdapter {
 		camera.update();
 		
 		map = new TmxMapLoader().load("MapTest.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1f / 4f);
+		renderer = new OrthogonalTiledMapRenderer(map, 1f / 1.5f);
 	}
 
 	@Override
