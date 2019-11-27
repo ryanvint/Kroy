@@ -1,5 +1,8 @@
 package com.earlybird.kroygame;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 public class Unit extends Entity{
 
 	public int moveLocationX, moveLocationY;
@@ -12,7 +15,33 @@ public class Unit extends Entity{
 		this.moveLocationY = moveLocationY;
 		this.speed = speed;
 	}
+	
+	public Unit() {
+		super();
+		moveLocationX = 0;
+		moveLocationY = 0;
+		speed = 80;
+	}
 
+	public void movement(int SPEED) {
+		if (Gdx.input.isKeyPressed(Keys.W)) {
+			this.currentLocationY += SPEED * Gdx.graphics.getDeltaTime();
+		}
+		
+		if (Gdx.input.isKeyPressed(Keys.S)) {
+			this.currentLocationY -= SPEED * Gdx.graphics.getDeltaTime();
+		}
+		
+		if (Gdx.input.isKeyPressed(Keys.A)) {
+			this.currentLocationX -= SPEED * Gdx.graphics.getDeltaTime();
+		}
+		
+		if (Gdx.input.isKeyPressed(Keys.D)) {
+			this.currentLocationX += SPEED * Gdx.graphics.getDeltaTime();
+		}
+	}
+	
+	
 	//Getters and Setters
 	public int getMoveLocationX() {
 		return moveLocationX;
