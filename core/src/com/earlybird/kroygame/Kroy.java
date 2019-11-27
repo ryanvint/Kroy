@@ -29,7 +29,7 @@ public class Kroy extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	
-	Unit unit1 = new Unit();
+	FireEngine FireEngine1 = new FireEngine();
 	
 	@Override
 	public void create () {
@@ -49,15 +49,17 @@ public class Kroy extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		unit1.movement(unit1.getSpeed());
+		FireEngine1.movement(FireEngine1.getSpeed());
+		FireEngine1.setSelectedUnit();
 		
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
 		
 		batch.begin();
-		batch.draw(img, unit1.currentLocationX, unit1.currentLocationY, 24, 24, 0, 0, 32, 32, false, false);
+		batch.draw(img, FireEngine1.currentLocationX, FireEngine1.currentLocationY, 24, 24, 0, 0, 32, 32, false, false);
 		batch.end();
+		
 	}
 	
 	@Override

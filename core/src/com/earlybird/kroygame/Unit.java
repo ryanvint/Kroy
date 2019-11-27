@@ -1,6 +1,7 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 
 public class Unit extends Entity{
@@ -9,8 +10,8 @@ public class Unit extends Entity{
 	private int speed;
 	
 	//Constructor
-	public Unit(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int moveLocationX, int moveLocationY, int speed) {
-		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY);
+	public Unit(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int moveLocationX, int moveLocationY, int speed, int spriteSize) {
+		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, spriteSize);
 		this.moveLocationX = moveLocationX;
 		this.moveLocationY = moveLocationY;
 		this.speed = speed;
@@ -40,7 +41,6 @@ public class Unit extends Entity{
 			this.currentLocationX += SPEED * Gdx.graphics.getDeltaTime();
 		}
 	}
-	
 	
 	//Getters and Setters
 	public int getMoveLocationX() {
