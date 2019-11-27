@@ -1,7 +1,14 @@
 package com.earlybird.kroygame;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 public class Entity {
 
-	private int currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY;
+	private int currentHealth, maxHealth, range, damage;
+	protected int currentLocationX;
+	protected int currentLocationY;
 	
 	//Constructor
 	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY) {
@@ -11,6 +18,15 @@ public class Entity {
 		this.damage = damage;
 		this.currentLocationX = currentLocationX;
 		this.currentLocationY = currentLocationY;
+	}
+	
+	public Entity() {
+		currentHealth = 100;
+		maxHealth = 100;
+		range = 0;
+		damage = 0;
+		currentLocationX = 0;
+		currentLocationY = 0;
 	}
 
 	//Getters and Setters
