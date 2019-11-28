@@ -14,6 +14,7 @@ import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
 import com.earlybird.kroygame.Kroy;
 
+
 public class MainGameScreen implements Screen {
 
 	private TiledMap map;
@@ -30,6 +31,7 @@ public class MainGameScreen implements Screen {
 	public MainGameScreen(Kroy game) {
 		this.game = game;
 	}
+	
 	@Override
 	public void show() {
 		fireTruckImg = new Texture("firetruck.png");
@@ -77,37 +79,12 @@ public class MainGameScreen implements Screen {
 	
 		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public void pause() {
