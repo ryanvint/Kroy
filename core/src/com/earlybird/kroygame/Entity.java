@@ -89,6 +89,8 @@ public class Entity {
 	}
 
 	//Methods
+	//Checks if given x,y pos is inside of the hitbox of the entity.
+	//Hitbox is defined as spriteSize+x and y current location to the normal x and y current locations
 	public boolean isInHitBox(int xpos, int ypos) {
 		if(xpos>=currentLocationX && xpos<=currentLocationX+spriteSize && ypos>=currentLocationY && ypos<=currentLocationY+spriteSize) {
 			return true;

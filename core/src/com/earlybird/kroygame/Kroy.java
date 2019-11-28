@@ -1,5 +1,7 @@
 package com.earlybird.kroygame;
 
+import java.awt.Dimension;
+
 import com.badlogic.gdx.ApplicationAdapter;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,21 +22,25 @@ public class Kroy extends ApplicationAdapter {
 	public static final int WITDH = 1024;
 	public static final int HEIGHT = 768;
 	public static final String TITLE = "Kroy";
-
+	
 	
 	private TiledMap map;
 	private TiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	
 	SpriteBatch batch;
-	Texture img;
+	Texture fireTruckImg;
 	
-	FireEngine FireEngine1 = new FireEngine();
+	//Creates new fireEngine squad
+	FireEngineSquad fireSquad = new FireEngineSquad();
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("firetruck.png");
+		fireTruckImg = new Texture("firetruck.png");
+		
+		//Adds a fireEngine entity to the game inside of the squad
+		fireSquad.addEngine();
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -49,22 +55,35 @@ public class Kroy extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		FireEngine1.movement(FireEngine1.getSpeed());
-		FireEngine1.setSelectedUnit();
+		//Loop listening to FireEngine changes
+		//Checks for movement or selected status changes of any spawned fireEngines
+		for(int i=0; i<fireSquad.getSize(); i++) {
+			FireEngine currentEngine = fireSquad.getEngine(i);
+			currentEngine.movement(currentEngine.getSpeed());
+			currentEngine.setSelectedUnit();
+		}
 		
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
 		
+		//Rendering sprites
 		batch.begin();
-		batch.draw(img, FireEngine1.currentLocationX, FireEngine1.currentLocationY, 24, 24, 0, 0, 32, 32, false, false);
+		
+		//Renders all fireEngines in game
+		for(int i=0; i<fireSquad.getSize(); i++) {
+			FireEngine currentEngine = fireSquad.getEngine(i);
+			batch.draw(fireTruckImg, currentEngine.currentLocationX, currentEngine.currentLocationY, 24, 24, 0, 0, 32, 32, false, false);
+		}
+		
 		batch.end();
 		
+		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + "), Truck: (" + FireEngine1.getCurrentLocationX() + "," + FireEngine1.currentLocationY + ")");
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		fireTruckImg.dispose();
 	}
 }
