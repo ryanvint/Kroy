@@ -29,11 +29,11 @@ public class Unit extends Entity{
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.S)) {
-			this.currentLocationY -= SPEED * Gdx.graphics.getDeltaTime();
+			this.currentLocationY -= (SPEED * Gdx.graphics.getDeltaTime())/2;
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			this.currentLocationX -= SPEED * Gdx.graphics.getDeltaTime();
+			this.currentLocationX -= (SPEED * Gdx.graphics.getDeltaTime())/2;
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.D)) {
