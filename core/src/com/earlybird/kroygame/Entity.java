@@ -6,18 +6,19 @@ import com.badlogic.gdx.Input.Keys;
 
 public class Entity {
 
-	private int currentHealth, maxHealth, range, damage;
+	private int currentHealth, maxHealth, range, damage, spriteSize;
 	protected int currentLocationX;
 	protected int currentLocationY;
 	
 	//Constructor
-	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY) {
+	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int spriteSize) {
 		this.currentHealth = currentHealth;
 		this.maxHealth = maxHealth;
 		this.range = range;
 		this.damage = damage;
 		this.currentLocationX = currentLocationX;
 		this.currentLocationY = currentLocationY;
+		this.spriteSize = spriteSize;
 	}
 	
 	public Entity() {
@@ -27,9 +28,18 @@ public class Entity {
 		damage = 0;
 		currentLocationX = 0;
 		currentLocationY = 0;
+		spriteSize = 32;
 	}
 
 	//Getters and Setters
+	public int getSpriteSize() {
+		return spriteSize;
+	}
+	
+	public void setSpriteSize(int spriteSize) {
+		this.spriteSize = spriteSize;
+	}
+	
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
@@ -79,6 +89,15 @@ public class Entity {
 	}
 
 	//Methods
+	public boolean isInHitBox(int xpos, int ypos) {
+		if(xpos>=currentLocationX && xpos<=currentLocationX+spriteSize && ypos>=currentLocationY && ypos<=currentLocationY+spriteSize) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public void destroy() {
 		
 	}

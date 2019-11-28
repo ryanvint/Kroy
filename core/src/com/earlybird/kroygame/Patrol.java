@@ -6,8 +6,8 @@ public class Patrol extends Unit{
 	
 	//Constructor
 	public Patrol(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY,
-			int moveLocationX, int moveLocationY, int speed) {
-		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, moveLocationX, moveLocationY, speed);
+			int moveLocationX, int moveLocationY, int speed, int spriteSize) {
+		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, moveLocationX, moveLocationY, speed, spriteSize);
 		
 	}
 
