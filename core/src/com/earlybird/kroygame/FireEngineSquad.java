@@ -43,4 +43,16 @@ public class FireEngineSquad {
 	public FireEngine getEngine(int i) {
 		return fireEngineSquad.get(i);
 	}
+	
+	//Returns list of fireEngines inside predefined square range
+	public List<FireEngine> getEnginesInRange(int leftX, int rightX, int topY, int bottomY){
+		List<FireEngine> enginesInRange = new ArrayList<FireEngine>();
+		for(int i=0; i<fireEngineSquad.size(); i++) {
+			if(fireEngineSquad.get(i).getCurrentLocationX()>=leftX && fireEngineSquad.get(i).getCurrentLocationX()<=rightX && fireEngineSquad.get(i).getCurrentLocationY()>=bottomY && fireEngineSquad.get(i).getCurrentLocationY()<=topY) {
+				enginesInRange.add(fireEngineSquad.get(i));
+			}
+		}
+		return enginesInRange;
+	}
+	
 }
