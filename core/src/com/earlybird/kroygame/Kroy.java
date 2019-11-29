@@ -18,7 +18,8 @@ public class Kroy extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new StartScreen(this));
+		//this.setScreen(new MainGameScreen(this));
 	}
 
 	@Override
