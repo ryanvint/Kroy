@@ -69,7 +69,7 @@ public class MainGameScreen implements Screen {
 		//Renders all fireEngines in game
 		for(int i=0; i<fireSquad.getSize(); i++) {
 			FireEngine currentEngine = fireSquad.getEngine(i);
-			game.batch.draw(fireTruckImg, currentEngine.getCurrentLocationX(), currentEngine.getCurrentLocationY(), 24, 24, 0, 0, 32, 32, false, false);
+			game.batch.draw(fireTruckImg, currentEngine.getCurrentLocationX(), currentEngine.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
 		}
 		
 		game.batch.end();
