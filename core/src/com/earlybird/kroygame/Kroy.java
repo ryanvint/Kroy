@@ -8,8 +8,8 @@ import com.earlybird.kroygame.screens.StartScreen;
 
 public class Kroy extends Game {
 	
-	public static final int WITDH = 1024;
-	public static final int HEIGHT = 768;
+	public static final int WITDH = 1200;
+	public static final int HEIGHT = 770;
 	public static final String TITLE = "Kroy";
 	
 	public SpriteBatch batch;

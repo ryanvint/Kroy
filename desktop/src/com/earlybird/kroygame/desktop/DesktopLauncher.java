@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.width = Kroy.WITDH;
 		config.height = Kroy.HEIGHT;
 		config.title = Kroy.TITLE;
+		config.resizable = false;
 		config.foregroundFPS = 60;
 		config.backgroundFPS = 20;
 		
