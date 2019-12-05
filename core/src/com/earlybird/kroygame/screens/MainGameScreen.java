@@ -9,8 +9,10 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
+import com.earlybird.kroygame.HealthBar;
 import com.earlybird.kroygame.Kroy;
 
 
@@ -19,12 +21,13 @@ public class MainGameScreen implements Screen {
 	private TiledMap map;
 	private TiledMapRenderer renderer;
 	private OrthographicCamera camera;
+	private HealthBar healthBar;
+	private Stage stage;
 	
 	Texture fireTruckImg;
 	
 	//Creates new fireEngine squad
 	FireEngineSquad fireSquad = new FireEngineSquad();
-	
 	Kroy game;
 
 	public MainGameScreen(Kroy game) {
@@ -33,10 +36,15 @@ public class MainGameScreen implements Screen {
 	
 	@Override
 	public void show() {
+		stage = new Stage();
+		
 		fireTruckImg = new Texture("firetruck.png");
 		
 		//Adds a fireEngine entity to the game inside of the squad
 		fireSquad.addEngine();
+		
+		//Adds fireEngine healthBar to stage
+		stage.addActor(fireSquad.getEngine(0).healthBar);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -53,11 +61,14 @@ public class MainGameScreen implements Screen {
 		
 		//Loop listening to FireEngine changes
 		//Checks for movement or selected status changes of any spawned fireEngines
+		//Changes healthBar location and value for each fireEngine as they move
 		for(int i=0; i<fireSquad.getSize(); i++) {
 			FireEngine currentEngine = fireSquad.getEngine(i);
 			currentEngine.movement(currentEngine.getSpeed());
 			currentEngine.setSelectedUnit();
-		}
+			currentEngine.healthBar.setPosition(currentEngine.getHealthBarX(), currentEngine.getCurrentLocationY());
+			currentEngine.healthBar.setValue(currentEngine.getCurrentHealth());
+	}
 		
 		camera.update();
 		renderer.setView(camera);
@@ -73,6 +84,10 @@ public class MainGameScreen implements Screen {
 		}
 		
 		game.batch.end();
+		
+		//Renders the stage (HealthBar)
+		stage.draw();
+		stage.act();
 		
 		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + "), Truck: (" + FireEngine1.getCurrentLocationX() + "," + FireEngine1.currentLocationY + ")");
 	
