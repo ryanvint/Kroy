@@ -51,14 +51,14 @@ public class MainGameScreen implements Screen {
 		camera.update();
 		
 		map = new TmxMapLoader().load("MapTest.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1f / 1.5f);
+		renderer = new OrthogonalTiledMapRenderer(map, 1.0f / 1.56f);
 		
 		System.out.println();
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//Loop listening to FireEngine changes
@@ -68,7 +68,7 @@ public class MainGameScreen implements Screen {
 			FireEngine currentEngine = fireSquad.getEngine(i);
 			currentEngine.movement(currentEngine.getSpeed());
 			currentEngine.setSelectedUnit();
-			currentEngine.healthBar.setPosition(currentEngine.getHealthBarX(), currentEngine.getCurrentLocationY());
+			currentEngine.healthBar.setPosition(currentEngine.getHealthBarX(), currentEngine.getHealthBarY());
 			currentEngine.healthBar.setValue(currentEngine.getCurrentHealth());
 	}
 		

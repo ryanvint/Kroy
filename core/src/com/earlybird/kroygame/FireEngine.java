@@ -46,7 +46,7 @@ public class FireEngine extends Unit{
 	}
 	
 	public int getHealthBarY() {
-		return this.currentLocationY+25;
+		return this.currentLocationY-8;
 	}
 	
 	public int getCurrentVolume() {
