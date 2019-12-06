@@ -52,6 +52,8 @@ public class MainGameScreen implements Screen {
 		
 		map = new TmxMapLoader().load("MapTest.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1f / 1.5f);
+		
+		System.out.println();
 	}
 
 	@Override
