@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
-import com.earlybird.kroygame.HealthBar;
 import com.earlybird.kroygame.Kroy;
 
 
@@ -21,7 +20,6 @@ public class MainGameScreen implements Screen {
 	private TiledMap map;
 	private TiledMapRenderer renderer;
 	private OrthographicCamera camera;
-	private HealthBar healthBar;
 	private Stage stage;
 	
 	Texture fireTruckImg;
@@ -45,6 +43,7 @@ public class MainGameScreen implements Screen {
 		
 		//Adds fireEngine healthBar to stage
 		stage.addActor(fireSquad.getEngine(0).healthBar);
+		stage.addActor(fireSquad.getEngine(0).waterBar);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -70,6 +69,8 @@ public class MainGameScreen implements Screen {
 			currentEngine.setSelectedUnit();
 			currentEngine.healthBar.setPosition(currentEngine.getHealthBarX(), currentEngine.getHealthBarY());
 			currentEngine.healthBar.setValue(currentEngine.getCurrentHealth());
+			currentEngine.waterBar.setPosition(currentEngine.getWaterBarX(), currentEngine.getWaterBarY());
+			currentEngine.waterBar.setValue(currentEngine.getCurrentVolume());
 	}
 		
 		camera.update();

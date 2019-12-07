@@ -3,12 +3,14 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 
 public class Entity {
 
 	private int currentHealth, maxHealth, range, damage, spriteSize;
 	protected int currentLocationX;
 	protected int currentLocationY;
+	public StatBar healthBar;
 	
 	//Constructor
 	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int spriteSize) {
@@ -19,6 +21,7 @@ public class Entity {
 		this.currentLocationX = currentLocationX;
 		this.currentLocationY = currentLocationY;
 		this.spriteSize = spriteSize;
+		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
 	public Entity() {
@@ -29,9 +32,18 @@ public class Entity {
 		currentLocationX = 0;
 		currentLocationY = 0;
 		spriteSize = 32;
+		this.healthBar = new StatBar(40, 5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 
 	//Getters and Setters
+	public int getHealthBarX() {
+		return this.currentLocationX-10;
+	}
+	
+	public int getHealthBarY() {
+		return this.currentLocationY-8;
+	}
+	
 	public int getSpriteSize() {
 		return spriteSize;
 	}

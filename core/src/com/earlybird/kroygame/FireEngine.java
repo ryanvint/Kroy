@@ -1,26 +1,27 @@
 package com.earlybird.kroygame;
 
-import com.earlybird.kroygame.HealthBar;
+import com.earlybird.kroygame.StatBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 
 public class FireEngine extends Unit{
 
 	private int currentVolume, maxVolume;
 	public boolean isRefilling, isSelected;
-	public HealthBar healthBar;
+	public StatBar waterBar;
 	
 	//Constructor
 	public FireEngine(int currentHealth, int maxHealth, int range, int damage, int currentLocationX,
 			int currentLocationY, int moveLocationX, int moveLocationY, int speed, int currentVolume, 
-			int maxVolume, boolean isRefilling, boolean isSelected, int spriteSize, HealthBar healthBar) {
+			int maxVolume, boolean isRefilling, boolean isSelected, int spriteSize) {
 		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, moveLocationX, moveLocationY, speed, spriteSize);
 		this.currentVolume = currentVolume;
 		this.maxVolume = maxVolume;
 		this.isRefilling = isRefilling;
 		this.isSelected = isSelected;
-		this.healthBar = new HealthBar(40,5, this.getMaxHealth());
+		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 	
 	public FireEngine() {
@@ -29,24 +30,16 @@ public class FireEngine extends Unit{
 		maxVolume = 100;
 		isRefilling = false;
 		isSelected = false;
-		this.healthBar = new HealthBar(40, 5, this.getMaxHealth());
+		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 
 	//Getters and Setters
-	public int getCurrentHealth() {
-		return (int) this.healthBar.getValue();
-	}
-	
-	public void setCurrentHealth(int health) {
-		this.healthBar.setValue(health);
-	}
-	
-	public int getHealthBarX() {
+	public int getWaterBarX() {
 		return this.currentLocationX-10;
 	}
 	
-	public int getHealthBarY() {
-		return this.currentLocationY-8;
+	public int getWaterBarY() {
+		return this.currentLocationY-13;
 	}
 	
 	public int getCurrentVolume() {
