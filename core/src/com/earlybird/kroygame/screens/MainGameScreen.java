@@ -115,6 +115,13 @@ public class MainGameScreen implements Screen {
 		game.batch.draw(fortressImg, fortress2.getCurrentLocationX(),fortress2.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
 		game.batch.draw(fortressImg, fortress3.getCurrentLocationX(),fortress3.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
 		
+		fortress1.healthBar.setPosition(fortress1.getHealthBarX(), fortress1.getHealthBarY());
+		fortress1.healthBar.setValue(fortress1.getCurrentHealth());
+		fortress2.healthBar.setPosition(fortress2.getHealthBarX(), fortress2.getHealthBarY());
+		fortress2.healthBar.setValue(fortress2.getCurrentHealth());
+		fortress3.healthBar.setPosition(fortress3.getHealthBarX(), fortress3.getHealthBarY());
+		fortress3.healthBar.setValue(fortress3.getCurrentHealth());
+		
 		
 		game.batch.end();
 		
