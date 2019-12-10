@@ -9,6 +9,11 @@ public class Fortress extends Entity{
 		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, spriteSize);
 		this.hasBoss = hasBoss;
 	}
+	
+	public Fortress(boolean hasBoss, int currentLocationX, int currentLocationY) {
+		super(currentLocationX, currentLocationY);
+		this.hasBoss = hasBoss;
+	}
 
 	//Getters and setters
 	public boolean isHasBoss() {

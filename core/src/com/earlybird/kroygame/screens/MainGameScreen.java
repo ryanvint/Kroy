@@ -1,5 +1,8 @@
 package com.earlybird.kroygame.screens;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
+import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 
 
@@ -23,6 +27,10 @@ public class MainGameScreen implements Screen {
 	private Stage stage;
 	
 	Texture fireTruckImg;
+	Texture fortressImg;
+	Fortress fortress1;
+	Fortress fortress2;
+	Fortress fortress3;
 	
 	//Creates new fireEngine squad
 	FireEngineSquad fireSquad = new FireEngineSquad();
@@ -37,13 +45,30 @@ public class MainGameScreen implements Screen {
 		stage = new Stage();
 		
 		fireTruckImg = new Texture("firetruck.png");
+		fortressImg = new Texture("fortress.png");
 		
 		//Adds a fireEngine entity to the game inside of the squad
 		fireSquad.addEngine();
 		
+		//Creates the new fortresses and assigns random boss
+		List<Boolean> hasBossList = new ArrayList<Boolean>();
+		for(int i = 0; i < 3; i++) {
+			hasBossList.add(false);
+		}
+		hasBossList.set((int)(Math.random() * 3), true);
+		
+		fortress1 = new Fortress(hasBossList.get(0), 76, 552);
+		fortress2 = new Fortress(hasBossList.get(1), 94, 328);
+		fortress3 = new Fortress(hasBossList.get(2), 460, 635);
+		
 		//Adds fireEngine healthBar to stage
 		stage.addActor(fireSquad.getEngine(0).healthBar);
 		stage.addActor(fireSquad.getEngine(0).waterBar);
+		
+		//Adds fortress healthBars to stage
+		stage.addActor(fortress1.healthBar);
+		stage.addActor(fortress2.healthBar);
+		stage.addActor(fortress3.healthBar);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -86,6 +111,11 @@ public class MainGameScreen implements Screen {
 			game.batch.draw(fireTruckImg, currentEngine.getCurrentLocationX(), currentEngine.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
 		}
 		
+		game.batch.draw(fortressImg, fortress1.getCurrentLocationX(),fortress1.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
+		game.batch.draw(fortressImg, fortress2.getCurrentLocationX(),fortress2.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
+		game.batch.draw(fortressImg, fortress3.getCurrentLocationX(),fortress3.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
+		
+		
 		game.batch.end();
 		
 		//Renders the stage (HealthBar)
@@ -93,7 +123,7 @@ public class MainGameScreen implements Screen {
 		stage.act();
 		
 		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + "), Truck: (" + FireEngine1.getCurrentLocationX() + "," + FireEngine1.currentLocationY + ")");
-	
+		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + ")");
 		
 	}
 	

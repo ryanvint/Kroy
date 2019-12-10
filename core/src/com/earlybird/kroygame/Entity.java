@@ -24,13 +24,24 @@ public class Entity {
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
+	public Entity(int currentLocationX, int currentLocationY) {
+		this.currentLocationX = currentLocationX;
+		this.currentLocationY = currentLocationY;
+		currentHealth = 100;
+		maxHealth = 100;
+		range = 0;
+		damage = 0;
+		spriteSize = 32;
+		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+	}
+	
 	public Entity() {
 		currentHealth = 100;
 		maxHealth = 100;
 		range = 0;
 		damage = 0;
-		currentLocationX = 0;
-		currentLocationY = 0;
+		currentLocationX = 30;
+		currentLocationY = 30;
 		spriteSize = 32;
 		this.healthBar = new StatBar(40, 5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
