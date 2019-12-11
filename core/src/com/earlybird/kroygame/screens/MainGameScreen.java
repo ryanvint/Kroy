@@ -27,13 +27,11 @@ public class MainGameScreen implements Screen {
 	private Stage stage;
 	
 	Texture fireTruckImg;
+	public static List<Fortress> fortressList;
 	Texture fortressImg;
-	Fortress fortress1;
-	Fortress fortress2;
-	Fortress fortress3;
 	
 	//Creates new fireEngine squad
-	FireEngineSquad fireSquad = new FireEngineSquad();
+	public static FireEngineSquad fireSquad = new FireEngineSquad();
 	Kroy game;
 
 	public MainGameScreen(Kroy game) {
@@ -49,6 +47,7 @@ public class MainGameScreen implements Screen {
 		
 		//Adds a fireEngine entity to the game inside of the squad
 		fireSquad.addEngine();
+		fireSquad.getEngine(0).setRange(30);
 		
 		//Creates the new fortresses and assigns random boss
 		List<Boolean> hasBossList = new ArrayList<Boolean>();
@@ -57,18 +56,21 @@ public class MainGameScreen implements Screen {
 		}
 		hasBossList.set((int)(Math.random() * 3), true);
 		
-		fortress1 = new Fortress(hasBossList.get(0), 76, 552);
-		fortress2 = new Fortress(hasBossList.get(1), 94, 328);
-		fortress3 = new Fortress(hasBossList.get(2), 460, 635);
+		fortressList = new ArrayList<Fortress>();
+		fortressList.add(new Fortress(hasBossList.get(0), 76, 552));
+		fortressList.add(new Fortress(hasBossList.get(1), 94, 328));
+		fortressList.add(new Fortress(hasBossList.get(2), 460, 635));
 		
 		//Adds fireEngine healthBar to stage
 		stage.addActor(fireSquad.getEngine(0).healthBar);
 		stage.addActor(fireSquad.getEngine(0).waterBar);
 		
 		//Adds fortress healthBars to stage
-		stage.addActor(fortress1.healthBar);
-		stage.addActor(fortress2.healthBar);
-		stage.addActor(fortress3.healthBar);
+		for(int i=0; i<fortressList.size(); i++) {
+			Fortress currentFortress = fortressList.get(i);
+			stage.addActor(currentFortress.healthBar);
+			currentFortress.setRange(50);
+		}
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
@@ -96,7 +98,14 @@ public class MainGameScreen implements Screen {
 			currentEngine.healthBar.setValue(currentEngine.getCurrentHealth());
 			currentEngine.waterBar.setPosition(currentEngine.getWaterBarX(), currentEngine.getWaterBarY());
 			currentEngine.waterBar.setValue(currentEngine.getCurrentVolume());
-	}
+			currentEngine.rangeCheck(1);
+		}
+		
+		//Loop to check fortress updates such as to check if any fireengines are in range
+		for(int i=0; i<fortressList.size();i++) {
+			Fortress currentFortress = fortressList.get(i);
+			currentFortress.rangeCheck(0);
+		}
 		
 		camera.update();
 		renderer.setView(camera);
@@ -111,16 +120,12 @@ public class MainGameScreen implements Screen {
 			game.batch.draw(fireTruckImg, currentEngine.getCurrentLocationX(), currentEngine.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
 		}
 		
-		game.batch.draw(fortressImg, fortress1.getCurrentLocationX(),fortress1.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
-		game.batch.draw(fortressImg, fortress2.getCurrentLocationX(),fortress2.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
-		game.batch.draw(fortressImg, fortress3.getCurrentLocationX(),fortress3.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
-		
-		fortress1.healthBar.setPosition(fortress1.getHealthBarX(), fortress1.getHealthBarY());
-		fortress1.healthBar.setValue(fortress1.getCurrentHealth());
-		fortress2.healthBar.setPosition(fortress2.getHealthBarX(), fortress2.getHealthBarY());
-		fortress2.healthBar.setValue(fortress2.getCurrentHealth());
-		fortress3.healthBar.setPosition(fortress3.getHealthBarX(), fortress3.getHealthBarY());
-		fortress3.healthBar.setValue(fortress3.getCurrentHealth());
+		for(int i=0; i<fortressList.size(); i++) {
+			Fortress currentFortress = fortressList.get(i);
+			game.batch.draw(fortressImg, currentFortress.getCurrentLocationX(),currentFortress.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
+			currentFortress.healthBar.setPosition(currentFortress.getHealthBarX(), currentFortress.getHealthBarY());
+			currentFortress.healthBar.setValue(currentFortress.getCurrentHealth());
+		}
 		
 		
 		game.batch.end();

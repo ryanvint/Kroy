@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.earlybird.kroygame.screens.MainGameScreen;
 
 public class Entity {
 
@@ -125,6 +126,26 @@ public class Entity {
 	
 	public void destroy() {
 		
+	}
+	
+	//Checks if there are any of the units that can be attacked in range (0 is for attacking fire engines
+	// 1 is for attacking fortresses)
+	public boolean rangeCheck(int unitType) {
+		if(unitType == 0) {
+			if(MainGameScreen.fireSquad.getEnginesInRange((this.currentLocationX - this.range),(this.currentLocationX + this.range),(this.currentLocationY + this.range),(this.currentLocationY - this.range)).size() > 0) {
+				System.out.println("fire engine in range");
+				return true;
+			}
+		}else if(unitType == 1) {
+			for(int i = 0; i < MainGameScreen.fortressList.size(); i++) {
+				Fortress currentFortress = MainGameScreen.fortressList.get(i);
+				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range))) {
+					System.out.println("fortress in range");
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public void attack() {
