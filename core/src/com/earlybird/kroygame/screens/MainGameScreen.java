@@ -9,102 +9,92 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
 import com.earlybird.kroygame.Kroy;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.earlybird.kroygame.Map;
+import com.earlybird.kroygame.Resources;
 
 
-public class MainGameScreen implements Screen, InputProcessor {
-
+public class MainGameScreen extends DefaultScreen {
+	
+	public static final int scrWidth = 32 * Resources.TILE_SIZE;
+	public static final int scrHeight = 24 * Resources.TILE_SIZE;
+	
+	
+//	public SpriteBatch batch;
+	private Stage gameStage;
+	
 	private TiledMap map;
-	private TiledMapRenderer renderer;
+	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	private boolean clicked;
-	private int boxstartx;
-	private int boxstarty;
-	private int mousex;
-	private int mousey;
-//	private ShapeRenderer shapeRenderer;
+	private int boxstartx, boxstarty, mousex, mousey;
+	private Map roadmap;
 	
-	Texture fireTruckImg;
 	Texture selectionbox;
-	//Creates new fireEngine squad
+	Texture firetruck;
 	FireEngineSquad fireSquad = new FireEngineSquad();
-	
-	Kroy game;
 
 	public MainGameScreen(Kroy game) {
-		this.game = game;
+		super(game);
+//		batch = new SpriteBatch();
+		
+		ExtendViewport viewport = new ExtendViewport(scrWidth, scrHeight);
+		gameStage = new Stage(viewport);
+		
 	}
 	
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(this);
-		fireTruckImg = new Texture("firetruck.png");
 		selectionbox = new Texture("badlogic.jpg");
-		//Adds a fireEngine entity to the game inside of the squad
-		fireSquad.addEngine();
-		
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 1024, 768);
+		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
-		map = new TmxMapLoader().load("MapTest.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1f / 1.5f);
-//		shapeRenderer = new ShapeRenderer();
+		map = new TmxMapLoader().load("testroadmap.tmx");
+		renderer = new OrthogonalTiledMapRenderer(map);
+		roadmap = new Map(this.map);
+		firetruck = new Texture("firetruck.png");
 	}
-
+	public void update(float delta) {
+		gameStage.act(delta);
+	}
 	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+	public void render(float delta)
+	{
+		update(delta);
+		
+		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		
-		//Loop listening to FireEngine changes
-		//Checks for movement or selected status changes of any spawned fireEngines
-		for(int i=0; i<fireSquad.getSize(); i++) {
-			FireEngine currentEngine = fireSquad.getEngine(i);
-			currentEngine.movement(currentEngine.getSpeed());
-			currentEngine.setSelectedUnit();
-		}
 		
 		camera.update();
 		renderer.setView(camera);
-		renderer.render();
+		renderer.render();	
 		
-		//Rendering sprites
-		game.batch.begin();
-		Color c = game.batch.getColor();
-		game.batch.setColor(c.r, c.g, c.b, 1f);
-		//Renders all fireEngines in game
-		for(int i=0; i<fireSquad.getSize(); i++) {
-			FireEngine currentEngine = fireSquad.getEngine(i);
-			game.batch.draw(fireTruckImg, currentEngine.getCurrentLocationX(), currentEngine.getCurrentLocationY(), 20, 23, 0, 0, 32, 32, false, false);
-		}
-//		if (this.clicked = true) {
-//			shapeRenderer.begin(ShapeType.Line);
-//			shapeRenderer.rect(this.boxstartx,this.boxstarty,mousex - this.boxstartx,mousey - this.boxstarty);
-//			shapeRenderer.end();
-//		}
+		gameStage.getBatch().begin();
+		Color c = gameStage.getBatch().getColor();
+		gameStage.getBatch().draw(firetruck, 32 * 4, 32 * 3);
+		gameStage.getBatch().setColor(c.r, c.g, c.b, 1f);
 		if (this.clicked == true) {
-			game.batch.setColor(c.r, c.g, c.b, .1f);
-			game.batch.draw(selectionbox, this.boxstartx, this.boxstarty, mousex - this.boxstartx, mousey - this.boxstarty);
+			gameStage.getBatch().setColor(c.r, c.g, c.b, .1f);
+			gameStage.getBatch().draw(selectionbox, this.boxstartx, this.boxstarty, mousex - this.boxstartx, mousey - this.boxstarty);
 		}
-		game.batch.end();
-		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + "), Truck: (" + FireEngine1.getCurrentLocationX() + "," + FireEngine1.currentLocationY + ")");
-	
-		
+		gameStage.getBatch().end();
+		gameStage.draw();
 	}
 	
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		super.resize(width, height);
+		gameStage.getViewport().update(width, height, true);
 	}
 	
 	@Override
@@ -127,8 +117,9 @@ public class MainGameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		game.batch.dispose();
-		fireTruckImg.dispose();
+		super.dispose();
+//		batch.dispose();
+		gameStage.dispose();
 		selectionbox.dispose();
 	}
 

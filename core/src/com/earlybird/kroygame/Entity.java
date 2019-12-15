@@ -3,33 +3,13 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Entity {
+public abstract class Entity extends Actor{
 
 	private int currentHealth, maxHealth, range, damage, spriteSize;
 	protected int currentLocationX;
 	protected int currentLocationY;
-	
-	//Constructor
-	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int spriteSize) {
-		this.currentHealth = currentHealth;
-		this.maxHealth = maxHealth;
-		this.range = range;
-		this.damage = damage;
-		this.currentLocationX = currentLocationX;
-		this.currentLocationY = currentLocationY;
-		this.spriteSize = spriteSize;
-	}
-	
-	public Entity() {
-		currentHealth = 100;
-		maxHealth = 100;
-		range = 0;
-		damage = 0;
-		currentLocationX = 0;
-		currentLocationY = 0;
-		spriteSize = 32;
-	}
 
 	//Getters and Setters
 	public int getSpriteSize() {

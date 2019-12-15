@@ -10,8 +10,9 @@ public class FireEngine extends Unit{
 	
 	//Constructor
 	public FireEngine(int currentHealth, int maxHealth, int range, int damage, int currentLocationX,
-			int currentLocationY, int moveLocationX, int moveLocationY, int speed, int currentVolume, int maxVolume, boolean isRefilling, boolean isSelected, int spriteSize) {
-		super(currentHealth, maxHealth, range, damage, currentLocationX, currentLocationY, moveLocationX, moveLocationY, speed, spriteSize);
+			int currentLocationY, int moveLocationX, int moveLocationY, int speed, int currentVolume,
+			int maxVolume, boolean isRefilling, boolean isSelected, int spriteSize) {
+		
 		this.currentVolume = currentVolume;
 		this.maxVolume = maxVolume;
 		this.isRefilling = isRefilling;
