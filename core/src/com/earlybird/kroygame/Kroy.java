@@ -2,10 +2,7 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.Game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.earlybird.kroygame.screens.MainGameScreen;
-import com.earlybird.kroygame.screens.StartScreen;
-import com.earlybird.kroygame.screens.TestScreen;
 
 public class Kroy extends Game {
 	
