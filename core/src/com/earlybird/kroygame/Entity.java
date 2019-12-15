@@ -130,34 +130,40 @@ public class Entity {
 	
 	//Checks if there are any of the units that can be attacked in range (0 is for attacking fire engines
 	// 1 is for attacking fortresses)
-	public boolean rangeCheck(int unitType) {
+	public void attack(int unitType) {
+		boolean canAttack = false;
+		Entity attackThisUnit = null;
 		if(unitType == 0) {
 			if(MainGameScreen.fireSquad.getEnginesInRange((this.currentLocationX - this.range),(this.currentLocationX + this.range),(this.currentLocationY + this.range),(this.currentLocationY - this.range)).size() > 0) {
-				System.out.println("fire engine in range");
-				return true;
+				canAttack = true;
+				attackThisUnit = MainGameScreen.fireSquad.getEnginesInRange((this.currentLocationX - this.range),(this.currentLocationX + this.range),(this.currentLocationY + this.range),(this.currentLocationY - this.range)).get(0);
 			}
 		}else if(unitType == 1) {
 			for(int i = 0; i < MainGameScreen.fortressList.size(); i++) {
 				Fortress currentFortress = MainGameScreen.fortressList.get(i);
 				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range))) {
-					System.out.println("fortress in range");
-					return true;
+					canAttack = true;
+					attackThisUnit = currentFortress;
 				}
 			}
 		}
-		return false;
-	}
-	
-	public void attack() {
+		if(canAttack) {
+			
+			if(this instanceof FireEngine) {
+				if(this.getCurrentVolume() != 0) {
+					this.changeCurrentVolume(this.getDamage());
+					attackThisUnit.changeHealth(this.getDamage());
+				}
+
+			}else {
+				attackThisUnit.changeHealth(this.getDamage());
+			}
+		}
 		
 	}
-	
-	public void increaseHealth() {
-		
-	}
-	
-	public void decreaseHealth() {
-		
+
+	public void changeHealth(int damageValue) {
+		this.setCurrentHealth(this.getCurrentHealth() - damageValue);
 	}
 	
 	public void increaseMaxHealth() {
@@ -170,5 +176,13 @@ public class Entity {
 	
 	public void increaseDamage() {
 		
+	}
+	
+	//This is the empty version as the empty version to be changed in the fireEngine class
+	public void changeCurrentVolume(int damage) {
+	}
+	
+	public int getCurrentVolume() {
+		return 0;
 	}
 }

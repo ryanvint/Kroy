@@ -43,6 +43,7 @@ public class FireEngine extends Unit{
 	}
 	
 	public int getCurrentVolume() {
+		super.getCurrentVolume();
 		return currentVolume;
 	}
 
@@ -95,12 +96,9 @@ public class FireEngine extends Unit{
 		}
 	}
 	
-	public void increaseCurrentVolume() {
-		
-	}
-	
-	public void decreaseCurrentVolume() {
-		
+	public void changeCurrentVolume(int damageOutput) {
+		super.changeCurrentVolume(damageOutput);
+		this.setCurrentVolume(this.getCurrentVolume() - damageOutput);
 	}
 	
 	public void increaseMaxVolume() {

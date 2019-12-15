@@ -48,6 +48,7 @@ public class MainGameScreen implements Screen {
 		//Adds a fireEngine entity to the game inside of the squad
 		fireSquad.addEngine();
 		fireSquad.getEngine(0).setRange(30);
+		fireSquad.getEngine(0).setDamage(10);
 		
 		//Creates the new fortresses and assigns random boss
 		List<Boolean> hasBossList = new ArrayList<Boolean>();
@@ -69,7 +70,9 @@ public class MainGameScreen implements Screen {
 		for(int i=0; i<fortressList.size(); i++) {
 			Fortress currentFortress = fortressList.get(i);
 			stage.addActor(currentFortress.healthBar);
+			
 			currentFortress.setRange(50);
+			currentFortress.setDamage(1);
 		}
 		
 		camera = new OrthographicCamera();
@@ -98,13 +101,14 @@ public class MainGameScreen implements Screen {
 			currentEngine.healthBar.setValue(currentEngine.getCurrentHealth());
 			currentEngine.waterBar.setPosition(currentEngine.getWaterBarX(), currentEngine.getWaterBarY());
 			currentEngine.waterBar.setValue(currentEngine.getCurrentVolume());
-			currentEngine.rangeCheck(1);
+			currentEngine.attack(1);
 		}
 		
 		//Loop to check fortress updates such as to check if any fireengines are in range
 		for(int i=0; i<fortressList.size();i++) {
 			Fortress currentFortress = fortressList.get(i);
-			currentFortress.rangeCheck(0);
+			currentFortress.attack(0);
+			currentFortress.healthBar.setValue(currentFortress.getCurrentHealth());
 		}
 		
 		camera.update();
