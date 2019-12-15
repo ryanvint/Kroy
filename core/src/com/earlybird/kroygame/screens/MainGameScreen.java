@@ -17,6 +17,7 @@ import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.FireEngineSquad;
 import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
+import com.earlybird.kroygame.FireStation;
 
 
 public class MainGameScreen implements Screen {
@@ -29,10 +30,13 @@ public class MainGameScreen implements Screen {
 	Texture fireTruckImg;
 	public static List<Fortress> fortressList;
 	Texture fortressImg;
+	Texture fireStationImg;
 	
 	//Creates new fireEngine squad
 	public static FireEngineSquad fireSquad = new FireEngineSquad();
 	Kroy game;
+	
+	FireStation fireStation;
 
 	public MainGameScreen(Kroy game) {
 		this.game = game;
@@ -44,6 +48,7 @@ public class MainGameScreen implements Screen {
 		
 		fireTruckImg = new Texture("firetruck.png");
 		fortressImg = new Texture("fortress.png");
+		fireStationImg = new Texture("firestation.png");
 		
 		//Adds a fireEngine entity to the game inside of the squad
 		fireSquad.addEngine();
@@ -61,6 +66,8 @@ public class MainGameScreen implements Screen {
 		fortressList.add(new Fortress(hasBossList.get(0), 76, 552));
 		fortressList.add(new Fortress(hasBossList.get(1), 94, 328));
 		fortressList.add(new Fortress(hasBossList.get(2), 460, 635));
+		
+		fireStation = new FireStation();
 		
 		//Adds fireEngine healthBar to stage
 		stage.addActor(fireSquad.getEngine(0).healthBar);
@@ -133,6 +140,7 @@ public class MainGameScreen implements Screen {
 			currentFortress.healthBar.setValue(currentFortress.getCurrentHealth());
 		}
 		
+		game.batch.draw(fireStationImg, fireStation.getX(), fireStation.getY(), 50, 50, 0, 0, 150, 150, false, false);
 		
 		game.batch.end();
 		
@@ -141,7 +149,7 @@ public class MainGameScreen implements Screen {
 		stage.act();
 		
 		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + "), Truck: (" + FireEngine1.getCurrentLocationX() + "," + FireEngine1.currentLocationY + ")");
-		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + Gdx.input.getY() + ")");
+		//System.out.println("Cursor: (" + Gdx.input.getX() +"," + (Kroy.HEIGHT - Gdx.input.getY()) + ")");
 		
 	}
 	
