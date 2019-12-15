@@ -12,6 +12,7 @@ public class Entity {
 	protected int currentLocationX;
 	protected int currentLocationY;
 	public StatBar healthBar;
+	public boolean notDestroyed = true;
 	
 	//Constructor
 	public Entity(int currentHealth, int maxHealth, int range, int damage, int currentLocationX, int currentLocationY, int spriteSize) {
@@ -125,7 +126,13 @@ public class Entity {
 	}
 	
 	public void destroy() {
-		
+		if(this.getCurrentHealth()<=0) {
+			this.notDestroyed = false;
+			this.setDamage(0);
+			this.setMaxHealth(0);
+			this.setRange(0);
+			this.healthBar.setVisible(false);
+		}
 	}
 	
 	//Checks if there are any of the units that can be attacked in range (0 is for attacking fire engines
@@ -141,7 +148,7 @@ public class Entity {
 		}else if(unitType == 1) {
 			for(int i = 0; i < MainGameScreen.fortressList.size(); i++) {
 				Fortress currentFortress = MainGameScreen.fortressList.get(i);
-				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range))) {
+				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range)&&currentFortress.notDestroyed)) {
 					canAttack = true;
 					attackThisUnit = currentFortress;
 				}

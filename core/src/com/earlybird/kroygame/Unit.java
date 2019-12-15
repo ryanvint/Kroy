@@ -80,4 +80,16 @@ public class Unit extends Entity{
 		
 	}
 	
+	public void destroy(){
+		super.destroy();
+		if(this.getCurrentHealth()<=0) {
+			this.setDamage(0);
+			this.setMaxHealth(0);
+			this.setRange(0);
+			this.setSpeed(0);
+			this.healthBar.setVisible(false);
+		}
+		
+	}
+	
 }

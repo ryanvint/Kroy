@@ -102,6 +102,7 @@ public class MainGameScreen implements Screen {
 			currentEngine.waterBar.setPosition(currentEngine.getWaterBarX(), currentEngine.getWaterBarY());
 			currentEngine.waterBar.setValue(currentEngine.getCurrentVolume());
 			currentEngine.attack(1);
+			currentEngine.destroy();
 		}
 		
 		//Loop to check fortress updates such as to check if any fireengines are in range
@@ -109,6 +110,7 @@ public class MainGameScreen implements Screen {
 			Fortress currentFortress = fortressList.get(i);
 			currentFortress.attack(0);
 			currentFortress.healthBar.setValue(currentFortress.getCurrentHealth());
+			currentFortress.destroy();
 		}
 		
 		camera.update();

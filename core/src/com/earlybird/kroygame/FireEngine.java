@@ -26,8 +26,8 @@ public class FireEngine extends Unit{
 	
 	public FireEngine() {
 		super();
-		currentVolume = 100;
-		maxVolume = 100;
+		currentVolume = 110;
+		maxVolume = 110;
 		isRefilling = false;
 		isSelected = false;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
@@ -99,6 +99,19 @@ public class FireEngine extends Unit{
 	public void changeCurrentVolume(int damageOutput) {
 		super.changeCurrentVolume(damageOutput);
 		this.setCurrentVolume(this.getCurrentVolume() - damageOutput);
+	}
+	
+	public void destroy(){
+		super.destroy();
+		if(this.getCurrentHealth()<=0) {
+			this.setDamage(0);
+			this.setMaxHealth(0);
+			this.setRange(0);
+			this.setSpeed(0);
+			this.healthBar.setVisible(false);
+			this.waterBar.setVisible(false);
+		}
+		
 	}
 	
 	public void increaseMaxVolume() {
