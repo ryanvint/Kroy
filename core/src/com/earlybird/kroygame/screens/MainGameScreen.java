@@ -82,6 +82,10 @@ public class MainGameScreen implements Screen {
 			currentFortress.setDamage(1);
 		}
 		
+		//fire station healing test
+		fireStation.setRange(30);
+		fireStation.setDamage(-10);
+		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1024, 768);
 		camera.update();
@@ -120,6 +124,9 @@ public class MainGameScreen implements Screen {
 			currentFortress.destroy();
 		}
 		
+		//fire station healing
+		fireStation.attack(0);
+		
 		camera.update();
 		renderer.setView(camera);
 		renderer.render();
@@ -140,7 +147,7 @@ public class MainGameScreen implements Screen {
 			currentFortress.healthBar.setValue(currentFortress.getCurrentHealth());
 		}
 		
-		game.batch.draw(fireStationImg, fireStation.getX(), fireStation.getY(), 50, 50, 0, 0, 150, 150, false, false);
+		game.batch.draw(fireStationImg, fireStation.getCurrentLocationX(), fireStation.getCurrentLocationY(), 50, 50, 0, 0, 150, 150, false, false);
 		
 		game.batch.end();
 		

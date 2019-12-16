@@ -1,29 +1,45 @@
 package com.earlybird.kroygame;
 
-public class FireStation {
-	protected int x,y;
-	protected boolean destroyed;
+public class FireStation extends Entity {
+	
+	public int currentRefilling;
+	public int maxCapacity;
+	private int refillRate;
 	
 	public FireStation() {
-		x =  1090;
-		y = 30;
-		destroyed = false;
+		super();
+		this.currentLocationX = 1090;
+		this.currentLocationY = 30;
+		this.setSpriteSize(150);
+		this.currentRefilling = 0;
+		this.maxCapacity = 1;
+		this.refillRate = 10;
 	}
 	
-	public int getX() {
-		return this.x;
+	//getters and setters
+	
+	public int getCurrentRefilling() {
+		return this.currentRefilling;
 	}
 	
-	public int getY() {
-		return this.y;
+	public void setCurrentRefilling(int numberRefilling) {
+		this.currentRefilling = numberRefilling;
 	}
 	
-	public boolean isDestroyed() {
-		return destroyed;
+	public int getMaxCapacity() {
+		return this.maxCapacity;
 	}
 	
-	//Might be ok just to set destroyed to true if this is called
-	public void setDestroyed(boolean destroyed) {
-		this.destroyed = destroyed;
+	public void setMaxCapacity(int maxCapacity) {
+		this.maxCapacity = maxCapacity;
 	}
+	
+	public int getRefillRate() {
+		return this.refillRate;
+	}
+	
+	public void setRefillRate(int refillRate) {
+		this.refillRate = refillRate;
+	}
+	
 }

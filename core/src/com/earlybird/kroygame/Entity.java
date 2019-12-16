@@ -112,6 +112,14 @@ public class Entity {
 	public void setCurrentLocationY(int currentLocationY) {
 		this.currentLocationY = currentLocationY;
 	}
+	
+	public boolean getNotDestroyed() {
+		return notDestroyed;
+	}
+	
+	public void setNotDestroyed(boolean notDestroyed) {
+		this.notDestroyed = notDestroyed;
+	}
 
 	//Methods
 	//Checks if given x,y pos is inside of the hitbox of the entity.
@@ -127,7 +135,7 @@ public class Entity {
 	
 	public void destroy() {
 		if(this.getCurrentHealth()<=0) {
-			this.notDestroyed = false;
+			this.setNotDestroyed(false);
 			this.setDamage(0);
 			this.setMaxHealth(0);
 			this.setRange(0);
@@ -148,7 +156,7 @@ public class Entity {
 		}else if(unitType == 1) {
 			for(int i = 0; i < MainGameScreen.fortressList.size(); i++) {
 				Fortress currentFortress = MainGameScreen.fortressList.get(i);
-				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range)&&currentFortress.notDestroyed)) {
+				if((currentFortress.getCurrentLocationX() >= (this.currentLocationX-this.range)) && (currentFortress.getCurrentLocationX()<=(this.currentLocationX+this.range)) && (currentFortress.getCurrentLocationY()>=(this.currentLocationY-this.range)) && (currentFortress.getCurrentLocationY()<=(this.currentLocationY+this.range)&&currentFortress.getNotDestroyed())) {
 					canAttack = true;
 					attackThisUnit = currentFortress;
 				}
@@ -170,7 +178,11 @@ public class Entity {
 	}
 
 	public void changeHealth(int damageValue) {
-		this.setCurrentHealth(this.getCurrentHealth() - damageValue);
+		if(this.getCurrentHealth() - damageValue <= this.getMaxHealth()) {
+			this.setCurrentHealth(this.getCurrentHealth() - damageValue);
+		}else {
+			this.setCurrentHealth(this.getMaxHealth());
+		}
 	}
 	
 	public void increaseMaxHealth() {
