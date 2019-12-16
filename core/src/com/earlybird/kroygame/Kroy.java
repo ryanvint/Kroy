@@ -23,6 +23,6 @@ public class Kroy extends Game {
 	
 	@Override
 	public void dispose () {
-		
+		res.dispose();
 	}
 }

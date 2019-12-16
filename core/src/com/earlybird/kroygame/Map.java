@@ -3,6 +3,7 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.Vector2;
 
 public class Map {
 	
@@ -25,5 +26,16 @@ public class Map {
         	}
         	System.out.println();
         }
+	}
+	//public method to query grid
+	public boolean isRoad(Vector2 point) {
+		int x = (int) Math.floor(point.x / 32);
+		int y = (int) Math.floor(point.y / 32);
+		
+		if (grid[x][y] == 3) {
+			return true;
+		}
+		
+		return false;
 	}
 }

@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		settings.maxHeight = 2048;
 		settings.pot = true;
 		
-		TexturePacker.process("C:\\Users\\tanay\\Documents\\GitHub\\Kroy\\assets", "packer", "game");
+		TexturePacker.process("C:\\Users\\tanay\\Documents\\GitHub\\Kroy\\assets", "packed", "game");
 	}
 	
 	public static void main (String[] arg) {
