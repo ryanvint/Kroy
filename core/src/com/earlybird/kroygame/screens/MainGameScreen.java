@@ -145,6 +145,7 @@ public class MainGameScreen extends DefaultScreen {
 			info();
 		case Keys.C:
 			deselectEngines();
+			write("Deselected");
 	    }
 		return super.keyUp(keycode);
 	}
