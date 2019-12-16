@@ -170,11 +170,14 @@ public class Entity {
 					attackThisUnit.changeHealth(this.getDamage());
 				}
 
+			}else if(this instanceof FireStation) {
+				attackThisUnit.changeCurrentVolume(this.getDamage());
+				attackThisUnit.changeHealth(this.getDamage());
+				
 			}else {
 				attackThisUnit.changeHealth(this.getDamage());
 			}
-		}
-		
+		}	
 	}
 
 	public void changeHealth(int damageValue) {

@@ -97,8 +97,12 @@ public class FireEngine extends Unit{
 	}
 	
 	public void changeCurrentVolume(int damageOutput) {
-		super.changeCurrentVolume(damageOutput);
-		this.setCurrentVolume(this.getCurrentVolume() - damageOutput);
+		if(this.getCurrentVolume() - damageOutput <= this.getMaxVolume()) {
+			this.setCurrentVolume(this.getCurrentVolume() - damageOutput);
+		}else {
+			this.setCurrentVolume(this.getMaxVolume());
+		}
+		
 	}
 	
 	public void destroy(){
