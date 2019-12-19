@@ -45,7 +45,7 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
 
