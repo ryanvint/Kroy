@@ -3,6 +3,7 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.Game;
 
 import com.earlybird.kroygame.screens.MainGameScreen;
+import com.earlybird.kroygame.screens.StartScreen;
 
 public class Kroy extends Game {
 	
@@ -17,8 +18,7 @@ public class Kroy extends Game {
 	public void create () {
 
 		res = new Resources();
-//		this.setScreen(new StartScreen(this));
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new StartScreen(this));
 	}
 	
 	@Override
