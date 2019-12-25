@@ -3,9 +3,10 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public abstract class Entity extends Actor{
+public abstract class Entity extends Group{
 	Sprite sprite;
 	
 	void _init() {

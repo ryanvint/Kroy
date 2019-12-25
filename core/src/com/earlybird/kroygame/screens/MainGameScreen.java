@@ -1,20 +1,21 @@
 package com.earlybird.kroygame.screens;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
@@ -79,10 +80,12 @@ public class MainGameScreen extends DefaultScreen {
 		engines.getChild(0).setPosition(32 * 4, 32);
 	}
 	public void update(float delta) {
+		//if engine is stopped, check if its moveToLocation tile is different to its current tile
+		//if so, check next tile to see if engine can move into it (sure if this is best)
 		gameStage.act(delta);
 	}
 	@Override
-	public void render(float delta)
+	public void render(float delta)	
 	{
 		update(delta);
 		
@@ -143,8 +146,12 @@ public class MainGameScreen extends DefaultScreen {
 	    {
 		case Keys.CONTROL_RIGHT:
 			info();
+			return true;
 		case Keys.C:
 			deselectEngines();
+			return true;
+		case Keys.ESCAPE:
+			Gdx.app.exit();
 	    }
 		return super.keyUp(keycode);
 	}
@@ -171,7 +178,25 @@ public class MainGameScreen extends DefaultScreen {
 		if (button == Input.Buttons.LEFT) {
 			if (this.firstTouch == this.lastTouch) {
 				if (this.roadmap.isRoad(this.firstTouch) == true) {
-					write("true");
+					if (this.selectedEngines.hasChildren()) {
+//						---------stuff between '-' can go into its own method
+						SnapshotArray<Actor> children = this.selectedEngines.getChildren();
+						Actor[] actors = children.begin();
+						for (int i = 0, n = children.size; i < n; i++) {
+							Actor child = actors[i];
+							child.clearActions();
+							Vector2 truckcoords = new Vector2(child.getX(), child.getY());
+							SequenceAction sequence = new SequenceAction();
+//							replace 0.2f with engine's speed
+							List<Action> actions = this.roadmap.pathfind(truckcoords, this.lastTouch, 0.2f);
+							for (Action a : actions) {
+								sequence.addAction(a);
+							}
+							child.addAction(sequence);
+					
+						}
+//						------------
+					}
 				}
 				//move actors in selectedEngines to this.firstTouch
 				//set move location for all actors in selectedEngines
@@ -251,7 +276,6 @@ public class MainGameScreen extends DefaultScreen {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
 			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
-				write("hello");
 				this.selectedEngines.addActor(child);
 			}
 		}
