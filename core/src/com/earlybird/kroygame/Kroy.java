@@ -15,8 +15,7 @@ public class Kroy extends Game {
 	
 
 	@Override
-	public void create () {
-
+	public void create () { 
 		res = new Resources();
 		this.setScreen(new StartScreen(this));
 	}

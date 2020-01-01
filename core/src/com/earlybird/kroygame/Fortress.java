@@ -8,10 +8,14 @@ public class Fortress extends Entity{
 	
 	public Fortress(Sprite sprite) {
 		this.sprite = sprite;
-		
+		hasBoss = false;
 	}
 	
-	
+	public Fortress(Sprite sprite, boolean hasBoss) {
+		super();
+		this.sprite = sprite;
+		this.hasBoss = hasBoss;
+	}
 
 	//Getters and setters
 	public boolean isHasBoss() {
