@@ -1,5 +1,7 @@
 package com.earlybird.kroygame.screens;
 
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -12,9 +14,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
@@ -32,8 +36,7 @@ public class MainGameScreen extends DefaultScreen {
 	
 	public static final int scrWidth = 32 * Resources.TILE_SIZE;
 	public static final int scrHeight = 24 * Resources.TILE_SIZE;
-		
-//	public SpriteBatch batch;
+	
 	private Stage gameStage;
 	private Engines engines;
 	private SelectedEngines selectedEngines;
@@ -54,9 +57,7 @@ public class MainGameScreen extends DefaultScreen {
 	
 
 	public MainGameScreen(Kroy game) {
-		super(game);
-//		batch = new SpriteBatch();
-		
+		super(game);	
 		ExtendViewport viewport = new ExtendViewport(scrWidth, scrHeight);
 		gameStage = new Stage(viewport);
 		
@@ -76,13 +77,16 @@ public class MainGameScreen extends DefaultScreen {
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
 		firetruck = new FireEngine(game.res.firetruck);
+		FireEngine firetruck2 = new FireEngine(game.res.firetruck);
+		engines.addActor(firetruck);
+		engines.addActor(firetruck2);
 		fortress1 = new Fortress(game.res.fortress1);
 		firestation = new FireStation(game.res.firestation);
 		
 		for(int i=0;i<1;i++) {
 			Engine engine = new Engine();
 			engine.addActor(firetruck);
-			engine.addActor(firetruck.healthBar);
+			engine.addActor(firetruck.healthBar);	// should this be done in the constructor of the firetruck?
 			engine.addActor(firetruck.waterBar);
 			engine.getChild(1).setPosition(0, -5);
 			engine.getChild(2).setPosition(0, -10);
@@ -95,11 +99,18 @@ public class MainGameScreen extends DefaultScreen {
 		
 		fortress1.setPosition(400, 400);
 		firestation.setPosition(500, 500);
-		engines.getChild(0).setPosition(32 * 4, 32);
+		engines.getChild(0).setPosition(4 * Resources.TILE_SIZE, 1 * Resources.TILE_SIZE);
+		engines.getChild(1).setPosition(4* Resources.TILE_SIZE, 12 * Resources.TILE_SIZE);
 	}
 	
 	
 	public void update(float delta) {
+		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
+		//check between enemies and enemies for junction halting
+		//check between engines and engines for junction halting
+		//check between units so they stop in adjacent tiles
+		//if engine is stopped, check if its moveToLocation tile is different to its current tile
+		//if so, check next tile to see if engine can move into it (sure if this is best)
 		gameStage.act(delta);
 	}
 	
@@ -149,7 +160,6 @@ public class MainGameScreen extends DefaultScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-//		batch.dispose();
 		gameStage.dispose();
 	}
 
@@ -165,9 +175,13 @@ public class MainGameScreen extends DefaultScreen {
 	    {
 		case Keys.CONTROL_RIGHT:
 			info();
+			return true;
 		case Keys.C:
 			deselectEngines();
 			write("Deselected");
+			return true;
+		case Keys.ESCAPE:
+			Gdx.app.exit();
 	    }
 		return super.keyUp(keycode);
 	}
@@ -194,7 +208,28 @@ public class MainGameScreen extends DefaultScreen {
 		if (button == Input.Buttons.LEFT) {
 			if (this.firstTouch == this.lastTouch) {
 				if (this.roadmap.isRoad(this.firstTouch) == true) {
-					write("true");
+					if (this.selectedEngines.hasChildren()) {
+//						---------stuff between '-' can go into its own method
+						SnapshotArray<Actor> children = this.selectedEngines.getChildren();
+						Actor[] actors = children.begin();
+						for (int i = 0, n = children.size; i < n; i++) {
+							Actor child = actors[i];
+							child.clearActions();
+							Vector2 truckcoords = new Vector2(child.getX(), child.getY());
+							SequenceAction sequence = new SequenceAction();
+//							replace 0.2f with engine's speed
+//							setmovelocation of fireengine to lasttouch
+//							or set list of actions
+							write("gg");
+							List<Action> actions = this.roadmap.pathfind(truckcoords, this.lastTouch, 0.2f);
+							for (Action a : actions) {
+								sequence.addAction(a);
+							}
+							child.addAction(sequence);
+						}
+//						deselectEngines();
+//						------------
+					}
 				}
 				//move actors in selectedEngines to this.firstTouch
 				//set move location for all actors in selectedEngines
@@ -274,7 +309,7 @@ public class MainGameScreen extends DefaultScreen {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
 			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
-				write("hello");
+				write("Engine selected");
 				this.selectedEngines.addActor(child);
 			}
 		}

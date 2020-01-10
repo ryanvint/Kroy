@@ -14,10 +14,10 @@ public class Resources {
 	
 	public TextureRegion ground;
 	public TextureRegion road;
-	public Sprite firetruck;
-	public Sprite fortress1;
-	public Sprite fortress2;
-	public Sprite firestation;
+	public TextureRegion firetruck;
+	public TextureRegion fortress1;
+	public TextureRegion fortress2;
+	public TextureRegion firestation;
 	public static final int TILE_SIZE = 32;
 	
 	public Resources()
@@ -27,11 +27,9 @@ public class Resources {
 		
 		ground = gameSprites.findRegion("ground");
 		road = gameSprites.findRegion("road");
-		System.out.println("hi");
-		firetruck = new Sprite(gameSprites.findRegion("firetruck"));
-		fortress1 = new Sprite(gameSprites.findRegion("firetruck"));
-		firestation = new Sprite(gameSprites.findRegion("firetruck"));
-		System.out.println("hii");
+		firetruck = gameSprites.findRegion("firetruck");
+		fortress1 = gameSprites.findRegion("firetruck");
+		firestation = gameSprites.findRegion("firetruck");
 	}
 	
 	public void dispose()
