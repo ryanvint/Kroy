@@ -2,6 +2,7 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
@@ -13,7 +14,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.earlybird.kroygame.screens.MainGameScreen;
 
 public abstract class Entity extends Actor{
-	Sprite sprite;
+	TextureRegion texture;
 	
 	private int currentHealth, maxHealth, range, damage;
 	public StatBar healthBar;
@@ -93,14 +94,6 @@ public abstract class Entity extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getHealthBar().setValue(this.getCurrentHealth());
-		sprite.draw(batch);
+		batch.draw(texture, getX(), getY());
 	}
-
-	@Override
-	protected void positionChanged() {
-		sprite.setPosition(getX(), getY());
-		super.positionChanged();
-		
-	}
-	
 }

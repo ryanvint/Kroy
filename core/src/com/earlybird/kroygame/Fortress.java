@@ -1,19 +1,20 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Fortress extends Entity{
 
 	public boolean hasBoss;
 	
-	public Fortress(Sprite sprite) {
-		this.sprite = sprite;
+	public Fortress(TextureRegion texture) {
+		this.texture = texture;
 		hasBoss = false;
 	}
 	
-	public Fortress(Sprite sprite, boolean hasBoss) {
+	public Fortress(TextureRegion texture, boolean hasBoss) {
 		super();
-		this.sprite = sprite;
+		this.texture = texture;
 		this.hasBoss = hasBoss;
 	}
 
