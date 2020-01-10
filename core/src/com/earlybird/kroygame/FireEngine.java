@@ -1,6 +1,7 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FireEngine extends Unit {
@@ -13,13 +14,16 @@ public class FireEngine extends Unit {
 	public FireEngine(Sprite sprite) {
 		super();
 		this.sprite = sprite;
-		currentVolume = 110;
-		maxVolume = 110;
+		currentVolume = 100;
+		maxVolume = 100;
 		isRefilling = false;
 		isSelected = false;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 
+	public StatBar getWaterBar() {
+		return this.waterBar;
+	}
 
 	public int getCurrentVolume() {
 		return currentVolume;
@@ -60,6 +64,11 @@ public class FireEngine extends Unit {
 		this.isSelected = isSelected;
 	}
 
-
-
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		this.getHealthBar().setValue(this.getCurrentHealth());
+		this.getWaterBar().setValue(this.getCurrentVolume());
+		sprite.draw(batch);
+	}
+	
 }

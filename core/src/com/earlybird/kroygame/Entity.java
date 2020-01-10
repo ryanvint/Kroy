@@ -90,11 +90,9 @@ public abstract class Entity extends Actor{
 		this.notDestroyed = notDestroyed;
 	}
 
-
-			
-
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+		this.getHealthBar().setValue(this.getCurrentHealth());
 		sprite.draw(batch);
 	}
 

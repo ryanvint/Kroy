@@ -269,7 +269,7 @@ public class MainGameScreen extends DefaultScreen {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
 			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
-				write("hello");
+				write("Engine selected");
 				this.selectedEngines.addActor(child);
 			}
 		}
