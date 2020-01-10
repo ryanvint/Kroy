@@ -31,7 +31,7 @@ public abstract class Entity extends Actor{
 		this.maxHealth = maxHealth;
 		this.range = range;
 		this.damage = damage;
-		//this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
 	public Entity() {
@@ -39,7 +39,7 @@ public abstract class Entity extends Actor{
 		maxHealth = 100;
 		range = 0;
 		damage = 0;
-		//this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
 	public int getCurrentHealth() {

@@ -24,6 +24,7 @@ import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
 import com.earlybird.kroygame.SelectedEngines;
+import com.earlybird.kroygame.Engine;
 
 
 public class MainGameScreen extends DefaultScreen {
@@ -71,12 +72,19 @@ public class MainGameScreen extends DefaultScreen {
 		renderer = new OrthogonalTiledMapRenderer(map);
 		roadmap = new Map(this.map);
 		
-		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
 		firetruck = new FireEngine(game.res.firetruck);
 		fortress1 = new Fortress(game.res.fortress1);
-		engines.addActor(firetruck);
+		for(int i=0;i<1;i++) {
+			Engine engine = new Engine();
+			engine.addActor(firetruck);
+			engine.addActor(firetruck.healthBar);
+			engine.addActor(firetruck.waterBar);
+			engine.getChild(1).setPosition(0, -5);
+			engine.getChild(2).setPosition(0, -10);
+			engines.addActor(engine);
+		}
 		gameStage.addActor(engines);
 		gameStage.addActor(fortress1);
 		gameStage.addActor(selectedEngines);

@@ -29,13 +29,15 @@ public class Map {
 	}
 	//public method to query grid
 	public boolean isRoad(Vector2 point) {
-		int x = (int) Math.floor(point.x / 32);
-		int y = (int) Math.floor(point.y / 32);
-		
-		if (grid[x][y] == 3) {
-			return true;
+		//POINT IS NULL
+		if(point!=null) {
+			int x = (int) Math.floor(point.x / 32);
+			int y = (int) Math.floor(point.y / 32);
+			
+			if (grid[x][y] == 3) {
+				return true;
+			}
 		}
-		
 		return false;
 	}
 }
