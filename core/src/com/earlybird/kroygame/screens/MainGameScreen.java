@@ -75,19 +75,28 @@ public class MainGameScreen extends DefaultScreen {
 		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
-		fortress1 = new Fortress(game.res.fortress1);
 		firestation = new FireStation(game.res.firestation);
 		
 		addFireTruck(4,1);
 		addFireTruck(4,12);
+		addFortress(17,6);
+		addFireStation(25,13);
 		
 		gameStage.addActor(engines);
-		gameStage.addActor(fortress1);
-		gameStage.addActor(firestation);
 		gameStage.addActor(selectedEngines);
 		
-		fortress1.setPosition(400, 400);
-		firestation.setPosition(500, 500);
+	}
+
+	public void addFortress(int xTilePos, int yTilePos) {
+		fortress1 = new Fortress(game.res.fortress1);
+		fortress1.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		gameStage.addActor(fortress1);
+	}
+	
+	public void addFireStation(int xTilePos, int yTilePos) {
+		firestation = new FireStation(game.res.firestation);
+		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		gameStage.addActor(firestation);
 	}
 	
 	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
