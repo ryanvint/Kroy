@@ -15,6 +15,7 @@ public class Resources {
 	public Sprite firetruck;
 	public Sprite fortress1;
 	public Sprite fortress2;
+	public Sprite firestation;
 	public static final int TILE_SIZE = 32;
 	
 	public Resources()
@@ -25,7 +26,7 @@ public class Resources {
 		System.out.println("hi");
 		firetruck = new Sprite(gameSprites.findRegion("firetruck"));
 		fortress1 = new Sprite(gameSprites.findRegion("firetruck"));
-		fortress2 = new Sprite(gameSprites.findRegion("firetruck"));
+		firestation = new Sprite(gameSprites.findRegion("firetruck"));
 		System.out.println("hii");
 	}
 	
