@@ -11,6 +11,7 @@ public class Resources {
 	TextureAtlas gameSprites;
 	TextureAtlas gameLocations;
 	
+	
 	public TextureRegion ground;
 	public TextureRegion road;
 	public TextureRegion firetruck;
