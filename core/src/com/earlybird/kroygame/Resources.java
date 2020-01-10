@@ -22,14 +22,14 @@ public class Resources {
 	
 	public Resources()
 	{
-		//gameLocations = new TextureAtlas(Gdx.files.internal("packed/gameLocation.atlas"));
+		gameLocations = new TextureAtlas(Gdx.files.internal("packed/gameLocations.txt"));
 		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas"));
 		
 		ground = gameSprites.findRegion("ground");
 		road = gameSprites.findRegion("road");
 		firetruck = gameSprites.findRegion("firetruck");
-		fortress1 = gameSprites.findRegion("firetruck");
-		firestation = gameSprites.findRegion("firetruck");
+		fortress1 = gameLocations.findRegion("Fortress");
+		firestation = gameLocations.findRegion("FireStation");
 	}
 	
 	public void dispose()
