@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
 import com.earlybird.kroygame.FireEngine;
+import com.earlybird.kroygame.FireStation;
 import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
@@ -31,14 +32,14 @@ public class MainGameScreen extends DefaultScreen {
 	
 	public static final int scrWidth = 32 * Resources.TILE_SIZE;
 	public static final int scrHeight = 24 * Resources.TILE_SIZE;
-	
-	
+		
 //	public SpriteBatch batch;
 	private Stage gameStage;
 	private Engines engines;
 	private SelectedEngines selectedEngines;
 	FireEngine firetruck;
 	Fortress fortress1;
+	FireStation firestation; 
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -76,6 +77,8 @@ public class MainGameScreen extends DefaultScreen {
 		selectedEngines= new SelectedEngines();
 		firetruck = new FireEngine(game.res.firetruck);
 		fortress1 = new Fortress(game.res.fortress1);
+		firestation = new FireStation(game.res.firestation);
+		
 		for(int i=0;i<1;i++) {
 			Engine engine = new Engine();
 			engine.addActor(firetruck);
@@ -87,9 +90,11 @@ public class MainGameScreen extends DefaultScreen {
 		}
 		gameStage.addActor(engines);
 		gameStage.addActor(fortress1);
+		gameStage.addActor(firestation);
 		gameStage.addActor(selectedEngines);
 		
 		fortress1.setPosition(400, 400);
+		firestation.setPosition(500, 500);
 		engines.getChild(0).setPosition(32 * 4, 32);
 	}
 	
