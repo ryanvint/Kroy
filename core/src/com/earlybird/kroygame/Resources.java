@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Resources {
 	
 	TextureAtlas gameSprites;
+	TextureAtlas gameLocations;
+	TextureAtlas;
 	
 	public TextureRegion ground;
 	public TextureRegion road;
@@ -20,7 +22,9 @@ public class Resources {
 	
 	public Resources()
 	{
+		//gameLocations = new TextureAtlas(Gdx.files.internal("packed/gameLocation.atlas"));
 		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas"));
+		
 		ground = gameSprites.findRegion("ground");
 		road = gameSprites.findRegion("road");
 		System.out.println("hi");
