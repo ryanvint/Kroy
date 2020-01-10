@@ -227,7 +227,7 @@ public class MainGameScreen extends DefaultScreen {
 							}
 							child.addAction(sequence);
 						}
-//						deselectEngines();
+						deselectEngines();
 //						------------
 					}
 				}
