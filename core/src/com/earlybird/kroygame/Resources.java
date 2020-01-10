@@ -10,7 +10,7 @@ public class Resources {
 	
 	TextureAtlas gameSprites;
 	TextureAtlas gameLocations;
-	TextureAtlas;
+	
 	
 	public TextureRegion ground;
 	public TextureRegion road;
