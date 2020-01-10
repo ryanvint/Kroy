@@ -40,7 +40,6 @@ public class MainGameScreen extends DefaultScreen {
 	private Stage gameStage;
 	private Engines engines;
 	private SelectedEngines selectedEngines;
-	FireEngine firetruck;
 	Fortress fortress1;
 	FireStation firestation; 
 	
@@ -76,22 +75,12 @@ public class MainGameScreen extends DefaultScreen {
 		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
-		firetruck = new FireEngine(game.res.firetruck);
-		FireEngine firetruck2 = new FireEngine(game.res.firetruck);
-		engines.addActor(firetruck);
-		engines.addActor(firetruck2);
 		fortress1 = new Fortress(game.res.fortress1);
 		firestation = new FireStation(game.res.firestation);
 		
-		for(int i=0;i<1;i++) {
-			Engine engine = new Engine();
-			engine.addActor(firetruck);
-			engine.addActor(firetruck.healthBar);	// should this be done in the constructor of the firetruck?
-			engine.addActor(firetruck.waterBar);
-			engine.getChild(1).setPosition(0, -5);
-			engine.getChild(2).setPosition(0, -10);
-			engines.addActor(engine);
-		}
+		addFireTruck(4,1);
+		addFireTruck(4,12);
+		
 		gameStage.addActor(engines);
 		gameStage.addActor(fortress1);
 		gameStage.addActor(firestation);
@@ -99,10 +88,21 @@ public class MainGameScreen extends DefaultScreen {
 		
 		fortress1.setPosition(400, 400);
 		firestation.setPosition(500, 500);
-		engines.getChild(0).setPosition(4 * Resources.TILE_SIZE, 1 * Resources.TILE_SIZE);
-		engines.getChild(1).setPosition(4* Resources.TILE_SIZE, 12 * Resources.TILE_SIZE);
 	}
 	
+	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
+	//Then adds this fireEngine to the Engines group
+	public void addFireTruck(int xTilePos, int yTilePos) {
+		Engine engine = new Engine();
+		FireEngine fireEngine = new FireEngine(game.res.firetruck);
+		engine.addActor(fireEngine);
+		engine.addActor(fireEngine.healthBar);
+		engine.addActor(fireEngine.waterBar);
+		engine.getChild(1).setPosition(0, -5);
+		engine.getChild(2).setPosition(0, -10);
+		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		engines.addActor(engine);
+	}
 	
 	public void update(float delta) {
 		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
