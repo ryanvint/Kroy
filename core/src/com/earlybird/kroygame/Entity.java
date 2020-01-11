@@ -27,7 +27,7 @@ public abstract class Entity extends Actor{
 	//}
 
 	//Constructor
-	public Entity(int currentHealth, int maxHealth, int range, int damage) {
+	public Entity(int currentHealth, int maxHealth, int range, int damage) {	//Constructor to instantiate Entity
 		this.currentHealth = currentHealth;
 		this.maxHealth = maxHealth;
 		this.range = range;
@@ -35,13 +35,15 @@ public abstract class Entity extends Actor{
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
-	public Entity() {
+	public Entity() {	////Constructor to instantiate Entity
 		currentHealth = 100;
 		maxHealth = 100;
 		range = 0;
 		damage = 0;
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
+	
+	//Getters and Setters
 	
 	public int getCurrentHealth() {
 		return currentHealth;

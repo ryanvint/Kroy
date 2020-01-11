@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class FireEngine extends Unit {
 	
-	private int currentVolume, maxVolume;
-	public boolean isRefilling, isSelected;
-	public StatBar waterBar;
+	private int currentVolume, maxVolume; //Used for water statbars
+	public boolean isRefilling, isSelected; //Status variables
+	public StatBar waterBar; //Used to create the stat bar
 	
 	
-	public FireEngine(TextureRegion texture) {
+	public FireEngine(TextureRegion texture) { //Instantiates a fire engine
 		super();
 		this.texture = texture;
 		currentVolume = 100;
@@ -22,6 +22,8 @@ public class FireEngine extends Unit {
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 
+	//Getters and Setters
+	
 	public StatBar getWaterBar() {
 		return this.waterBar;
 	}

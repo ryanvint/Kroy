@@ -37,11 +37,10 @@ public class MainGameScreen extends DefaultScreen {
 	public static final int scrWidth = 32 * Resources.TILE_SIZE;
 	public static final int scrHeight = 24 * Resources.TILE_SIZE;
 	
-	private Stage gameStage;
-	private Engines engines;
-	private SelectedEngines selectedEngines;
-	Fortress fortress1;
-	FireStation firestation; 
+	private Stage gameStage; //Used as a base to add all sprites to the Game using the scene2D library
+	private Engines engines; //Used to group all fire engines
+	private SelectedEngines selectedEngines; //Allows user to select more than one engine at a time
+	
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -65,7 +64,7 @@ public class MainGameScreen extends DefaultScreen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(this);
-		selectionbox = new Texture("badlogic.jpg");
+		selectionbox = new Texture("badlogic.jpg"); //Do we still need this?
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
@@ -75,7 +74,6 @@ public class MainGameScreen extends DefaultScreen {
 		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
-		firestation = new FireStation(game.res.firestation);
 		
 		addFireTruck(4,1);
 		addFireTruck(4,12);
@@ -87,14 +85,14 @@ public class MainGameScreen extends DefaultScreen {
 		
 	}
 
-	public void addFortress(int xTilePos, int yTilePos) {
-		fortress1 = new Fortress(game.res.fortress1);
+	public void addFortress(int xTilePos, int yTilePos) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
+		Fortress fortress1 = new Fortress(game.res.fortress1);
 		fortress1.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(fortress1);
 	}
 	
-	public void addFireStation(int xTilePos, int yTilePos) {
-		firestation = new FireStation(game.res.firestation);
+	public void addFireStation(int xTilePos, int yTilePos) { //Renders a Firestation at a specified XY location with a Texture allocated with in Resources.jv
+		FireStation firestation = new FireStation(game.res.firestation);
 		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(firestation);
 	}
@@ -236,7 +234,7 @@ public class MainGameScreen extends DefaultScreen {
 							}
 							child.addAction(sequence);
 						}
-						deselectEngines();
+//						deselectEngines();
 //						------------
 					}
 				}
