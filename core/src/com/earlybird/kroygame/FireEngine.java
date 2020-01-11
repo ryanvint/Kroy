@@ -24,6 +24,10 @@ public class FireEngine extends Unit {
 
 	//Getters and Setters
 	
+	public void setTexture(TextureRegion texture) {
+		this.texture = texture;
+	}
+	
 	public StatBar getWaterBar() {
 		return this.waterBar;
 	}

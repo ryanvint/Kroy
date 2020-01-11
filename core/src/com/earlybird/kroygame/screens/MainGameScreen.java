@@ -77,6 +77,7 @@ public class MainGameScreen extends DefaultScreen {
 		
 		addFireTruck(4,1);
 		addFireTruck(4,12);
+		
 		addFortress(17,6);
 		addFireStation(25,13);
 		
@@ -138,6 +139,7 @@ public class MainGameScreen extends DefaultScreen {
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
 		gameStage.draw();
+		
 	}
 	
 	@Override
@@ -234,7 +236,7 @@ public class MainGameScreen extends DefaultScreen {
 							}
 							child.addAction(sequence);
 						}
-//						deselectEngines();
+						deselectEngines();
 //						------------
 					}
 				}
@@ -243,6 +245,7 @@ public class MainGameScreen extends DefaultScreen {
 				return true;
 			}
 			else {
+				deselectEngines();
 				selectEngines();
 			}
 			return true;
@@ -317,6 +320,10 @@ public class MainGameScreen extends DefaultScreen {
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
 			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
 				write("Engine selected");
+				//switch texture
+				Engine thisEngine = (Engine) child;
+				FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+				thisFireEngine.setTexture(game.res.firetruckSelected);
 				this.selectedEngines.addActor(child);
 			}
 		}
@@ -326,6 +333,10 @@ public class MainGameScreen extends DefaultScreen {
 		Actor[] actors = children.begin();
 		for (int i = 0, n = children.size; i < n; i++) {
 			Actor child = actors[i];
+			//switch texture
+			Engine thisEngine = (Engine) child;
+			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+			thisFireEngine.setTexture(game.res.firetruck);
 			this.engines.addActor(child);
 		}
 	}
