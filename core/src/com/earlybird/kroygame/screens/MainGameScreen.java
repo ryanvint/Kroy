@@ -138,7 +138,6 @@ public class MainGameScreen extends DefaultScreen {
 		
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
-		System.out.println("post");
 		gameStage.draw();
 		
 	}
