@@ -16,6 +16,7 @@ public class Resources {
 	public TextureRegion ground; //Initialising "Texture Regions" which allow use to pull individual texture from the atlas PNGs and assign them to a variable.
 	public TextureRegion road;
 	public TextureRegion firetruck;
+	public TextureRegion firetruckSelected;
 	public TextureRegion fortress1;
 	public TextureRegion firestation;
 	public static final int TILE_SIZE = 32;
@@ -28,6 +29,7 @@ public class Resources {
 		
 		ground = gameSprites.findRegion("ground"); //Do we need?
 		road = gameSprites.findRegion("road"); //Do we need?
+		firetruckSelected = gameSprites.findRegion("firetruckSelected");
 		firetruck = gameSprites.findRegion("firetruck"); //Defining the texture for the Fire Trucks
 		fortress1 = gameLocations.findRegion("Fortress"); //Defining the texture for the Fortress's
 		firestation = gameLocations.findRegion("FireStation"); //Defining the texture for the Fire Station
