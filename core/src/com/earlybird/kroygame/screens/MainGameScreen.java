@@ -21,8 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
@@ -47,7 +46,8 @@ public class MainGameScreen extends DefaultScreen {
 	private Engines selectedEngines; //Allows user to select more than one engine at a time
 	private Fortresses fortresses;
 	
-	private TextButton pauseButton, continueButton;
+	private TextButton pauseButton, quitButton;
+	private TextField menuTitle, scoreTitle, engineTitle, shopTitle;
 	public Skin skin;
 	
 	private TiledMap map;
@@ -85,21 +85,34 @@ public class MainGameScreen extends DefaultScreen {
 		roadmap = new Map(this.map);
 		
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		continueButton = new TextButton("Continue", skin, "default");
+		quitButton = new TextButton("Quit", skin, "default");
 		pauseButton = new TextButton("Pause", skin, "default");
-		continueButton.setBounds(1550, 900, 100f, 20f);
-		pauseButton.setBounds(1550, 930, 100f, 20f);
+		menuTitle = new TextField("Menu", skin, "default");
+		scoreTitle = new TextField("Score", skin, "default");
+		engineTitle = new TextField("Engines", skin, "default");
+		shopTitle = new TextField("Shop", skin, "default");
+		quitButton.setBounds(1550, 870, 100f, 20f);
+		pauseButton.setBounds(1550, 900, 100f, 20f);
+		menuTitle.setBounds(1550, 930, 100f, 20f);
+		scoreTitle.setBounds(1550, 810, 100f, 20f);
+		shopTitle.setBounds(1550, 250, 100f, 20f);
+		engineTitle.setBounds(1550, 720, 100f, 20f);
+		
 		userInterface.addActor(pauseButton);
-		userInterface.addActor(continueButton);
+		userInterface.addActor(quitButton);
+		userInterface.addActor(menuTitle);
+		userInterface.addActor(scoreTitle);
+		userInterface.addActor(engineTitle);
+		userInterface.addActor(shopTitle);
 		
 		engines = new Engines();
 		selectedEngines= new Engines();
 		fortresses = new Fortresses();
 		
-		addFireTruck(4,1);
-		addFireTruck(4,11);
+		addFireTruck(42,2);
+		addFireTruck(46,2);
 		
-		addFortress(19,17,game.res.fortress1);
+		addFortress(18,17,game.res.fortress1);
 		addFireStation(42,3);
 
 		
@@ -129,8 +142,8 @@ public class MainGameScreen extends DefaultScreen {
 		engine.addActor(fireEngine);
 		engine.addActor(fireEngine.healthBar);
 		engine.addActor(fireEngine.waterBar);
-		engine.getChild(1).setPosition(0, -5);
-		engine.getChild(2).setPosition(0, -10);
+		engine.getChild(1).setPosition(-4, -7);
+		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
 	}
@@ -178,7 +191,7 @@ public class MainGameScreen extends DefaultScreen {
 		}
 		update(delta);
 		
-		Gdx.gl.glClearColor(135/255f, 1/255f, 235/255f, 1);
+		Gdx.gl.glClearColor(33/255f, 191/255f, 33/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
@@ -194,12 +207,7 @@ public class MainGameScreen extends DefaultScreen {
 		
 		if (pauseButton.isPressed() == true) {
 			click = true;
-		}
-		
-		if (continueButton.isPressed() && clicked == true) {
-			click = false;
-		}
-		
+		}  
 	}
 	
 	@Override
