@@ -32,11 +32,6 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
-<<<<<<< HEAD
-import com.earlybird.kroygame.SelectedEngines;
-import com.earlybird.kroygame.ButtonGroup;
-=======
->>>>>>> cf143b6c7d9d8c4d2dee4ece09d5d1581a0f1be7
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
@@ -54,7 +49,6 @@ public class MainGameScreen extends DefaultScreen {
 	
 	private TextButton pauseButton, continueButton;
 	public Skin skin;
-	private ButtonGroup menu;
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -105,13 +99,9 @@ public class MainGameScreen extends DefaultScreen {
 		addFireTruck(4,1);
 		addFireTruck(4,11);
 		
-<<<<<<< HEAD
 		addFortress(19,17,game.res.fortress1);
 		addFireStation(42,3);
-=======
-		addFortress(10,6,game.res.fortress1);
-		addFireStation(20,13);
->>>>>>> cf143b6c7d9d8c4d2dee4ece09d5d1581a0f1be7
+
 		
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
