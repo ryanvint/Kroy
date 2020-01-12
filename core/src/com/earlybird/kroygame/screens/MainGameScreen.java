@@ -68,7 +68,8 @@ public class MainGameScreen extends DefaultScreen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
-		map = new TmxMapLoader().load("testroadmap.tmx");
+		//map = new TmxMapLoader().load("testroadmap.tmx");
+		map = new TmxMapLoader().load("MapOfYork.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
 		roadmap = new Map(this.map);
 		
