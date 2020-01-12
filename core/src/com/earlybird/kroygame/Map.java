@@ -70,28 +70,11 @@ public class Map {
 					new Node((int) endTile.x, (int) endTile.y));
 			List<Node> nodes = pathfinder.findPath();
 			nodes.remove(0);
-			Node prevNode = new Node((int) startTile.x, (int) startTile.y);
 			for (Node n : nodes) {
 				MoveToAction action = new MoveToAction();
 				action.setPosition(n.getX()*32, n.getY()*32);
 				action.setDuration(speed);
-				//add rotation
-				RotateToAction rotation = new RotateToAction();
-				if (n.getX() > prevNode.getX()) {
-					rotation.setRotation(270);
-				}
-				if (n.getX() < prevNode.getX()) {
-					rotation.setRotation(90);
-				}
-				if (n.getY() > prevNode.getY()) {
-					rotation.setRotation(180);
-				}
-				if (n.getY() > prevNode.getY()) {
-					rotation.setRotation(0);
-				}
-				//actions.add(rotation);
 				actions.add(action);
-				prevNode = n;
 //				System.out.println(n.getX() + " " + n.getY());
 			}
 			
