@@ -38,7 +38,7 @@ import com.earlybird.kroygame.Fortresses;
 public class MainGameScreen extends DefaultScreen {
 	
 	public static final int scrWidth = 50 * Resources.TILE_SIZE;
-	public static final int scrHeight = 35 * Resources.TILE_SIZE;
+	public static final int scrHeight = 32 * Resources.TILE_SIZE;
 	
 	private Stage gameStage; //Used as a base to add all sprites to the Game using the scene2D library
 	private Engines engines; //Used to group all fire engines
