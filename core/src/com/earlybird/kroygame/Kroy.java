@@ -7,8 +7,8 @@ import com.earlybird.kroygame.screens.StartScreen;
 
 public class Kroy extends Game {
 	
-	public static final int WITDH = 50 * Resources.TILE_SIZE;
-	public static final int HEIGHT = 32 * Resources.TILE_SIZE;
+	public static final int WITDH = 52 * Resources.TILE_SIZE;
+	public static final int HEIGHT = 30 * Resources.TILE_SIZE;
 	public static final String TITLE = "Kroy";
 	
 	public Resources res;

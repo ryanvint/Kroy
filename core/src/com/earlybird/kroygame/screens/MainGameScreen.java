@@ -21,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
@@ -31,20 +33,25 @@ import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
 import com.earlybird.kroygame.SelectedEngines;
+import com.earlybird.kroygame.ButtonGroup;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
 
 public class MainGameScreen extends DefaultScreen {
 	
-	public static final int scrWidth = 50 * Resources.TILE_SIZE;
-	public static final int scrHeight = 32 * Resources.TILE_SIZE;
+	public static final int scrWidth = 52 * Resources.TILE_SIZE;
+	public static final int scrHeight = 30 * Resources.TILE_SIZE;
 	
-	private Stage gameStage; //Used as a base to add all sprites to the Game using the scene2D library
+	private Stage gameStage;//Used as a base to add all sprites to the Game using the scene2D library
+	private Stage userInterface;
 	private Engines engines; //Used to group all fire engines
 	private SelectedEngines selectedEngines; //Allows user to select more than one engine at a time
 	private Fortresses fortresses;
 	
+	private TextButton pauseButton, continueButton;
+	public Skin skin;
+	private ButtonGroup menu;
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -54,6 +61,8 @@ public class MainGameScreen extends DefaultScreen {
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
+	boolean click;
+	
 	
 	Texture selectionbox;
 	
@@ -62,6 +71,7 @@ public class MainGameScreen extends DefaultScreen {
 		super(game);	
 		ExtendViewport viewport = new ExtendViewport(scrWidth, scrHeight);
 		gameStage = new Stage(viewport);
+		userInterface = new Stage(viewport);
 		
 	}
 	
@@ -77,15 +87,23 @@ public class MainGameScreen extends DefaultScreen {
 		renderer = new OrthogonalTiledMapRenderer(map);
 		roadmap = new Map(this.map);
 		
+		skin = new Skin(Gdx.files.internal("uiskin.json"));
+		continueButton = new TextButton("Continue", skin, "default");
+		pauseButton = new TextButton("Pause", skin, "default");
+		continueButton.setBounds(1550, 900, 100f, 20f);
+		pauseButton.setBounds(1550, 930, 100f, 20f);
+		userInterface.addActor(pauseButton);
+		userInterface.addActor(continueButton);
+		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
 		fortresses = new Fortresses();
 		
-		addFireTruck(4,2);
-		addFireTruck(4,10);
+		addFireTruck(4,1);
+		addFireTruck(4,11);
 		
-		addFortress(12,6,game.res.fortress1);
-		addFireStation(20,13);
+		addFortress(19,17,game.res.fortress1);
+		addFireStation(42,3);
 		
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
@@ -148,14 +166,18 @@ public class MainGameScreen extends DefaultScreen {
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
 		gameStage.act(delta);
+		userInterface.act(Gdx.graphics.getDeltaTime());
 	}
 	
 	@Override
 	public void render(float delta)
 	{
+		if (click == true) {
+			delta = 0;
+		}
 		update(delta);
 		
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(135/255f, 1/255f, 235/255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		camera.update();
@@ -167,6 +189,15 @@ public class MainGameScreen extends DefaultScreen {
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
 		gameStage.draw();
+		userInterface.draw();
+		
+		if (pauseButton.isPressed() == true) {
+			click = true;
+		}
+		
+		if (continueButton.isPressed() && clicked == true) {
+			click = false;
+		}
 		
 	}
 	
