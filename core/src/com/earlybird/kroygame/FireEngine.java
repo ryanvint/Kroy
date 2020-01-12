@@ -21,6 +21,13 @@ public class FireEngine extends Unit {
 		isSelected = false;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
+	
+	public boolean isEngineinRange(int leftX, int rightX, int topY, int bottomY) {
+		if(this.getX()>=leftX && this.getX()<=rightX && this.getY()>=bottomY && this.getY()<=topY) {
+			return true;
+		}
+		return false;
+	}
 
 	//Getters and Setters
 	
