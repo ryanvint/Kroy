@@ -80,7 +80,6 @@ public class FireEngine extends Unit {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		this.getHealthBar().setValue(this.getCurrentHealth()); // probably should be in a different function
 		this.getWaterBar().setValue(this.getCurrentVolume());
 		super.draw(batch, parentAlpha);
 	}
