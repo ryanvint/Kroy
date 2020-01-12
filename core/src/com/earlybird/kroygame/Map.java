@@ -25,7 +25,7 @@ public class Map {
         	for(int y = 0; y < layer.getHeight();y++){
         		TiledMapTileLayer.Cell cell = layer.getCell(x,y);
         		if(cell!=null) {
-        			if (cell.getTile().getId() == 924 || cell.getTile().getId() == 925 || cell.getTile().getId() == 956 || cell.getTile().getId() == 957 || cell.getTile().getId() == 958 || cell.getTile().getId() == 959 || cell.getTile().getId() == 988 || cell.getTile().getId() == 989 || cell.getTile().getId() == 990 || cell.getTile().getId() == 991 || cell.getTile().getId() == 1020 || cell.getTile().getId() == 1021 || cell.getTile().getId() == 1022 || cell.getTile().getId() == 1023 || cell.getTile().getId() == 1024) {
+        			if (cell.getTile().getId() == 925 || cell.getTile().getId() == 926 || cell.getTile().getId() == 957 || cell.getTile().getId() == 958 || cell.getTile().getId() == 959 || cell.getTile().getId() == 960 || cell.getTile().getId() == 989 || cell.getTile().getId() == 990 || cell.getTile().getId() == 991 || cell.getTile().getId() == 992 || cell.getTile().getId() == 1021 || cell.getTile().getId() == 1022 || cell.getTile().getId() == 1023 || cell.getTile().getId() == 1024) {
                     	this.grid[x][y] = 1;
                     }
                     else {
