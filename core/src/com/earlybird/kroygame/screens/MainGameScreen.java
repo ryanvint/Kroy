@@ -1,5 +1,6 @@
 package com.earlybird.kroygame.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -30,6 +32,7 @@ import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
 import com.earlybird.kroygame.SelectedEngines;
 import com.earlybird.kroygame.Engine;
+import com.earlybird.kroygame.Fortresses;
 
 
 public class MainGameScreen extends DefaultScreen {
@@ -40,6 +43,7 @@ public class MainGameScreen extends DefaultScreen {
 	private Stage gameStage; //Used as a base to add all sprites to the Game using the scene2D library
 	private Engines engines; //Used to group all fire engines
 	private SelectedEngines selectedEngines; //Allows user to select more than one engine at a time
+	private Fortresses fortresses;
 	
 	
 	private TiledMap map;
@@ -75,22 +79,24 @@ public class MainGameScreen extends DefaultScreen {
 		
 		engines = new Engines();
 		selectedEngines= new SelectedEngines();
+		fortresses = new Fortresses();
 		
 		addFireTruck(4,1);
 		addFireTruck(4,12);
 		
-		addFortress(17,6);
+		addFortress(17,6,game.res.fortress1);
 		addFireStation(25,13);
 		
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
+		gameStage.addActor(fortresses);
 		
 	}
 
-	public void addFortress(int xTilePos, int yTilePos) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
-		Fortress fortress1 = new Fortress(game.res.fortress1);
-		fortress1.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
-		gameStage.addActor(fortress1);
+	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
+		Fortress fortress = new Fortress(texture);
+		fortress.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		fortresses.addActor(fortress);
 	}
 	
 	public void addFireStation(int xTilePos, int yTilePos) { //Renders a Firestation at a specified XY location with a Texture allocated with in Resources.jv
@@ -111,6 +117,27 @@ public class MainGameScreen extends DefaultScreen {
 		engine.getChild(2).setPosition(0, -10);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
+	}
+	
+	public List<FireEngine> getEnginesInRange(Group Engines, int leftX, int rightX, int topY, int bottomY){
+		List<FireEngine> enginesInRange = new ArrayList<FireEngine>();
+		for(int i=0; i<Engines.getChildren().size; i++) {
+			Engine thisEngine = (Engine) Engines.getChild(i);
+			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+			if(thisFireEngine.isEngineinRange(leftX,rightX,topY,bottomY)){
+				enginesInRange.add(thisFireEngine);
+			}
+		}
+		return enginesInRange;
+	}
+	
+	public void attackFortress(Fortress fortress, FireEngine engine) {
+		if(fortress.getX() >= engine.getX()-engine.getRange() && fortress.getX()<=engine.getX()+engine.getRange() && fortress.getY()>=engine.getY()-engine.getRange() && fortress.getY()<=engine.getY()+engine.getRange()) {
+			if(engine.getCurrentHealth()!=0) {
+				engine.setCurrentVolume(engine.getCurrentVolume()-engine.getDamage());
+				fortress.setCurrentHealth(fortress.getCurrentHealth()-engine.getDamage());
+			}
+		}
 	}
 	
 	public void update(float delta) {
@@ -230,7 +257,6 @@ public class MainGameScreen extends DefaultScreen {
 //							replace 0.2f with engine's speed
 //							setmovelocation of fireengine to lasttouch
 //							or set list of actions
-							write("gg");
 							List<Action> actions = this.roadmap.pathfind(truckcoords, this.lastTouch, 0.2f);
 							for (Action a : actions) {
 								sequence.addAction(a);
@@ -241,6 +267,9 @@ public class MainGameScreen extends DefaultScreen {
 //						------------
 					}
 				}
+				//else if(isFortressClicked()) {
+					
+				//}
 				//move actors in selectedEngines to this.firstTouch
 				//set move location for all actors in selectedEngines
 				return true;
