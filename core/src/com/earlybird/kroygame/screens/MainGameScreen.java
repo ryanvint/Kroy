@@ -30,7 +30,6 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
-import com.earlybird.kroygame.SelectedEngines;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
@@ -42,7 +41,7 @@ public class MainGameScreen extends DefaultScreen {
 	
 	private Stage gameStage; //Used as a base to add all sprites to the Game using the scene2D library
 	private Engines engines; //Used to group all fire engines
-	private SelectedEngines selectedEngines; //Allows user to select more than one engine at a time
+	private Engines selectedEngines; //Allows user to select more than one engine at a time
 	private Fortresses fortresses;
 	
 	
@@ -78,13 +77,13 @@ public class MainGameScreen extends DefaultScreen {
 		roadmap = new Map(this.map);
 		
 		engines = new Engines();
-		selectedEngines= new SelectedEngines();
+		selectedEngines= new Engines();
 		fortresses = new Fortresses();
 		
 		addFireTruck(4,2);
 		addFireTruck(4,10);
 		
-		addFortress(12,6,game.res.fortress1);
+		addFortress(10,6,game.res.fortress1);
 		addFireStation(20,13);
 		
 		gameStage.addActor(engines);
@@ -119,18 +118,6 @@ public class MainGameScreen extends DefaultScreen {
 		engines.addActor(engine);
 	}
 	
-	public List<FireEngine> getEnginesInRange(Group Engines, int leftX, int rightX, int topY, int bottomY){
-		List<FireEngine> enginesInRange = new ArrayList<FireEngine>();
-		for(int i=0; i<Engines.getChildren().size; i++) {
-			Engine thisEngine = (Engine) Engines.getChild(i);
-			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-			if(thisFireEngine.isEngineinRange(leftX,rightX,topY,bottomY)){
-				enginesInRange.add(thisFireEngine);
-			}
-		}
-		return enginesInRange;
-	}
-	
 	public void attackFortress(Fortress fortress, FireEngine engine) {
 		if(fortress.getX() >= engine.getX()-engine.getRange() && fortress.getX()<=engine.getX()+engine.getRange() && fortress.getY()>=engine.getY()-engine.getRange() && fortress.getY()<=engine.getY()+engine.getRange()) {
 			if(engine.getCurrentHealth()!=0) {
@@ -138,6 +125,21 @@ public class MainGameScreen extends DefaultScreen {
 				fortress.setCurrentHealth(fortress.getCurrentHealth()-engine.getDamage());
 			}
 		}
+	}
+	
+	public Fortress getFortress(Vector2 point) {
+		for(int i=0; i<fortresses.getChildren().size; i++) {
+			Fortress thisFortress = (Fortress) fortresses.getChild(i);
+			if(point != null) {
+				Vector2 bottomLeft = new Vector2(thisFortress.getX(),thisFortress.getY());
+				Vector2 topRight = new Vector2(thisFortress.getX() + 96, thisFortress.getY() + 96);
+				if(isBetween(bottomLeft,topRight,point)) {
+					return thisFortress;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public void update(float delta) {
@@ -263,13 +265,27 @@ public class MainGameScreen extends DefaultScreen {
 							}
 							child.addAction(sequence);
 						}
-						deselectEngines();
+						//deselectEngines();
 //						------------
 					}
 				}
-				//else if(isFortressClicked()) {
-					
-				//}
+				else if(getFortress(this.firstTouch)!=null) {
+					//Check if selected firetrucks are in range of attacking 
+					Fortress thisFortress = getFortress(this.firstTouch);
+					if (this.selectedEngines.hasChildren()) {
+						for(int i=0; i<selectedEngines.getChildren().size; i++) {
+						Engine thisEngine = (Engine) selectedEngines.getChild(i);
+						FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+						Vector2 bottomLeft = new Vector2(thisFireEngine.getX()-thisFireEngine.getRange(),thisFireEngine.getY()-thisFireEngine.getRange());
+						Vector2 topRight = new Vector2(thisFireEngine.getX()+thisFireEngine.getRange(),thisFireEngine.getY()+thisFireEngine.getRange());
+							//ERROR: ONLY CHECKS FOR BOTTOM LEFT POINT OF FORTRESS IN RANGE
+							if(isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()))){
+								attackFortress(thisFortress, thisFireEngine);
+								System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
+							}
+						}	
+					}
+				}
 				//move actors in selectedEngines to this.firstTouch
 				//set move location for all actors in selectedEngines
 				return true;

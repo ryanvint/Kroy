@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class FireEngine extends Unit {
 	
@@ -22,8 +23,8 @@ public class FireEngine extends Unit {
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 	
-	public boolean isEngineinRange(int leftX, int rightX, int topY, int bottomY) {
-		if(this.getX()>=leftX && this.getX()<=rightX && this.getY()>=bottomY && this.getY()<=topY) {
+	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {
+		if(this.getX()>=bottomLeft.x && this.getX()<=topRight.x && this.getY()>=bottomLeft.y && this.getY()<=topRight.y) {
 			return true;
 		}
 		return false;

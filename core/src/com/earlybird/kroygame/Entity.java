@@ -40,8 +40,8 @@ public abstract class Entity extends Actor{
 	public Entity() {	////Constructor to instantiate Entity
 		currentHealth = 100;
 		maxHealth = 100;
-		range = 0;
-		damage = 0;
+		range = 400;
+		damage = 10;
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
