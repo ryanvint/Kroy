@@ -18,19 +18,20 @@ public class Map {
 	private int[][] grid;
 	
 	public Map(TiledMap map) {
-		
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(2);
 		this.grid = new int[layer.getWidth()][layer.getHeight()]; 
-		
+		System.out.println(layer.getHeight());
         for(int x = 0; x < layer.getWidth();x++){
         	for(int y = 0; y < layer.getHeight();y++){
-                TiledMapTileLayer.Cell cell = layer.getCell(x,y);
-                if (cell.getTile().getId() == 3) { //924 || 925 || 956 || 957 || 958 || 959 || 988 || 989 || 990 || 991 || 1020 || 1021 || 1022 || 1023
-                	this.grid[x][y] = 1;
-                }
-                else {
-                	this.grid[x][y] = 0;
-                }
+        		TiledMapTileLayer.Cell cell = layer.getCell(x,y);
+        		if(cell!=null) {
+        			if (cell.getTile().getId() == 924 || cell.getTile().getId() == 925 || cell.getTile().getId() == 956 || cell.getTile().getId() == 957 || cell.getTile().getId() == 958 || cell.getTile().getId() == 959 || cell.getTile().getId() == 988 || cell.getTile().getId() == 989 || cell.getTile().getId() == 990 || cell.getTile().getId() == 991 || cell.getTile().getId() == 1020 || cell.getTile().getId() == 1021 || cell.getTile().getId() == 1022 || cell.getTile().getId() == 1023 || cell.getTile().getId() == 1024) {
+                    	this.grid[x][y] = 1;
+                    }
+                    else {
+                    	this.grid[x][y] = 0;
+                    }
+        		}
             }
         }
         printMap();
