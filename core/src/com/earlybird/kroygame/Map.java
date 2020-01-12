@@ -19,13 +19,13 @@ public class Map {
 	
 	public Map(TiledMap map) {
 		
-		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
+		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(2);
 		this.grid = new int[layer.getWidth()][layer.getHeight()]; 
 		
         for(int x = 0; x < layer.getWidth();x++){
         	for(int y = 0; y < layer.getHeight();y++){
                 TiledMapTileLayer.Cell cell = layer.getCell(x,y);
-                if (cell.getTile().getId() == 3) {
+                if (cell.getTile().getId() == 3) { //924 || 925 || 956 || 957 || 958 || 959 || 988 || 989 || 990 || 991 || 1020 || 1021 || 1022 || 1023
                 	this.grid[x][y] = 1;
                 }
                 else {

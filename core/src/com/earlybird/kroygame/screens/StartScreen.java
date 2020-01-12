@@ -61,11 +61,13 @@ public class StartScreen implements Screen {
 		}
 		
 		if (optionsButton.isPressed() == true) {							//Action to take when optionsButton is pressed
-			System.out.print("Options Pressed"+"\n");							
+			System.out.print("Options Pressed"+"\n");
+			Gdx.app.exit();
 		}
 		
 		if (quitButton.isPressed() == true) {								//Action to take when quitButton is pressed
 			System.out.print("Quit Pressed"+"\n");
+			Gdx.app.exit();
 		}
 	}
 
