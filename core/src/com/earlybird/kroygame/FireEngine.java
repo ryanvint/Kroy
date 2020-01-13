@@ -27,7 +27,8 @@ public class FireEngine extends Unit {
 	}
 	
 	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {
-		if(this.getX()>=bottomLeft.x && this.getX()<=topRight.x && this.getY()>=bottomLeft.y && this.getY()<=topRight.y) {
+		Vector2 currentLocation = new Vector2(this.localToStageCoordinates(new Vector2(0,0)));
+		if(currentLocation.x>=bottomLeft.x && currentLocation.x<=topRight.x && currentLocation.y>=bottomLeft.y && currentLocation.y<=topRight.y) {
 			return true;
 		}
 		return false;
@@ -80,6 +81,13 @@ public class FireEngine extends Unit {
 		return true;
 	}
 
+	public boolean isInFireStationRange(FireStation station) {
+		if(this.isEngineinRange(new Vector2(station.getX(),station.getY()-32), new Vector2(station.getX()+96,station.getY()))) {
+			return true;
+		}
+		return false;
+	}
+	
 	//Getters and Setters
 	
 	public void setCurrentTarget(Fortress fortress) {

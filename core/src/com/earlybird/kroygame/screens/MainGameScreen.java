@@ -46,6 +46,7 @@ public class MainGameScreen extends DefaultScreen {
 	private Engines engines; //Used to group all fire engines
 	private Engines selectedEngines; //Allows user to select more than one engine at a time
 	private Fortresses fortresses;
+	private FireStation firestation;
 	
 	private TextButton pauseButton, quitButton;
 	private TextField menuTitle, scoreTitle, engineTitle, shopTitle;
@@ -132,7 +133,7 @@ public class MainGameScreen extends DefaultScreen {
 	}
 	
 	public void addFireStation(int xTilePos, int yTilePos) { //Renders a Firestation at a specified XY location with a Texture allocated with in Resources.jv
-		FireStation firestation = new FireStation(game.res.firestation);
+		firestation = new FireStation(game.res.firestation);
 		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(firestation);
 	}
@@ -158,9 +159,17 @@ public class MainGameScreen extends DefaultScreen {
 		//check between units so they stop in adjacent tiles
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
-		for(int i=0; i<fortresses.getChildren().size; i++) {
-			for(int j=0; j<engines.getChildren().size; j++) {
-				
+		
+		//Checks if all fireEngines in engines and selectedEngines are in range of fireStation
+		//if so it refills them
+		for(int i=0; i<engines.getChildren().size; i++) {
+			if(engines.getFireEngine(i).isInFireStationRange(firestation)) {
+				firestation.refillEngine(engines.getFireEngine(i));
+			}
+		}
+		for(int i=0; i<selectedEngines.getChildren().size; i++) {
+			if(selectedEngines.getFireEngine(i).isInFireStationRange(firestation)) {
+				firestation.refillEngine(selectedEngines.getFireEngine(i));
 			}
 		}
 		
