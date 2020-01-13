@@ -242,6 +242,11 @@ public class MainGameScreen extends DefaultScreen {
 			deselectEngines();
 			write("Deselected");
 			return true;
+		case Keys.X:
+			for(int i=0; i<selectedEngines.getChildren().size;i++) {
+				selectedEngines.getFireEngine(i).setCurrentTarget(null);
+			}
+			return true;
 		case Keys.ESCAPE:
 			Gdx.app.exit();
 	    }
@@ -298,13 +303,7 @@ public class MainGameScreen extends DefaultScreen {
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
 						FireEngine thisFireEngine = selectedEngines.getFireEngine(i);
-						Vector2 bottomLeft = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
-						Vector2 topRight = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
-							if(Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY())) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY())) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()+96)) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY()+96))){
-								thisFireEngine.attackFortress(thisFortress);
-								System.out.println(thisFortress.getCurrentHealth());
-								//System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
-							}
+						thisFireEngine.setCurrentTarget(thisFortress);
 						}	
 					}
 				}
