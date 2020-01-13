@@ -31,6 +31,7 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
+import com.earlybird.kroygame.Utils;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
@@ -148,21 +149,6 @@ public class MainGameScreen extends DefaultScreen {
 		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
-	}
-	
-	public Fortress getFortress(Vector2 point) {
-		for(int i=0; i<fortresses.getChildren().size; i++) {
-			Fortress thisFortress = (Fortress) fortresses.getChild(i);
-			if(point != null) {
-				Vector2 bottomLeft = new Vector2(thisFortress.getX(),thisFortress.getY());
-				Vector2 topRight = new Vector2(thisFortress.getX() + 96, thisFortress.getY() + 96);
-				if(isBetween(bottomLeft,topRight,point)) {
-					return thisFortress;
-				}
-			}
-		}
-		
-		return null;
 	}
 	
 	public void update(float delta) {
@@ -306,15 +292,15 @@ public class MainGameScreen extends DefaultScreen {
 //						------------
 					}
 				}
-				else if(getFortress(this.firstTouch)!=null) {
+				else if(fortresses.getFortress(this.firstTouch)!=null) {
 					//Check if selected firetrucks are in range of attacking 
-					Fortress thisFortress = getFortress(this.firstTouch);
+					Fortress thisFortress = fortresses.getFortress(this.firstTouch);
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
 						FireEngine thisFireEngine = selectedEngines.getFireEngine(i);
 						Vector2 bottomLeft = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
 						Vector2 topRight = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
-							if(isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY())) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY())) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()+96)) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY()+96))){
+							if(Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY())) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY())) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()+96)) || Utils.isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY()+96))){
 								thisFireEngine.attackFortress(thisFortress);
 								System.out.println(thisFortress.getCurrentHealth());
 								//System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
@@ -354,34 +340,6 @@ public class MainGameScreen extends DefaultScreen {
 		return super.scrolled(amount);
 	}
 	
-//	is point 3 between point 1 and 2?
-	private boolean isBetween(Vector2 point1, Vector2 point2, Vector2 point3) {
-		Vector2 big = new Vector2(0, 0);
-		Vector2 small = new Vector2(0, 0);
-		if (point1.x < point2.x) {
-			big.x = point2.x;
-			small.x = point1.x;
-		}
-		else {
-			big.x = point1.x;
-			small.x = point2.x;
-		}
-		if (point1.y < point2.y) {
-			big.y = point2.y;
-			small.y = point1.y;
-		}
-		else {
-			big.y = point1.y;
-			small.y = point2.y;
-		}
-		if (point3.x > small.x & point3.x < big.x
-				& point3.y > small.y & point3.y < big.y) {
-			return true;
-			}
-		else {
-			return false;
-		}
-	}
 	//to save time when debugging
 	private void write(String text) {
 		System.out.println(text);
@@ -400,7 +358,7 @@ public class MainGameScreen extends DefaultScreen {
 		for (int i = 0, n = children.size; i < n; i++) {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
-			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
+			if (Utils.isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
 				write("Engine selected");
 				//switch texture
 				Engine thisEngine = (Engine) child;
