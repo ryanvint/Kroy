@@ -11,12 +11,17 @@ public class Fortress extends Entity{
 	public Fortress(TextureRegion texture) {
 		this.texture = texture;
 		hasBoss = false;
+		this.healthBar.setWidth(96);
 	}
 	
 	public Fortress(TextureRegion texture, boolean hasBoss) {
 		super();
 		this.texture = texture;
 		this.hasBoss = hasBoss;
+	}
+	
+	public void attackEngine(FireEngine engine) {
+		engine.changeHealth(-this.getDamage());
 	}
 
 	//Getters and setters

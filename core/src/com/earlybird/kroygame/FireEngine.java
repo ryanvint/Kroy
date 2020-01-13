@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class FireEngine extends Unit {
 	
-	private int currentVolume, maxVolume; //Used for water statbars
+	private int currentVolume, maxVolume, waterRate; //Used for water statbars
 	public boolean isRefilling, isSelected; //Status variables
 	public StatBar waterBar; //Used to create the stat bar
 	
@@ -18,6 +18,7 @@ public class FireEngine extends Unit {
 		this.texture = texture;
 		currentVolume = 100;
 		maxVolume = 100;
+		waterRate = 20;
 		isRefilling = false;
 		isSelected = false;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
@@ -29,8 +30,33 @@ public class FireEngine extends Unit {
 		}
 		return false;
 	}
+	
+	public void changeWater(int change) {
+		this.setCurrentVolume(this.getCurrentVolume() + change);
+		if(this.getCurrentVolume()<0) {
+			this.setCurrentVolume(0);
+		}
+		else if(this.getCurrentVolume()>this.getMaxVolume()) {
+			this.setCurrentVolume(this.getMaxVolume());
+		}
+	}
+	
+	public void attackFortress(Fortress fortress) {
+		if(fortress.getCurrentHealth()>0 && this.getCurrentVolume()>0) {
+			this.changeWater(-this.getWaterRate());
+			fortress.changeHealth(-this.getDamage());
+		}
+	}
 
 	//Getters and Setters
+	
+	public void setWaterRate(int rate) {
+		this.waterRate = rate;
+	}
+	
+	public int getWaterRate() {
+		return this.waterRate;
+	}
 	
 	public void setTexture(TextureRegion texture) {
 		this.texture = texture;

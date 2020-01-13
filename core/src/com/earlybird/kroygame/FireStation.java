@@ -17,6 +17,11 @@ public class FireStation extends Entity {
 		this.refillRate = 10;
 	}
 	
+	public void refillEngine(FireEngine engine) {
+		engine.changeHealth(refillRate);
+		engine.changeWater(refillRate);
+	}
+	
 	//getters and setters
 	
 	public int getCurrentRefilling() {

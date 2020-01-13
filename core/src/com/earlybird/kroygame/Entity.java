@@ -40,9 +40,19 @@ public abstract class Entity extends Actor{
 	public Entity() {	////Constructor to instantiate Entity
 		currentHealth = 100;
 		maxHealth = 100;
-		range = 400;
+		range = 32*5;
 		damage = 10;
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+	}
+	
+	public void changeHealth(int change) {
+		this.setCurrentHealth(this.getCurrentHealth() + change);
+		if(this.getCurrentHealth()<0) {
+			this.setCurrentHealth(0);
+		}
+		else if(this.getCurrentHealth()>this.getMaxHealth()) {
+			this.setCurrentHealth(this.getMaxHealth());
+		}
 	}
 	
 	//Getters and Setters

@@ -125,6 +125,8 @@ public class MainGameScreen extends DefaultScreen {
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
 		fortress.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		gameStage.addActor(fortress.getHealthBar());
+		fortress.getHealthBar().setPosition(fortress.getX()+5, fortress.getY()+106);
 		fortresses.addActor(fortress);
 	}
 	
@@ -140,21 +142,12 @@ public class MainGameScreen extends DefaultScreen {
 		Engine engine = new Engine();
 		FireEngine fireEngine = new FireEngine(game.res.firetruck);
 		engine.addActor(fireEngine);
-		engine.addActor(fireEngine.healthBar);
-		engine.addActor(fireEngine.waterBar);
+		engine.addActor(fireEngine.getHealthBar());
+		engine.addActor(fireEngine.getWaterBar());
 		engine.getChild(1).setPosition(-4, -7);
 		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
-	}
-	
-	public void attackFortress(Fortress fortress, FireEngine engine) {
-		if(fortress.getX() >= engine.getX()-engine.getRange() && fortress.getX()<=engine.getX()+engine.getRange() && fortress.getY()>=engine.getY()-engine.getRange() && fortress.getY()<=engine.getY()+engine.getRange()) {
-			if(engine.getCurrentHealth()!=0) {
-				engine.setCurrentVolume(engine.getCurrentVolume()-engine.getDamage());
-				fortress.setCurrentHealth(fortress.getCurrentHealth()-engine.getDamage());
-			}
-		}
 	}
 	
 	public Fortress getFortress(Vector2 point) {
@@ -179,6 +172,12 @@ public class MainGameScreen extends DefaultScreen {
 		//check between units so they stop in adjacent tiles
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
+		for(int i=0; i<fortresses.getChildren().size; i++) {
+			for(int j=0; j<engines.getChildren().size; j++) {
+				
+			}
+		}
+		
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
 	}
@@ -312,14 +311,13 @@ public class MainGameScreen extends DefaultScreen {
 					Fortress thisFortress = getFortress(this.firstTouch);
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
-						Engine thisEngine = (Engine) selectedEngines.getChild(i);
-						FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-						Vector2 bottomLeft = new Vector2(thisFireEngine.getX()-thisFireEngine.getRange(),thisFireEngine.getY()-thisFireEngine.getRange());
-						Vector2 topRight = new Vector2(thisFireEngine.getX()+thisFireEngine.getRange(),thisFireEngine.getY()+thisFireEngine.getRange());
-							//ERROR: ONLY CHECKS FOR BOTTOM LEFT POINT OF FORTRESS IN RANGE
-							if(isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()))){
-								attackFortress(thisFortress, thisFireEngine);
-								System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
+						FireEngine thisFireEngine = selectedEngines.getFireEngine(i);
+						Vector2 bottomLeft = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
+						Vector2 topRight = new Vector2(thisFireEngine.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(thisFireEngine.getRange(), thisFireEngine.getRange())));
+							if(isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY())) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY())) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()+96)) || isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX()+96, thisFortress.getY()+96))){
+								thisFireEngine.attackFortress(thisFortress);
+								System.out.println(thisFortress.getCurrentHealth());
+								//System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
 							}
 						}	
 					}
@@ -336,7 +334,7 @@ public class MainGameScreen extends DefaultScreen {
 		}
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
-
+	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		lastTouch = new Vector2(screenX, Gdx.graphics.getHeight()- screenY);
