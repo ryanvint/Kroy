@@ -31,6 +31,7 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
+import com.earlybird.kroygame.Unit;
 import com.earlybird.kroygame.Utils;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
@@ -153,6 +154,10 @@ public class MainGameScreen extends DefaultScreen {
 	}
 	
 	public void update(float delta) {
+		
+		setLastPostions(this.engines);
+		setLastPostions(this.selectedEngines);
+		
 		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
 		//check between enemies and enemies for junction halting
 		//check between engines and engines for junction halting
@@ -175,8 +180,55 @@ public class MainGameScreen extends DefaultScreen {
 		
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
+		
+		if (this.engines.hasChildren() == true) {
+			for (Actor a : this.engines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
+				if (d != -1) {
+					u.setDir(d);
+				}
+			}
+		}
+		if (this.selectedEngines.hasChildren() == true) {
+			for (Actor a : this.selectedEngines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
+				if (d != -1) {
+					u.setDir(d);
+				}
+			}
+		}
 	}
 	
+	private void setLastPostions(Engines engines) {
+		if (engines.hasChildren() == true) {
+			for (Actor a : engines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				u.setLastPos(u.localToStageCoordinates(new Vector2(0,0)));
+			}
+		}
+	}
+	
+	private int findDir(Vector2 a, Vector2 b) {
+		if (b.y > a.y) {
+			return 0;
+		}
+		if (b.x < a.x) {
+			return 1;
+		}
+		if (b.y < a.y) {
+			return 2;
+		}
+		if (b.x > a.x) {
+			return 3;
+		}
+		return -1;
+	}
+
 	@Override
 	public void render(float delta)
 	{
