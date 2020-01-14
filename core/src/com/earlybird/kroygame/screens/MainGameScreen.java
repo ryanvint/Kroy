@@ -181,26 +181,8 @@ public class MainGameScreen extends DefaultScreen {
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
 		
-		if (this.engines.hasChildren() == true) {
-			for (Actor a : this.engines.getChildren()) {
-				Engine e = (Engine) a;
-				Unit u = (Unit) e.getChild(0);
-				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
-				if (d != -1) {
-					u.setDir(d);
-				}
-			}
-		}
-		if (this.selectedEngines.hasChildren() == true) {
-			for (Actor a : this.selectedEngines.getChildren()) {
-				Engine e = (Engine) a;
-				Unit u = (Unit) e.getChild(0);
-				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
-				if (d != -1) {
-					u.setDir(d);
-				}
-			}
-		}
+		updateDir(this.engines);
+		updateDir(this.selectedEngines);
 	}
 	
 	private void setLastPostions(Engines engines) {
@@ -209,6 +191,18 @@ public class MainGameScreen extends DefaultScreen {
 				Engine e = (Engine) a;
 				Unit u = (Unit) e.getChild(0);
 				u.setLastPos(u.localToStageCoordinates(new Vector2(0,0)));
+			}
+		}
+	}
+	private void updateDir(Engines engines) {
+		if (engines.hasChildren() == true) {
+			for (Actor a : engines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
+				if (d != -1) {
+					u.setDir(d);
+				}
 			}
 		}
 	}
