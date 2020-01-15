@@ -316,6 +316,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFortress(18,17,game.res.fortress1);
 		addFortress(42,12,game.res.fortress2);
 		addFortress(42,20,game.res.fortress3);
+		addFortress(4,12,game.res.fortress3);
+		addFortress(3,7,game.res.fortress1);
+		addFortress(5,17,game.res.fortress1);
 		addFireStation(42,3);
 
 		
