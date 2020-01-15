@@ -6,6 +6,8 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,9 +21,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.Engines;
@@ -35,7 +40,7 @@ import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
 
-public class MainGameScreen extends DefaultScreen {
+public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	
 	public static final int scrWidth = 52 * Resources.TILE_SIZE;
 	public static final int scrHeight = 30 * Resources.TILE_SIZE;
@@ -48,16 +53,25 @@ public class MainGameScreen extends DefaultScreen {
 	
 	private TextButton pauseButton, quitButton;
 	private TextField menuTitle, scoreTitle, engineTitle, shopTitle;
-	public Skin skin;
+	private Button engineOne, engineTwo, engineThree;
+	private Label score, nOne, nTwo, nThree;
+	private Boolean paused;
+	
+	public Skin skin, engineSkin;
 	
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
 	private OrthographicCamera camera;
 	private Map roadmap;
+	private InputMultiplexer multiplexer;
+	
 	
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
+	public boolean b1Selected = false;
+	public boolean b2Selected = false;
+	public boolean b3Selected = false;
 	boolean click;
 	
 	
@@ -70,11 +84,16 @@ public class MainGameScreen extends DefaultScreen {
 		gameStage = new Stage(viewport);
 		userInterface = new Stage(viewport);
 		
+		multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(gameStage);
+		multiplexer.addProcessor(this);
+		
+		
 	}
 	
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(multiplexer);
 		selectionbox = new Texture("badlogic.jpg"); //Do we still need this?
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
@@ -85,32 +104,212 @@ public class MainGameScreen extends DefaultScreen {
 		roadmap = new Map(this.map);
 		
 		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		quitButton = new TextButton("Quit", skin, "default");
-		pauseButton = new TextButton("Pause", skin, "default");
+		
+		
+		quitButton = new TextButton("Quit", skin, "default"); //Initiates all buttons and labels
+		pauseButton = new TextButton("Pause", skin, "default"); //applys all styles and strings
 		menuTitle = new TextField("Menu", skin, "default");
 		scoreTitle = new TextField("Score", skin, "default");
 		engineTitle = new TextField("Engines", skin, "default");
 		shopTitle = new TextField("Shop", skin, "default");
-		quitButton.setBounds(1550, 870, 100f, 20f);
-		pauseButton.setBounds(1550, 900, 100f, 20f);
-		menuTitle.setBounds(1550, 930, 100f, 20f);
+		engineOne = new Button(skin, "default");
+		engineTwo = new Button(skin, "default");
+		engineThree = new Button(skin, "default");
+		score = new Label("00000", skin, "default");
+		nOne = new Label("No.1", skin, "default");
+		nTwo = new Label("No.2", skin, "default");
+		nThree = new Label("No.3", skin, "default");
+		
+		quitButton.setBounds(1550, 900, 100f, 20f); //Set location for all buttons and label and well
+		//pauseButton.setBounds(1550, 900, 100f, 20f); //as putting buttons to correct size ie scaling
+		menuTitle.setBounds(1550, 930, 100f, 20f); //them
 		scoreTitle.setBounds(1550, 810, 100f, 20f);
+		score.setBounds(1550, 780, 100f, 20f);
 		shopTitle.setBounds(1550, 250, 100f, 20f);
 		engineTitle.setBounds(1550, 720, 100f, 20f);
+		nOne.setBounds(1550, 690, 100f, 20f);
+		engineOne.setBounds(1550, 610, 80f, 80f);
+		nTwo.setBounds(1550, 560, 100f, 20f);
+		engineTwo.setBounds(1550, 480, 80f, 80f);
+		nThree.setBounds(1550, 430, 100f, 20f);
+		engineThree.setBounds(1550, 350, 80f, 80f);
 		
-		userInterface.addActor(pauseButton);
-		userInterface.addActor(quitButton);
-		userInterface.addActor(menuTitle);
-		userInterface.addActor(scoreTitle);
-		userInterface.addActor(engineTitle);
-		userInterface.addActor(shopTitle);
+		//gameStage.addActor(pauseButton);
+		gameStage.addActor(quitButton); //Adds the buttons and labels to the gamestage
+		gameStage.addActor(menuTitle);
+		gameStage.addActor(scoreTitle);
+		gameStage.addActor(score);
+		gameStage.addActor(engineTitle);
+		gameStage.addActor(shopTitle);
+		gameStage.addActor(nOne);
+		gameStage.addActor(engineOne);
+		gameStage.addActor(nTwo);
+		gameStage.addActor(engineTwo);		
+		gameStage.addActor(nThree);
+		gameStage.addActor(engineThree);
+		
+		quitButton.addListener(new InputListener(){ //Listens for any input on the quit Button and executes accordingly
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Press Up");
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            	Gdx.app.exit();             
+            	return true;
+            }
+		});
+		
+		pauseButton.addListener(new InputListener(){ //Listens for any input on the pause Button and executes accordingly
+            @Override //Currently not implemented correctly
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Press Up");
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            	if (paused == true) {
+                	game.resume();
+                	pauseButton.setName("Pause");
+                	paused = false;
+                } else {
+                	game.pause();
+                	pauseButton.setName("Continue");
+                	paused = true;
+                }               
+            	return true;
+            }
+		});
+		
+		engineOne.addListener(new InputListener(){ //Listens for any input on the engine no.1 button and executes accordingly
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+               
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) { 
+            	if (b1Selected) {
+            		for (int i = 0; i<=2; i++) {
+                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                		int var = thisFireEngine.getiD();
+                		if (var == 1) {
+                			thisFireEngine.setTexture(game.res.firetruck);
+                			engines.addActor(selectedEngines.getChild(i));
+                			b1Selected = false;
+                			break;
+                		} else {
+                			continue;
+                		}
+                	}
+            	} else {
+            		for (int i = 0; i<=2; i++) {
+            			Engine thisEngine = (Engine)engines.getChild(i);
+            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+            			int var = thisFireEngine.getiD();
+            			if (var == 1) {
+            				thisFireEngine.setTexture(game.res.firetruckSelected);
+            				selectedEngines.addActor(engines.getChild(i));
+            				b1Selected = true;
+            				break;
+            			} else {
+            				continue;
+            			}
+            			}
+            	}
+            return true;       
+		}
+            
+		});
+		
+		engineTwo.addListener(new InputListener(){ //Listens for any input on the engine no.2 button and executes accordingly
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Press Up");
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            	if (b2Selected) {
+            		for (int i = 0; i<=2; i++) {
+                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                		int var = thisFireEngine.getiD();
+                		if (var == 2) {
+                			thisFireEngine.setTexture(game.res.firetruck);
+                			engines.addActor(selectedEngines.getChild(i));
+                			b2Selected = false;
+                			break;
+                		} else {
+                			continue;
+                		}
+                	}
+            	} else {
+            		for (int i = 0; i<=2; i++) {
+            			Engine thisEngine = (Engine)engines.getChild(i);
+            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+            			int var = thisFireEngine.getiD();
+            			if (var == 2) {
+            				thisFireEngine.setTexture(game.res.firetruckSelected);
+            				selectedEngines.addActor(engines.getChild(i));
+            				b2Selected = true;
+            				break;
+            			} else {
+            				continue;
+            			}
+            			}
+            	}
+            return true;       
+		}
+		});
+		
+		engineThree.addListener(new InputListener(){ //Listens for any input on the engine no.3 button and executes accordingly
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("Press Up");
+            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            	if (b3Selected) {
+            		for (int i = 0; i<=2; i++) {
+                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                		int var = thisFireEngine.getiD();
+                		if (var == 3) {
+                			thisFireEngine.setTexture(game.res.firetruck);
+                			engines.addActor(selectedEngines.getChild(i));
+                			b3Selected = false;
+                			break;
+                		} else {
+                			continue;
+                		}
+                	}
+            	} else {
+            		for (int i = 0; i<=2; i++) {
+            			Engine thisEngine = (Engine)engines.getChild(i);
+            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+            			int var = thisFireEngine.getiD();
+            			if (var == 3) {
+            				thisFireEngine.setTexture(game.res.firetruckSelected);
+            				selectedEngines.addActor(engines.getChild(i));
+            				b3Selected = true;
+            				break;
+            			} else {
+            				continue;
+            			}
+            			}
+            	}
+            return true;       
+		}            
+            
+		});
+		
 		
 		engines = new Engines();
 		selectedEngines= new Engines();
 		fortresses = new Fortresses();
 		
-		addFireTruck(42,2);
-		addFireTruck(46,2);
+		addFireTruck(42,2,2);
+		addFireTruck(46,2,3);
+		addFireTruck(38,2,1);
 		
 		addFortress(18,17,game.res.fortress1);
 		addFireStation(42,3);
@@ -136,9 +335,9 @@ public class MainGameScreen extends DefaultScreen {
 	
 	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
 	//Then adds this fireEngine to the Engines group
-	public void addFireTruck(int xTilePos, int yTilePos) {
+	public void addFireTruck(int xTilePos, int yTilePos, int iD) {
 		Engine engine = new Engine();
-		FireEngine fireEngine = new FireEngine(game.res.firetruck);
+		FireEngine fireEngine = new FireEngine(game.res.firetruck, iD);
 		engine.addActor(fireEngine);
 		engine.addActor(fireEngine.healthBar);
 		engine.addActor(fireEngine.waterBar);
@@ -179,13 +378,15 @@ public class MainGameScreen extends DefaultScreen {
 		//check between units so they stop in adjacent tiles
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
+		
 		gameStage.act(delta);
-		userInterface.act(Gdx.graphics.getDeltaTime());
+		userInterface.act(delta);
 	}
 	
 	@Override
-	public void render(float delta)
-	{
+	public void render(float delta) {
+		
+		
 		if (click == true) {
 			delta = 0;
 		}
@@ -203,12 +404,10 @@ public class MainGameScreen extends DefaultScreen {
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
 		gameStage.draw();
-		userInterface.draw();
+		//userInterface.draw();
 		
-		if (pauseButton.isPressed() == true) {
-			click = true;
-		}  
 	}
+		
 	
 	@Override
 	public void resize(int width, int height) {

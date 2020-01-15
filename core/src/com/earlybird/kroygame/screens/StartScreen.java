@@ -4,9 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-
+import com.badlogic.gdx.utils.SnapshotArray;
+import com.earlybird.kroygame.Engine;
+import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.Kroy;
 
 //implements the Screen class
@@ -45,6 +49,7 @@ public class StartScreen implements Screen {
 			stage.addActor(button);											//Adding the current button to the stage
 			spacing += 25f;													//Spacing incremeneted value
 		}
+	
 		
 	}
 
@@ -62,7 +67,7 @@ public class StartScreen implements Screen {
 		
 		if (optionsButton.isPressed() == true) {							//Action to take when optionsButton is pressed
 			System.out.print("Options Pressed"+"\n");
-			Gdx.app.exit();
+			///Gdx.app.exit();
 		}
 		
 		if (quitButton.isPressed() == true) {								//Action to take when quitButton is pressed
@@ -100,5 +105,6 @@ public class StartScreen implements Screen {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

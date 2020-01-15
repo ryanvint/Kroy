@@ -11,10 +11,12 @@ public class FireEngine extends Unit {
 	private int currentVolume, maxVolume; //Used for water statbars
 	public boolean isRefilling, isSelected; //Status variables
 	public StatBar waterBar; //Used to create the stat bar
+	private int iD;
 	
 	
-	public FireEngine(TextureRegion texture) { //Instantiates a fire engine
+	public FireEngine(TextureRegion texture, int iD) { //Instantiates a fire engine
 		super();
+		this.iD = iD;
 		this.texture = texture;
 		currentVolume = 100;
 		maxVolume = 100;
@@ -42,6 +44,10 @@ public class FireEngine extends Unit {
 
 	public int getCurrentVolume() {
 		return currentVolume;
+	}
+	
+	public int getiD() {
+		return iD;
 	}
 
 
