@@ -190,21 +190,21 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) { 
-            	if (b1Selected) {
-            		for (int i = 0; i<=2; i++) {
-                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                		int var = thisFireEngine.getiD();
-                		if (var == 1) {
-                			thisFireEngine.setTexture(game.res.firetruck);
-                			engines.addActor(selectedEngines.getChild(i));
-                			b1Selected = false;
-                			break;
-                		} else {
-                			continue;
-                		}
-                	}
-            	} else {
+            	//if (b1Selected) {
+            	//	for (int i = 0; i<=2; i++) {
+                //		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                //		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                //		int var = thisFireEngine.getiD();
+                //		if (var == 1) {
+                //			thisFireEngine.setTexture(game.res.firetruck);
+                //			engines.addActor(selectedEngines.getChild(i));
+                //			b1Selected = false;
+                //			break;
+                //		} else {
+               // 			continue;
+                //		}
+                //	}
+            	//} else {
             		for (int i = 0; i<=2; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
@@ -212,13 +212,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             			if (var == 1) {
             				thisFireEngine.setTexture(game.res.firetruckSelected);
             				selectedEngines.addActor(engines.getChild(i));
-            				b1Selected = true;
+            				//b1Selected = true;
             				break;
             			} else {
             				continue;
             			}
             			}
-            	}
+            	//}
             return true;       
 		}
             
@@ -231,21 +231,21 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	if (b2Selected) {
-            		for (int i = 0; i<=2; i++) {
-                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                		int var = thisFireEngine.getiD();
-                		if (var == 2) {
-                			thisFireEngine.setTexture(game.res.firetruck);
-                			engines.addActor(selectedEngines.getChild(i));
-                			b2Selected = false;
-                			break;
-                		} else {
-                			continue;
-                		}
-                	}
-            	} else {
+            	//if (b2Selected) {
+            	//	for (int i = 0; i<=2; i++) {
+                //		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                //		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                //		int var = thisFireEngine.getiD();
+                //		if (var == 2) {
+                //			thisFireEngine.setTexture(game.res.firetruck);
+                //			engines.addActor(selectedEngines.getChild(i));
+                //			b2Selected = false;
+                //			break;
+                //		} else {
+                //			continue;
+                //		}
+                //	}
+            	//} else {
             		for (int i = 0; i<=2; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
@@ -253,13 +253,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             			if (var == 2) {
             				thisFireEngine.setTexture(game.res.firetruckSelected);
             				selectedEngines.addActor(engines.getChild(i));
-            				b2Selected = true;
+            				//b2Selected = true;
             				break;
             			} else {
             				continue;
             			}
             			}
-            	}
+            	//}
             return true;       
 		}
 		});
@@ -271,21 +271,21 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	if (b3Selected) {
-            		for (int i = 0; i<=2; i++) {
-                		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                		int var = thisFireEngine.getiD();
-                		if (var == 3) {
-                			thisFireEngine.setTexture(game.res.firetruck);
-                			engines.addActor(selectedEngines.getChild(i));
-                			b3Selected = false;
-                			break;
-                		} else {
-                			continue;
-                		}
-                	}
-            	} else {
+            	//if (b3Selected) {
+            	//	for (int i = 0; i<=2; i++) {
+                //		Engine thisEngine = (Engine)selectedEngines.getChild(i);
+                //		FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+                //		int var = thisFireEngine.getiD();
+                //		if (var == 3) {
+                //			thisFireEngine.setTexture(game.res.firetruck);
+                //			engines.addActor(selectedEngines.getChild(i));
+                //			b3Selected = false;
+                //			break;
+                //		} else {
+                //			continue;
+                //		}
+                //	}
+            	//} else {
             		for (int i = 0; i<=2; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
@@ -293,13 +293,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             			if (var == 3) {
             				thisFireEngine.setTexture(game.res.firetruckSelected);
             				selectedEngines.addActor(engines.getChild(i));
-            				b3Selected = true;
+            				//b3Selected = true;
             				break;
             			} else {
             				continue;
             			}
             			}
-            	}
+            	//}
             return true;       
 		}            
             
