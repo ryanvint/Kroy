@@ -11,11 +11,9 @@ public class FireEngine extends Unit {
 	private int currentVolume, maxVolume, waterRate; //Used for water statbars
 	public boolean isRefilling, isSelected; //Status variables
 	public StatBar waterBar; //Used to create the stat bar
-<<<<<<< HEAD
 	private int iD;
-=======
 	private Fortress currentTarget;
->>>>>>> 9ad8e83bc805d0dddbd7f3e5aa653f1e97df0d28
+
 	
 	
 	public FireEngine(TextureRegion texture, int iD) { //Instantiates a fire engine

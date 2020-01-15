@@ -364,10 +364,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
 		
-<<<<<<< HEAD
+
 		gameStage.act(delta);
 		userInterface.act(delta);
-=======
+
 		//Checks if all fireEngines in engines and selectedEngines are in range of fireStation
 		//if so it refills them
 		for(int i=0; i<engines.getChildren().size; i++) {
@@ -408,7 +408,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 				}
 			}
 		}
->>>>>>> 9ad8e83bc805d0dddbd7f3e5aa653f1e97df0d28
+
 	}
 	
 	private int findDir(Vector2 a, Vector2 b) {
