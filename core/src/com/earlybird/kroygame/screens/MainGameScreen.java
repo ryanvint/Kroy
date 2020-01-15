@@ -314,6 +314,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		
 		
 		addFortress(18,17,game.res.fortress1);
+		addFortress(42,12,game.res.fortress2);
+		addFortress(42,20,game.res.fortress3);
 		addFireStation(42,3);
 
 		
@@ -326,15 +328,15 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 
 	public boolean checkInEngines(int x) {
 		for (int i = 0; i<engines.getChildren().size; i++) {
-            	Engine thisEngine = (Engine)engines.getChild(i);
-            	FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-            	int var = thisFireEngine.getiD();
-            	if (var == x) {
-            		return true;
-            	} else {
-            		continue;
-            	}
-            }
+        	Engine thisEngine = (Engine)engines.getChild(i);
+        	FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+        	int var = thisFireEngine.getiD();
+        	if (var == x) {
+        		return true;
+        	} else {
+        		continue;
+        	}
+        }
 		return false;
 	}
 
