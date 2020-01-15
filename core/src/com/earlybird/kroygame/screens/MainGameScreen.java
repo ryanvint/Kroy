@@ -36,6 +36,8 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
+import com.earlybird.kroygame.Unit;
+import com.earlybird.kroygame.Utils;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
@@ -50,6 +52,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private Engines engines; //Used to group all fire engines
 	private Engines selectedEngines; //Allows user to select more than one engine at a time
 	private Fortresses fortresses;
+	private FireStation firestation;
 	
 	private TextButton pauseButton, quitButton;
 	private TextField menuTitle, scoreTitle, engineTitle, shopTitle;
@@ -324,11 +327,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
 		fortress.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
+		gameStage.addActor(fortress.getHealthBar());
+		fortress.getHealthBar().setPosition(fortress.getX()+5, fortress.getY()+106);
 		fortresses.addActor(fortress);
 	}
 	
 	public void addFireStation(int xTilePos, int yTilePos) { //Renders a Firestation at a specified XY location with a Texture allocated with in Resources.jv
-		FireStation firestation = new FireStation(game.res.firestation);
+		firestation = new FireStation(game.res.firestation);
 		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(firestation);
 	}
@@ -339,39 +344,19 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		Engine engine = new Engine();
 		FireEngine fireEngine = new FireEngine(game.res.firetruck, iD);
 		engine.addActor(fireEngine);
-		engine.addActor(fireEngine.healthBar);
-		engine.addActor(fireEngine.waterBar);
+		engine.addActor(fireEngine.getHealthBar());
+		engine.addActor(fireEngine.getWaterBar());
 		engine.getChild(1).setPosition(-4, -7);
 		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
 	}
 	
-	public void attackFortress(Fortress fortress, FireEngine engine) {
-		if(fortress.getX() >= engine.getX()-engine.getRange() && fortress.getX()<=engine.getX()+engine.getRange() && fortress.getY()>=engine.getY()-engine.getRange() && fortress.getY()<=engine.getY()+engine.getRange()) {
-			if(engine.getCurrentHealth()!=0) {
-				engine.setCurrentVolume(engine.getCurrentVolume()-engine.getDamage());
-				fortress.setCurrentHealth(fortress.getCurrentHealth()-engine.getDamage());
-			}
-		}
-	}
-	
-	public Fortress getFortress(Vector2 point) {
-		for(int i=0; i<fortresses.getChildren().size; i++) {
-			Fortress thisFortress = (Fortress) fortresses.getChild(i);
-			if(point != null) {
-				Vector2 bottomLeft = new Vector2(thisFortress.getX(),thisFortress.getY());
-				Vector2 topRight = new Vector2(thisFortress.getX() + 96, thisFortress.getY() + 96);
-				if(isBetween(bottomLeft,topRight,point)) {
-					return thisFortress;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
 	public void update(float delta) {
+		
+		setLastPostions(this.engines);
+		setLastPostions(this.selectedEngines);
+		
 		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
 		//check between enemies and enemies for junction halting
 		//check between engines and engines for junction halting
@@ -379,10 +364,69 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		//if engine is stopped, check if its moveToLocation tile is different to its current tile
 		//if so, check next tile to see if engine can move into it (sure if this is best)
 		
+<<<<<<< HEAD
 		gameStage.act(delta);
 		userInterface.act(delta);
+=======
+		//Checks if all fireEngines in engines and selectedEngines are in range of fireStation
+		//if so it refills them
+		for(int i=0; i<engines.getChildren().size; i++) {
+			if(engines.getFireEngine(i).isInFireStationRange(firestation)) {
+				firestation.refillEngine(engines.getFireEngine(i));
+			}
+		}
+		for(int i=0; i<selectedEngines.getChildren().size; i++) {
+			if(selectedEngines.getFireEngine(i).isInFireStationRange(firestation)) {
+				firestation.refillEngine(selectedEngines.getFireEngine(i));
+			}
+		}
+		
+		gameStage.act(delta);
+		userInterface.act(Gdx.graphics.getDeltaTime());
+		
+		updateDir(this.engines);
+		updateDir(this.selectedEngines);
 	}
 	
+	private void setLastPostions(Engines engines) {
+		if (engines.hasChildren() == true) {
+			for (Actor a : engines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				u.setLastPos(u.localToStageCoordinates(new Vector2(0,0)));
+			}
+		}
+	}
+	private void updateDir(Engines engines) {
+		if (engines.hasChildren() == true) {
+			for (Actor a : engines.getChildren()) {
+				Engine e = (Engine) a;
+				Unit u = (Unit) e.getChild(0);
+				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
+				if (d != -1) {
+					u.setDir(d);
+				}
+			}
+		}
+>>>>>>> 9ad8e83bc805d0dddbd7f3e5aa653f1e97df0d28
+	}
+	
+	private int findDir(Vector2 a, Vector2 b) {
+		if (b.y > a.y) {
+			return 0;
+		}
+		if (b.x < a.x) {
+			return 1;
+		}
+		if (b.y < a.y) {
+			return 2;
+		}
+		if (b.x > a.x) {
+			return 3;
+		}
+		return -1;
+	}
+
 	@Override
 	public void render(float delta) {
 		
@@ -456,6 +500,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			deselectEngines();
 			write("Deselected");
 			return true;
+		case Keys.X:
+			for(int i=0; i<selectedEngines.getChildren().size;i++) {
+				selectedEngines.getFireEngine(i).setCurrentTarget(null);
+			}
+			return true;
 		case Keys.ESCAPE:
 			Gdx.app.exit();
 	    }
@@ -506,20 +555,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 //						------------
 					}
 				}
-				else if(getFortress(this.firstTouch)!=null) {
+				else if(fortresses.getFortress(this.firstTouch)!=null) {
 					//Check if selected firetrucks are in range of attacking 
-					Fortress thisFortress = getFortress(this.firstTouch);
+					Fortress thisFortress = fortresses.getFortress(this.firstTouch);
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
-						Engine thisEngine = (Engine) selectedEngines.getChild(i);
-						FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-						Vector2 bottomLeft = new Vector2(thisFireEngine.getX()-thisFireEngine.getRange(),thisFireEngine.getY()-thisFireEngine.getRange());
-						Vector2 topRight = new Vector2(thisFireEngine.getX()+thisFireEngine.getRange(),thisFireEngine.getY()+thisFireEngine.getRange());
-							//ERROR: ONLY CHECKS FOR BOTTOM LEFT POINT OF FORTRESS IN RANGE
-							if(isBetween(bottomLeft,topRight,new Vector2(thisFortress.getX(), thisFortress.getY()))){
-								attackFortress(thisFortress, thisFireEngine);
-								System.out.println("Fortress attacked current health: " + thisFortress.getCurrentHealth());
-							}
+						FireEngine thisFireEngine = selectedEngines.getFireEngine(i);
+						thisFireEngine.setCurrentTarget(thisFortress);
 						}	
 					}
 				}
@@ -535,7 +577,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		}
 		return super.touchUp(screenX, screenY, pointer, button);
 	}
-
+	
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		lastTouch = new Vector2(screenX, Gdx.graphics.getHeight()- screenY);
@@ -555,34 +597,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.scrolled(amount);
 	}
 	
-//	is point 3 between point 1 and 2?
-	private boolean isBetween(Vector2 point1, Vector2 point2, Vector2 point3) {
-		Vector2 big = new Vector2(0, 0);
-		Vector2 small = new Vector2(0, 0);
-		if (point1.x < point2.x) {
-			big.x = point2.x;
-			small.x = point1.x;
-		}
-		else {
-			big.x = point1.x;
-			small.x = point2.x;
-		}
-		if (point1.y < point2.y) {
-			big.y = point2.y;
-			small.y = point1.y;
-		}
-		else {
-			big.y = point1.y;
-			small.y = point2.y;
-		}
-		if (point3.x > small.x & point3.x < big.x
-				& point3.y > small.y & point3.y < big.y) {
-			return true;
-			}
-		else {
-			return false;
-		}
-	}
 	//to save time when debugging
 	private void write(String text) {
 		System.out.println(text);
@@ -601,7 +615,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		for (int i = 0, n = children.size; i < n; i++) {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
-			if (isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
+			if (Utils.isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
 				write("Engine selected");
 				//switch texture
 				Engine thisEngine = (Engine) child;

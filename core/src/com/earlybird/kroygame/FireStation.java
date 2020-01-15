@@ -1,5 +1,6 @@
 package com.earlybird.kroygame;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -14,7 +15,12 @@ public class FireStation extends Entity {
 		this.texture = texture;
 		this.currentRefilling = 0;
 		this.maxCapacity = 1;
-		this.refillRate = 10;
+		this.refillRate = 1;
+	}
+	
+	public void refillEngine(FireEngine engine) {
+		engine.changeHealth(refillRate);
+		engine.changeWater(refillRate);
 	}
 	
 	//getters and setters
