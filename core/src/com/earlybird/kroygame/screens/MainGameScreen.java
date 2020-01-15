@@ -36,6 +36,7 @@ import com.earlybird.kroygame.Fortress;
 import com.earlybird.kroygame.Kroy;
 import com.earlybird.kroygame.Map;
 import com.earlybird.kroygame.Resources;
+import com.earlybird.kroygame.StatBar;
 import com.earlybird.kroygame.Unit;
 import com.earlybird.kroygame.Utils;
 import com.earlybird.kroygame.Engine;
@@ -186,7 +187,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engineOne.addListener(new InputListener(){ //Listens for any input on the engine no.1 button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-               
+            	System.out.println("Press Up");
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) { 
@@ -205,7 +206,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
                 //		}
                 //	}
             	//} else {
-            		for (int i = 0; i<=2; i++) {
+            		for (int i = 0; i<engines.getChildren().size; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
             			int var = thisFireEngine.getiD();
@@ -217,7 +218,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             			} else {
             				continue;
             			}
-            			}
+            		}
             	//}
             return true;       
 		}
@@ -246,7 +247,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
                 //		}
                 //	}
             	//} else {
-            		for (int i = 0; i<=2; i++) {
+            		for (int i = 0; i<selectedEngines.getChildren().size; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
             			int var = thisFireEngine.getiD();
@@ -286,7 +287,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
                 //		}
                 //	}
             	//} else {
-            		for (int i = 0; i<=2; i++) {
+            		for (int i = 0; i<selectedEngines.getChildren().size; i++) {
             			Engine thisEngine = (Engine)engines.getChild(i);
             			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
             			int var = thisFireEngine.getiD();
@@ -314,6 +315,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFireTruck(46,2,3);
 		addFireTruck(38,2,1);
 		
+		addHealthBar(1);
+		
+		
 		addFortress(18,17,game.res.fortress1);
 		addFireStation(42,3);
 
@@ -321,6 +325,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
 		gameStage.addActor(fortresses);
+		
 		
 	}
 
@@ -336,6 +341,21 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		firestation = new FireStation(game.res.firestation);
 		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(firestation);
+	}
+	
+	public void addHealthBar(int number) {
+		for(int i = 0; i <= 2; i++) {
+			Engine thisEngine = (Engine)engines.getChild(i);
+			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
+			int var = thisFireEngine.getiD();
+			if (var == number) {
+				StatBar copy = thisFireEngine.getHealthBar();
+				//copy.setPosition(500, 1);;
+				break;
+			} else {
+				continue;
+			}
+		}
 	}
 	
 	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
