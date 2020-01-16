@@ -1,7 +1,9 @@
 package com.earlybird.kroygame.screens;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -39,6 +41,7 @@ import com.earlybird.kroygame.Resources;
 import com.earlybird.kroygame.StatBar;
 import com.earlybird.kroygame.Unit;
 import com.earlybird.kroygame.Utils;
+import com.earlybird.kroygame.pathfinding.Node;
 import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.Fortresses;
 
@@ -376,6 +379,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		
 		setLastPostions(this.engines);
 		setLastPostions(this.selectedEngines);
+		//loop through engines for target locations, if the same as another change it
 		
 		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
 		//check between enemies and enemies for junction halting
@@ -407,7 +411,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		updateDir(this.engines);
 		updateDir(this.selectedEngines);
 	}
-	
+
 	private void setLastPostions(Engines engines) {
 		if (engines.hasChildren() == true) {
 			for (Actor a : engines.getChildren()) {
@@ -558,14 +562,15 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 						SnapshotArray<Actor> children = this.selectedEngines.getChildren();
 						Actor[] actors = children.begin();
 						for (int i = 0, n = children.size; i < n; i++) {
-							Actor child = actors[i];
+							Engine child = (Engine) actors[i];
 							child.clearActions();
 							Vector2 truckcoords = new Vector2(child.getX(), child.getY());
 							SequenceAction sequence = new SequenceAction();
 //							replace 0.2f with engine's speed
-//							setmovelocation of fireengine to lasttouch
+							child.setTargetTile(checkTargetTile(new Vector2((float) Math.floor(this.lastTouch.x / 32),
+									(float) Math.floor(this.lastTouch.y / 32))));
 //							or set list of actions
-							List<Action> actions = this.roadmap.pathfind(truckcoords, this.lastTouch, 0.2f);
+							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), 0.2f);
 							for (Action a : actions) {
 								sequence.addAction(a);
 							}
@@ -656,5 +661,57 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			thisFireEngine.setTexture(game.res.firetruck);
 			this.engines.addActor(child);
 		}
+	}
+	private Vector2 checkTargetTile(Vector2 tile){
+		if (checkIfTarget(tile.x, tile.y) == false) {
+			return tile;
+		}
+		List<Node> queue = new ArrayList<Node>();
+		queue.add(new Node((int)tile.x, (int)tile.y));
+		return flood(queue, new Vector2(tile.x - 5, tile.y - 5), new Vector2(tile.x + 5, tile.y + 5), 0);
+		
+	}
+	private Vector2 flood(List<Node> queue, Vector2 a, Vector2 b , int c) {
+		List<Node> list = new ArrayList<Node>();
+		for (int i = c, n = queue.size(); i < n; i++) {
+			List<Node> testNodes = new ArrayList<Node>();
+			testNodes.add(new Node(queue.get(i).getX() + 1, queue.get(i).getY()));
+			testNodes.add(new Node(queue.get(i).getX() - 1, queue.get(i).getY()));
+			testNodes.add(new Node(queue.get(i).getX(), queue.get(i).getY() + 1));
+			testNodes.add(new Node(queue.get(i).getX(), queue.get(i).getY() - 1));
+			for (Node t : testNodes) {
+				if (queue.contains(t) == false && list.contains(t) == false && Utils.isBetween(a, b, new Vector2(t.getX(), t.getY())) == true
+						&& this.roadmap.isRoad(new Vector2(t.getX() * 32, t.getY() * 32))) {
+					t.setF(c + 1);
+					list.add(t);
+				}
+			}
+		}
+		for (Node n : list) {
+			if (checkIfTarget(n.getX(), n.getY()) == false) {
+				return (new Vector2(n.getX(), n.getY()));
+			}
+		}
+		c = queue.size();
+		for (Node n : list) {
+			queue.add(n);
+		}
+		System.out.println("ERROR");
+		return flood(queue, a, b, c);
+	}
+	private boolean checkIfTarget(float x, float y) {
+		for (Actor actor : this.engines.getChildren()) {
+			Engine e = (Engine) actor;
+			if (e.getTargetTile().x == x && e.getTargetTile().y == y) {
+				return true;
+			}
+		}
+		for (Actor actor : this.selectedEngines.getChildren()) {
+			Engine e = (Engine) actor;
+			if (e.getTargetTile().x == x && e.getTargetTile().y == y) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

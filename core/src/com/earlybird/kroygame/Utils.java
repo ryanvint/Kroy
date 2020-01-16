@@ -44,8 +44,8 @@ public class Utils {
 				big.y = point1.y;
 				small.y = point2.y;
 			}
-			if (point3.x > small.x & point3.x < big.x
-					& point3.y > small.y & point3.y < big.y) {
+			if (point3.x >= small.x & point3.x <= big.x
+					& point3.y >= small.y & point3.y <= big.y) {
 				return true;
 				}
 			else {

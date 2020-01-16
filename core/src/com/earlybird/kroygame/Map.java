@@ -57,14 +57,13 @@ public class Map {
 		}
 		return false;
 	}
-	// start - actors current position
+		// start - actors current position
 		// end - actors moveToLocation
-		public List<Action> pathfind(Vector2 start, Vector2 end, float speed) {
+		public List<Action> pathfind(Vector2 start, Vector2 endTile, float speed) {
 			
 			List<Action> actions = new ArrayList<Action>();
 			//calculate start tile and move towards it
 			Vector2 startTile = new Vector2((float) Math.floor(start.x / 32), (float) Math.floor(start.y / 32));
-			Vector2 endTile = new Vector2((float) Math.floor(end.x / 32), (float) Math.floor(end.y / 32));
 
 			AStar pathfinder = new AStar(grid, new Node((int) startTile.x, (int) startTile.y),
 					new Node((int) endTile.x, (int) endTile.y));
