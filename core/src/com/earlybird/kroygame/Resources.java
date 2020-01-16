@@ -17,13 +17,13 @@ public class Resources {
 	public TextureRegion road;
 	public TextureRegion firetruck;
 	public TextureRegion firetruckSelected;
-	public TextureRegion fortress1;
+	public TextureRegion fortress1, fortress2, fortress3;
 	public TextureRegion firestation;
 	public static final int TILE_SIZE = 32;
 	
 	public Resources()
 	{
-		gameLocations = new TextureAtlas(Gdx.files.internal("packed/gameLocations.txt")); //These texture sheets define each texture within the atlas PNG files
+		gameLocations = new TextureAtlas(Gdx.files.internal("packed/GameLocation.txt")); //These texture sheets define each texture within the atlas PNG files
 		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas")); //Locations shows all textures used for FireStations and Fortress's 
 		//Sprites is where we get all textures for Fire Engines and Alien Patrols
 		
@@ -32,6 +32,8 @@ public class Resources {
 		firetruckSelected = gameSprites.findRegion("firetruckSelected");
 		firetruck = gameSprites.findRegion("firetruck"); //Defining the texture for the Fire Trucks
 		fortress1 = gameLocations.findRegion("Fortress"); //Defining the texture for the Fortress's
+		fortress2 = gameLocations.findRegion("AlienCentralHall");
+		fortress3 = gameLocations.findRegion("Building2");
 		firestation = gameLocations.findRegion("FireStation"); //Defining the texture for the Fire Station
 	}
 	

@@ -1,0 +1,33 @@
+GameLocation.png
+size: 105, 405
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+AlienCentralHall
+  rotate: false
+  xy: 0, 0
+  size: 103, 106
+  orig: 106, 106
+  offset: 0, 0
+  index: -1
+Building2
+  rotate: false
+  xy: 0, 106
+  size: 99, 99
+  orig: 99, 99
+  offset: 0, 0
+  index: -1
+FireStation
+  rotate: false
+  xy: 0, 205
+  size: 105, 103
+  orig: 107, 107
+  offset: 1, 1
+  index: -1
+Fortress
+  rotate: false
+  xy: 0, 308
+  size: 105, 97
+  orig: 107, 107
+  offset: 1, 8
+  index: -1
