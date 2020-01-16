@@ -10,7 +10,7 @@ public class FireEngine extends Unit {
 	
 	private int currentVolume, maxVolume, waterRate; //Used for water statbars
 	public boolean isRefilling, isSelected; //Status variables
-	public StatBar waterBar; //Used to create the stat bar
+	public StatBar waterBar, userInterfaceWaterBar; //Used to create the stat bar
 	private int iD;
 	private Fortress currentTarget;
 
@@ -27,6 +27,7 @@ public class FireEngine extends Unit {
 		isSelected = false;
 		currentTarget = null;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
+		this.userInterfaceWaterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 	
 	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {
@@ -160,9 +161,18 @@ public class FireEngine extends Unit {
 		this.isSelected = isSelected;
 	}
 
+	public StatBar getUserInterfaceWaterBar() {
+		return userInterfaceWaterBar;
+	}
+
+	public void setUserInterfaceWaterBar(StatBar userInterfaceWaterBar) {
+		this.userInterfaceWaterBar = userInterfaceWaterBar;
+	}
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getWaterBar().setValue(this.getCurrentVolume());
+		//this.getUserInterfaceWaterBar().setValue(this.getCurrentVolume());
 		if(this.isAttacking()) {
 			this.attackFortress();
 		}

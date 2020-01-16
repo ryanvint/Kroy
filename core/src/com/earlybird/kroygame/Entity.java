@@ -18,7 +18,7 @@ public abstract class Entity extends Actor{
 	TextureRegion texture;
 	
 	private int currentHealth, maxHealth, range, damage;
-	public StatBar healthBar;
+	public StatBar healthBar, userInterfaceHealthBar;
 	public boolean notDestroyed = true;
 	
 	
@@ -97,6 +97,14 @@ public abstract class Entity extends Actor{
 		this.healthBar = healthBar;
 	}
 
+	public StatBar getUserInterfaceHealthBar() {
+		return userInterfaceHealthBar;
+	}
+
+	public void setUserInterfaceHealthBar(StatBar userInterfaceHealthBar) {
+		this.userInterfaceHealthBar = userInterfaceHealthBar;
+	}
+
 	public boolean isNotDestroyed() {
 		return notDestroyed;
 	}
@@ -104,10 +112,13 @@ public abstract class Entity extends Actor{
 	public void setNotDestroyed(boolean notDestroyed) {
 		this.notDestroyed = notDestroyed;
 	}
+	
+	
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getHealthBar().setValue(this.getCurrentHealth());
+		//this.getUserInterfaceHealthBar().setValue(this.getCurrentHealth());
 		batch.draw(texture, getX(), getY());
 	}
 }

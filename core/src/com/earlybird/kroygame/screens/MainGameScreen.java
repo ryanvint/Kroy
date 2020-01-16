@@ -68,14 +68,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private OrthographicCamera camera;
 	private Map roadmap;
 	private InputMultiplexer multiplexer;
+	private StatBar eOneWater;
 	
 	
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
-	public boolean b1Selected = false;
-	public boolean b2Selected = false;
-	public boolean b3Selected = false;
 	boolean click;
 	
 	
@@ -309,10 +307,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFireTruck(42,2,2);
 		addFireTruck(46,2,3);
 		addFireTruck(38,2,1);
-		
-		addHealthBar(1);
-		
-		
+				
 		addFortress(18,17,game.res.fortress1);
 		addFortress(42,12,game.res.fortress2);
 		addFortress(42,20,game.res.fortress3);
@@ -325,6 +320,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
 		gameStage.addActor(fortresses);
+		
+		
 		
 		
 	}
@@ -358,21 +355,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.addActor(firestation);
 	}
 	
-	public void addHealthBar(int number) {
-		for(int i = 0; i <= 2; i++) {
-			Engine thisEngine = (Engine)engines.getChild(i);
-			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-			int var = thisFireEngine.getiD();
-			if (var == number) {
-				StatBar copy = thisFireEngine.getHealthBar();
-				//copy.setPosition(500, 1);;
-				break;
-			} else {
-				continue;
-			}
-		}
-	}
-	
 	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
 	//Then adds this fireEngine to the Engines group
 	public void addFireTruck(int xTilePos, int yTilePos, int iD) {
@@ -385,6 +367,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
+		//gameStage.addActor(fireEngine.getUserInterfaceHealthBar());
+		//gameStage.addActor(fireEngine.getUserInterfaceWaterBar());
 	}
 	
 	public void update(float delta) {
