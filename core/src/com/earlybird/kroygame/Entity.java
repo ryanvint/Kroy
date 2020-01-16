@@ -35,6 +35,7 @@ public abstract class Entity extends Actor{
 		this.range = range;
 		this.damage = damage;
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+		this.userInterfaceHealthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
 	public Entity() {	////Constructor to instantiate Entity
@@ -43,6 +44,7 @@ public abstract class Entity extends Actor{
 		range = 32*4;
 		damage = 1;
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
+		this.userInterfaceHealthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
 	public void changeHealth(int change) {
@@ -118,7 +120,7 @@ public abstract class Entity extends Actor{
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getHealthBar().setValue(this.getCurrentHealth());
-		//this.getUserInterfaceHealthBar().setValue(this.getCurrentHealth());
+		this.getUserInterfaceHealthBar().setValue(this.getCurrentHealth());
 		batch.draw(texture, getX(), getY());
 	}
 }

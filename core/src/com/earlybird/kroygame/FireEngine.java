@@ -172,7 +172,7 @@ public class FireEngine extends Unit {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getWaterBar().setValue(this.getCurrentVolume());
-		//this.getUserInterfaceWaterBar().setValue(this.getCurrentVolume());
+		this.getUserInterfaceWaterBar().setValue(this.getCurrentVolume());
 		if(this.isAttacking()) {
 			this.attackFortress();
 		}

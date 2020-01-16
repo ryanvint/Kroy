@@ -367,8 +367,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engine.getChild(2).setPosition(-4, -14);
 		engine.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		engines.addActor(engine);
-		//gameStage.addActor(fireEngine.getUserInterfaceHealthBar());
-		//gameStage.addActor(fireEngine.getUserInterfaceWaterBar());
+		gameStage.addActor(fireEngine.getUserInterfaceHealthBar());
+		gameStage.addActor(fireEngine.getUserInterfaceWaterBar());
 	}
 	
 	public void update(float delta) {
