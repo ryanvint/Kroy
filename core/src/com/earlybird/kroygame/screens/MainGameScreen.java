@@ -404,6 +404,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			}
 		}
 		
+		for(int i=0; i<fortresses.getChildren().size; i++) {
+			Fortress thisFortress = (Fortress) fortresses.getChild(i);
+			changeFortressTarget(thisFortress, engines, selectedEngines);
+		}
+		
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
 		
@@ -411,6 +416,18 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		updateDir(this.selectedEngines);
 	}
 
+	public void changeFortressTarget(Fortress fortress, Engines engines, Engines selectedEngines) {
+		if(fortress.isAttacking()) {
+			if(!fortress.isCurrentTargetValid(fortress.getCurrentTarget())) {
+				fortress.setNewTarget(engines, selectedEngines);
+			}
+		}
+		else {
+			fortress.setNewTarget(engines, selectedEngines);
+		}
+	}
+	
+	
 	private void setLastPostions(Engines engines) {
 		if (engines.hasChildren() == true) {
 			for (Actor a : engines.getChildren()) {

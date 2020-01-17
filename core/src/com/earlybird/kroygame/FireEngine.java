@@ -47,10 +47,15 @@ public class FireEngine extends Unit {
 				}
 		}
 		return false;
-		}	
+	}
 	
 	public boolean isEnoughWater() {
 		if(this.getCurrentVolume()>0) return true;
+		return false;
+	}
+	
+	public boolean isEnoughHealth() {
+		if(this.getCurrentHealth()>0) return true;
 		return false;
 	}
 	
@@ -72,7 +77,7 @@ public class FireEngine extends Unit {
 	}
 	
 	public void attackFortress() {
-		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater()) {
+		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater() && this.isEnoughHealth()) {
 			this.dealDamage();
 		}
 		else {
