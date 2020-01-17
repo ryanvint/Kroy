@@ -19,10 +19,9 @@ public class Kroy extends Game {
 
 	@Override
 	public void create () { 
-		musicBackground = Gdx.audio.newMusic(Gdx.files.internal("DefinitlyNotHalo.mp3"));
-		//musicBackground = Gdx.audio.newMusic(Gdx.files.internal("bensound-scifi.mp3"));
+		musicBackground = Gdx.audio.newMusic(Gdx.files.internal("bensound-scifi.mp3"));
 		musicBackground.setLooping(true);
-		musicBackground.setVolume((float) 0.5);
+		musicBackground.setVolume((float) 0.25);
 		musicBackground.play();
 		res = new Resources();
 		this.setScreen(new StartScreen(this));
