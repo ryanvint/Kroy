@@ -11,7 +11,7 @@ public class Kroy extends Game {
 	public static final int WITDH = 52 * Resources.TILE_SIZE;
 	public static final int HEIGHT = 30 * Resources.TILE_SIZE;
 	public static final String TITLE = "Kroy";
-	private Music musicBackground;
+	public Music musicBackground;
 	
 	
 	public Resources res;
@@ -21,7 +21,7 @@ public class Kroy extends Game {
 	public void create () { 
 		musicBackground = Gdx.audio.newMusic(Gdx.files.internal("bensound-scifi.mp3"));
 		musicBackground.setLooping(true);
-		musicBackground.setVolume((float) 0.25);
+		musicBackground.setVolume((float) 0.10);
 		musicBackground.play();
 		res = new Resources();
 		this.setScreen(new StartScreen(this));
