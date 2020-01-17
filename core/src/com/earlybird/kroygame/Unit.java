@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Unit extends Entity {
-	private Vector2 targetTile;
+
 	private int dir = 0;
 	private Vector2 lastPos = this.localToStageCoordinates(this.localToStageCoordinates(new Vector2(0,0)));
 	
@@ -12,14 +12,6 @@ public abstract class Unit extends Entity {
 	public void act(float delta) {
 		// TODO Auto-generated method stub
 		super.act(delta);
-	}
-
-	public Vector2 getTargetTile() {
-		return targetTile;
-	}
-
-	public void setTargetTile(Vector2 targetTile) {
-		this.targetTile = targetTile;
 	}
 
 	public int getDir() {

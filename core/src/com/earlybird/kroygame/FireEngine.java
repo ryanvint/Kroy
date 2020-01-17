@@ -47,7 +47,7 @@ public class FireEngine extends Unit {
 				}
 		}
 		return false;
-		}	
+	}
 	
 	public boolean isEnoughWater() { //Method to check that a fire engines currentVolume is not empty 
 		if(this.getCurrentVolume()>0) return true;
@@ -55,6 +55,12 @@ public class FireEngine extends Unit {
 	}
 	
 	public void changeWater(int change) { //Method used to increase and decrease the currentVolume variable within the Fire Engine
+	public boolean isEnoughHealth() {
+		if(this.getCurrentHealth()>0) return true;
+		return false;
+	}
+	
+	public void changeWater(int change) {
 		this.setCurrentVolume(this.getCurrentVolume() + change);
 		if(this.getCurrentVolume()<0) {
 			this.setCurrentVolume(0);
@@ -73,6 +79,8 @@ public class FireEngine extends Unit {
 	
 	public void attackFortress() {	//
 		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater()) {
+	public void attackFortress() {
+		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater() && this.isEnoughHealth()) {
 			this.dealDamage();
 		}
 		else {
