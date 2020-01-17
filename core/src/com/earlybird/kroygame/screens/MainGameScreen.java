@@ -305,12 +305,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFireTruck(46,2,3,335,325);
 		addFireTruck(38,2,1,595,585);
 				
-		addFortress(18,17,game.res.fortress1);
-		addFortress(42,12,game.res.fortress2);
-		addFortress(42,20,game.res.fortress3);
-		addFortress(4,12,game.res.fortress3);
-		addFortress(3,7,game.res.fortress1);
-		addFortress(5,17,game.res.fortress1);
+		addFortress(18,17,game.res.minister);
+		addFortress(42,12,game.res.centralHall);
+		addFortress(4,12,game.res.railway);
 		addFireStation(42,3);
 		
 		gameStage.addActor(engines);
@@ -332,7 +329,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
         }
 		return false;
 	}
-
 	
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
@@ -576,7 +572,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 							child.setTargetTile(checkTargetTile(new Vector2((float) Math.floor(this.lastTouch.x / 32),
 									(float) Math.floor(this.lastTouch.y / 32))));
 //							or set list of actions
-							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), 0.2f);
+							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), child.getSpeed());
 							for (Action a : actions) {
 								sequence.addAction(a);
 							}

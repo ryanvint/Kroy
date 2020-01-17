@@ -17,7 +17,7 @@ public class Resources {
 	public TextureRegion road;
 	public TextureRegion firetruck;
 	public TextureRegion firetruckSelected;
-	public TextureRegion fortress1, fortress2, fortress3;
+	public TextureRegion fortress, centralHall, building, minister, railway;
 	public TextureRegion firestation;
 	public static final int TILE_SIZE = 32;
 	
@@ -31,9 +31,11 @@ public class Resources {
 		road = gameSprites.findRegion("road"); //Do we need?
 		firetruckSelected = gameSprites.findRegion("firetruckSelected");
 		firetruck = gameSprites.findRegion("firetruck"); //Defining the texture for the Fire Trucks
-		fortress1 = gameLocations.findRegion("Fortress"); //Defining the texture for the Fortress's
-		fortress2 = gameLocations.findRegion("AlienCentralHall");
-		fortress3 = gameLocations.findRegion("Building2");
+		fortress = gameLocations.findRegion("Fortress"); //Defining the texture for the Fortress's
+		centralHall = gameLocations.findRegion("AlienCentralHall");
+		building = gameLocations.findRegion("Building2");
+		minister = gameSprites.findRegion("AlienYorkMinister");
+		railway = gameSprites.findRegion("RailwayAlien");
 		firestation = gameLocations.findRegion("FireStation"); //Defining the texture for the Fire Station
 	}
 	
