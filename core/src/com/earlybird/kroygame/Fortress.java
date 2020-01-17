@@ -43,7 +43,7 @@ public class Fortress extends Entity{
 		if(engine!=null) {
 			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
 			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange()+96, this.getRange()+96)));
-				if(engine.isEngineinRange(bottomLeft, topRight)) {
+				if(engine.isEngineinRange(bottomLeft, topRight) && this.getCurrentHealth()!=0) {
 					return true;
 				}
 		}
@@ -111,7 +111,7 @@ public class Fortress extends Entity{
 	}
 	
 	//Methods 
-	public void spawnPatrol() { //Spawn patrol method created for developement later on
+	public void spawnPatrol() { //Spawn patrol method created for development later on
 		
 	}
 	

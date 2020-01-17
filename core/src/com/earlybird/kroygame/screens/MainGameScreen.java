@@ -329,7 +329,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
         }
 		return false;
 	}
-
 	
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
