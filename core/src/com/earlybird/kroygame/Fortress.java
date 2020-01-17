@@ -8,10 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Fortress extends Entity{
 
+<<<<<<< HEAD
 	public boolean hasBoss;			//Boolean variable to be used in latter stage of developement
 									//to implement mini-game
+=======
 	public boolean hasBoss;
 	public FireEngine currentTarget;
+>>>>>>> fc01962a9c0ea1ffbbb60125c9a507d560aedd40
 	
 	public Fortress(TextureRegion texture) {	//Instantiates a Fortress with a texture parameter created in the resource class
 		this.texture = texture;					
