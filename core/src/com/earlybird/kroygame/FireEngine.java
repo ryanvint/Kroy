@@ -8,16 +8,16 @@ import com.badlogic.gdx.math.Vector2;
 
 public class FireEngine extends Unit {
 	
-	private int currentVolume, maxVolume, waterRate; //Used for water statbars
+	private int currentVolume, maxVolume, waterRate, iD; //Used for water statbars
 	public boolean isRefilling, isSelected; //Status variables
-	public StatBar waterBar, userInterfaceWaterBar; //Used to create the stat bar
-	private int iD;
+	public StatBar waterBar, userInterfaceWaterBar; //Used to create the statbar
+	
 	private Fortress currentTarget;
 
 	
 	
-	public FireEngine(TextureRegion texture, int iD) { //Instantiates a fire engine
-		super();
+	public FireEngine(TextureRegion texture, int iD) { //Instantiates a fire engine with a texture that you want assigned to it and gives it an
+		super();										//Identification number
 		this.iD = iD;
 		this.texture = texture;
 		currentVolume = 200;
@@ -27,10 +27,10 @@ public class FireEngine extends Unit {
 		isSelected = false;
 		currentTarget = null;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
-		this.userInterfaceWaterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
+		this.userInterfaceWaterBar = new StatBar(80,10, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 	}
 	
-	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {
+	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {  //Method
 		Vector2 currentLocation = new Vector2(this.localToStageCoordinates(new Vector2(0,0)));
 		if(currentLocation.x>=bottomLeft.x && currentLocation.x<=topRight.x && currentLocation.y>=bottomLeft.y && currentLocation.y<=topRight.y) {
 			return true;
@@ -49,12 +49,12 @@ public class FireEngine extends Unit {
 		return false;
 		}	
 	
-	public boolean isEnoughWater() {
+	public boolean isEnoughWater() { //Method to check that a fire engines currentVolume is not empty 
 		if(this.getCurrentVolume()>0) return true;
 		return false;
 	}
 	
-	public void changeWater(int change) {
+	public void changeWater(int change) { //Method used to increase and decrease the currentVolume variable within the Fire Engine
 		this.setCurrentVolume(this.getCurrentVolume() + change);
 		if(this.getCurrentVolume()<0) {
 			this.setCurrentVolume(0);
@@ -64,14 +64,14 @@ public class FireEngine extends Unit {
 		}
 	}
 	
-	public void dealDamage() {
+	public void dealDamage() { //Method used to deal Damage to enemies using the fire engines currentVolumen and WaterRate
 		if(currentTarget.getCurrentHealth()>0 && this.getCurrentVolume()>0) {
 			this.changeWater(-this.getWaterRate());
 			currentTarget.changeHealth(-this.getDamage());
 		}
 	}
 	
-	public void attackFortress() {
+	public void attackFortress() {	//
 		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater()) {
 			this.dealDamage();
 		}
@@ -80,12 +80,12 @@ public class FireEngine extends Unit {
 		}
 	}
 	
-	public boolean isAttacking() {
+	public boolean isAttacking() { //Method to check if this fire engine is attack anything and returns True if it is
 		if(this.getCurrentTarget() == null) return false;
 		return true;
 	}
 
-	public boolean isInFireStationRange(FireStation station) {
+	public boolean isInFireStationRange(FireStation station) { //Method to check how close the firestation is and whether it is in range and if it is returns True
 		if(this.isEngineinRange(new Vector2(station.getX(),station.getY()-32), new Vector2(station.getX()+96,station.getY()))) {
 			return true;
 		}
@@ -173,6 +173,7 @@ public class FireEngine extends Unit {
 	public void draw(Batch batch, float parentAlpha) {
 		this.getWaterBar().setValue(this.getCurrentVolume());
 		this.getUserInterfaceWaterBar().setValue(this.getCurrentVolume());
+		this.getUserInterfaceHealthBar().setValue(this.getCurrentHealth());
 		if(this.isAttacking()) {
 			this.attackFortress();
 		}

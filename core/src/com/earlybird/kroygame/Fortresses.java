@@ -5,11 +5,14 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 public class Fortresses extends Group{
 
-	public Fortresses() {
-		
-	}
+	public Fortresses() {	//Class 'Fortresses' which is an extension of 'Group' 
+							//Scene2d groups store actors together so that actions
+	}						//can be performed on all actors within group
+							//The Fortress Group stores together all the Fortress on the map
+							
 	
-	public Fortress getFortress(Vector2 point) {
+	
+	public Fortress getFortress(Vector2 point) { 
 		for(int i=0; i<this.getChildren().size; i++) {
 			Fortress thisFortress = (Fortress) this.getChild(i);
 			if(point != null) {

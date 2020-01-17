@@ -6,20 +6,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class FireStation extends Entity {
 	
-	public int currentRefilling;
-	public int maxCapacity;
-	private int refillRate;
+	public int currentRefilling;				//Boolean variable to signify if an individual fire engine is refilling
+	public int maxCapacity;						
+	private int refillRate;						//Shows how fast the engine can refill
 	
-	public FireStation(TextureRegion texture) {
+	public FireStation(TextureRegion texture) {	//Instantiates a fire engine
 		super();
 		this.texture = texture;
-		this.currentRefilling = 0;
+		this.currentRefilling = 0;		
 		this.maxCapacity = 1;
 		this.refillRate = 1;
 	}
 	
-	public void refillEngine(FireEngine engine) {
-		engine.changeHealth(refillRate);
+	public void refillEngine(FireEngine engine) {	//Method  to refill fire engine
+		engine.changeHealth(refillRate);			//Fire engine that is refilling needs to be passed through
 		engine.changeWater(refillRate);
 	}
 	

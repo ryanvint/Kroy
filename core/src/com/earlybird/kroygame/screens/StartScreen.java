@@ -35,9 +35,8 @@ public class StartScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);						
 		skin = new Skin(Gdx.files.internal("uiskin.json"));					//This creates a need Skin with contains all the assets needed to render the menu
 																			//allows for fonts and pictures
-		startButton = new TextButton("Start", skin, "default");				//These full instantiate the buttons on the menu with needed Text, Skin file and
-		//optionsButton = new TextButton("Options", skin, "default");			//font type
-		quitButton = new TextButton("Quit", skin, "default");
+		startButton = new TextButton("Start", skin, "default");				//These full instantiate the buttons on the menu with needed Text, Skin file and																			//font type
+		quitButton = new TextButton("Quit", skin, "default");				//style
 		
 		TextButton[] buttonArray = {startButton, quitButton};//Array of all buttons on the menu allows for easier addition of the wanted buttons
 																			//to the current stage and set there position and shape.
@@ -64,12 +63,6 @@ public class StartScreen implements Screen {
 		if (startButton.isPressed() == true){								//Action to take when startButton is pressed
 			game.setScreen(new MainGameScreen(game));						//Takes the current screen and closes it then sets the current screen to MainGame
 		}
-		
-		//if (optionsButton.isPressed() == true) {							//Action to take when optionsButton is pressed
-		//	gjhgfdsaame.setScreen(new OptionsScreen());
-		//	System.out.print("Options Pressed"+"\n");
-			
-		//}
 		
 		if (quitButton.isPressed() == true) {								//Action to take when quitButton is pressed
 			System.out.print("Quit Pressed"+"\n");

@@ -68,14 +68,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private OrthographicCamera camera;
 	private Map roadmap;
 	private InputMultiplexer multiplexer;
-	private StatBar eOneWater;
-	
 	
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
 	boolean click;
-	
 	
 	Texture selectionbox;
 	
@@ -105,8 +102,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		renderer = new OrthogonalTiledMapRenderer(map);
 		roadmap = new Map(this.map);
 		
-		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		
+		skin = new Skin(Gdx.files.internal("uiskin.json"));	
 		
 		quitButton = new TextButton("Quit", skin, "default"); //Initiates all buttons and labels
 		pauseButton = new TextButton("Pause", skin, "default"); //applys all styles and strings
@@ -127,7 +123,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		menuTitle.setBounds(1550, 930, 100f, 20f); //them
 		scoreTitle.setBounds(1550, 810, 100f, 20f);
 		score.setBounds(1550, 780, 100f, 20f);
-		shopTitle.setBounds(1550, 250, 100f, 20f);
+		shopTitle.setBounds(1550, 280, 100f, 20f);
 		engineTitle.setBounds(1550, 720, 100f, 20f);
 		nOne.setBounds(1550, 690, 100f, 20f);
 		engineOne.setBounds(1550, 610, 80f, 80f);
@@ -220,8 +216,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }      
                    
 		});
-		
-		
+				
 		engineTwo.addListener(new InputListener() { //Listens for any input on the engine no.2 button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -298,15 +293,14 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
             
 		});
-		
-		
+				
 		engines = new Engines();
 		selectedEngines= new Engines();
 		fortresses = new Fortresses();
 		
-		addFireTruck(42,2,2);
-		addFireTruck(46,2,3);
-		addFireTruck(38,2,1);
+		addFireTruck(42,2,2,465,455);
+		addFireTruck(46,2,3,335,325);
+		addFireTruck(38,2,1,595,585);
 				
 		addFortress(18,17,game.res.fortress1);
 		addFortress(42,12,game.res.fortress2);
@@ -315,14 +309,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFortress(3,7,game.res.fortress1);
 		addFortress(5,17,game.res.fortress1);
 		addFireStation(42,3);
-
 		
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
 		gameStage.addActor(fortresses);
-		
-		
-		
 		
 	}
 
@@ -357,7 +347,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	
 	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
 	//Then adds this fireEngine to the Engines group
-	public void addFireTruck(int xTilePos, int yTilePos, int iD) {
+	public void addFireTruck(int xTilePos, int yTilePos, int iD, int yUIWater, int yUIHealth) {
 		Engine engine = new Engine();
 		FireEngine fireEngine = new FireEngine(game.res.firetruck, iD);
 		engine.addActor(fireEngine);
@@ -369,7 +359,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engines.addActor(engine);
 		gameStage.addActor(fireEngine.getUserInterfaceHealthBar());
 		gameStage.addActor(fireEngine.getUserInterfaceWaterBar());
+		fireEngine.getUserInterfaceHealthBar().setPosition(1550, yUIWater);
+		fireEngine.getUserInterfaceWaterBar().setPosition(1550, yUIHealth);
 	}
+	
+	
 	
 	public void update(float delta) {
 		
@@ -449,10 +443,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	@Override
 	public void render(float delta) {
 		
-		
-		if (click == true) {
-			delta = 0;
-		}
 		update(delta);
 		
 		Gdx.gl.glClearColor(33/255f, 191/255f, 33/255f, 1);
