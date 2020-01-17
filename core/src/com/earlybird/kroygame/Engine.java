@@ -10,6 +10,7 @@ public class Engine extends Group{ 	//Class 'engine' which is an extension of 'G
 									//The Engine Group stores a FireEngine sprite and it stat
 									//bars all under one name
 	private Vector2 targetTile;
+	private float speed = 0.4f;
 	
 	public Engine() {
 	}
@@ -26,6 +27,14 @@ public class Engine extends Group{ 	//Class 'engine' which is an extension of 'G
 
 	public void setTargetTile(Vector2 targetTile) {
 		this.targetTile = targetTile;
+	}
+
+	public float getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 }
 

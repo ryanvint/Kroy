@@ -572,7 +572,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 							child.setTargetTile(checkTargetTile(new Vector2((float) Math.floor(this.lastTouch.x / 32),
 									(float) Math.floor(this.lastTouch.y / 32))));
 //							or set list of actions
-							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), 0.2f);
+							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), child.getSpeed());
 							for (Action a : actions) {
 								sequence.addAction(a);
 							}
