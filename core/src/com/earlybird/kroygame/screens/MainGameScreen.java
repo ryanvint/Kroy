@@ -315,6 +315,30 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.addActor(fortresses);
 		
 	}
+	
+	public void checkEngineBroken(Engine engine) {
+		FireEngine thisFireEngine = (FireEngine) engine.getChild(0);
+		if(!thisFireEngine.isEnoughHealth()) {
+			engine.setSpeed(1.2f);
+		}
+		else {
+			engine.setSpeed(.4f);
+		}
+	}
+	
+	public void checkWinCondition() {
+		boolean isAFortressAlive = false;
+		for(int i = 0; i<fortresses.getChildren().size; i++) {
+			Fortress thisFortress = (Fortress)fortresses.getChild(i);
+			if(thisFortress.getCurrentHealth()!=0) {
+				isAFortressAlive = true;
+			}
+		}
+		if(!isAFortressAlive) {
+			//Do win stuff
+			System.out.println("WINNER WINNER CHICKEN MOTHAFUCKIN DIN DIN");
+		}
+	}
 
 	public boolean checkInEngines(int x) {
 		for (int i = 0; i<engines.getChildren().size; i++) {
@@ -382,22 +406,26 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		userInterface.act(delta);
 
 		//Checks if all fireEngines in engines and selectedEngines are in range of fireStation
-		//if so it refills them
+		//if so it refills them, runs checkEngineBroken on each engine
 		for(int i=0; i<engines.getChildren().size; i++) {
 			if(engines.getFireEngine(i).isInFireStationRange(firestation)) {
 				firestation.refillEngine(engines.getFireEngine(i));
 			}
+			checkEngineBroken((Engine)engines.getChild(i));
 		}
 		for(int i=0; i<selectedEngines.getChildren().size; i++) {
 			if(selectedEngines.getFireEngine(i).isInFireStationRange(firestation)) {
 				firestation.refillEngine(selectedEngines.getFireEngine(i));
 			}
+			checkEngineBroken((Engine)selectedEngines.getChild(i));
 		}
 		
 		for(int i=0; i<fortresses.getChildren().size; i++) {
 			Fortress thisFortress = (Fortress) fortresses.getChild(i);
 			changeFortressTarget(thisFortress, engines, selectedEngines);
 		}
+		
+		checkWinCondition();
 		
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
