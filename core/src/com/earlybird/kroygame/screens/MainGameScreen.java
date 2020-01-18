@@ -56,7 +56,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
-	
+	/**
+	 * Initializes the Main Game screen
+	 * @param game
+	 */
 	public MainGameScreen(Kroy game) {
 		super(game);	
 		ExtendViewport viewport = new ExtendViewport(scrWidth, scrHeight);
@@ -68,20 +71,27 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		multiplexer.addProcessor(this);
 	}
 	
+	/**
+	 * Show runs first when the screen is opened
+	 * This creates and sets up the map, all UI, fortresses and initial fire engines
+	 */
 	@Override
 	public void show() {
         Gdx.input.setInputProcessor(multiplexer);
+        //Camera and map initialized
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
 		map = new TmxMapLoader().load("MapOfYork.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
+		//Map of roads made as a matrix of 0's and 1's -- Check Map class
 		roadmap = new Map(this.map);
 		
 		skin = new Skin(Gdx.files.internal("uiskin.json"));	
 		
-		quitButton = new TextButton("Quit", skin, "default"); //Initiates all buttons and labels
-		pauseButton = new TextButton("Pause", skin, "default"); //applys all styles and strings
+		//UI initialized
+		quitButton = new TextButton("Quit", skin, "default");
+		pauseButton = new TextButton("Pause", skin, "default");
 		menuTitle = new TextField("Menu", skin, "default");
 		scoreTitle = new TextField("Score", skin, "default");
 		engineTitle = new TextField("Engines", skin, "default");
@@ -94,9 +104,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		nTwo = new Label("No.2", skin, "default");
 		nThree = new Label("No.3", skin, "default");
 		
-		quitButton.setBounds(1550, 900, 100f, 20f); //Set location for all buttons and label and well
-		//pauseButton.setBounds(1550, 900, 100f, 20f); //as putting buttons to correct size ie scaling
-		menuTitle.setBounds(1550, 930, 100f, 20f); //them
+		//Sets locations and correct scaling for all buttons and labels
+		quitButton.setBounds(1550, 900, 100f, 20f);
+		//pauseButton.setBounds(1550, 900, 100f, 20f); 
+		menuTitle.setBounds(1550, 930, 100f, 20f);
 		scoreTitle.setBounds(1550, 810, 100f, 20f);
 		score.setBounds(1550, 780, 100f, 20f);
 		shopTitle.setBounds(1550, 280, 100f, 20f);
@@ -108,8 +119,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		nThree.setBounds(1550, 430, 100f, 20f);
 		engineThree.setBounds(1550, 350, 80f, 80f);
 		
+		//Adds buttons to stage
 		//gameStage.addActor(pauseButton);
-		gameStage.addActor(quitButton); //Adds the buttons and labels to the gamestage
+		gameStage.addActor(quitButton);
 		gameStage.addActor(menuTitle);
 		gameStage.addActor(scoreTitle);
 		gameStage.addActor(score);
@@ -122,7 +134,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.addActor(nThree);
 		gameStage.addActor(engineThree);
 		
-		quitButton.addListener(new InputListener(){ //Listens for any input on the quit Button and executes accordingly
+		//Listens for clicks on the quit button and exits the game if pressed
+		quitButton.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                
@@ -134,7 +147,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
 		});
 		
-		pauseButton.addListener(new InputListener(){ //Listens for any input on the pause Button and executes accordingly
+		//Listens for clicks on the pause button and pauses the game if pressed. Not implemented yet
+		pauseButton.addListener(new InputListener(){ 
             @Override //Currently not implemented correctly
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 
@@ -154,7 +168,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
 		});
 		
-		engineOne.addListener(new InputListener() { //Listens for any input on the engine no.1 button and executes accordingly
+		//All engine listeners listen for clicks on the engine buttons and selects/deselects that engine in game if clicked on
+		engineOne.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             }
@@ -166,7 +181,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
                    
 		});
 				
-		engineTwo.addListener(new InputListener() { //Listens for any input on the engine no.2 button and executes accordingly
+		engineTwo.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             }
@@ -177,7 +192,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
 		});
 		
-		engineThree.addListener(new InputListener(){ //Listens for any input on the engine no.3 button and executes accordingly
+		engineThree.addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             }
@@ -189,25 +204,39 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             
 		});
 				
+		//Creates Engine groups for engines and selectedEngines which respectively hold
+		//the engines not currently selected and those currently selected
+		//Creates a group of Fortresses holding all fortresses in game
 		engines = new Engines();
 		selectedEngines= new Engines();
 		fortresses = new Fortresses();
 		
+		//Adds initial fire engines to game
 		addFireTruck(42,2,2,465,455);
 		addFireTruck(46,2,3,335,325);
 		addFireTruck(38,2,1,595,585);
 				
+		//Adds fortresses to game
 		addFortress(18,17,game.res.minister);
 		addFortress(42,12,game.res.centralHall);
 		addFortress(4,12,game.res.railway);
+		
+		//Adds fire station to game
 		addFireStation(42,3);
 		
+		//Adds all selected and unselected fire engines to the stage as well as all fortresses
 		gameStage.addActor(engines);
 		gameStage.addActor(selectedEngines);
 		gameStage.addActor(fortresses);
 		
 	}
 	
+	/**
+	 * Checks if any Engine contains fireEngine ID equal to the ID passed in
+	 * If so the engine is moved from engines/selectedEngines to the other (selectedEngines/engines)
+	 * and the texture is changed accordingly
+	 * @param ID a FireEngine ID
+	 */
 	private void checkButtonEngineSelect(int ID) {
 		if (engines.checkInEngines(ID)) {
            		engines.getFireEngineByID(ID).setTexture(game.res.firetruckSelected);
@@ -220,7 +249,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
             }
     	}
 
-	
+	/**
+	 * Checks if all fortresses are at 0 health
+	 * If so the game is won and the game ends
+	 */
 	public void checkWinCondition() {
 		boolean isAFortressAlive = false;
 		for(int i = 0; i<fortresses.getChildren().size; i++) {
@@ -234,6 +266,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		}
 	}
 	
+	/**
+	 * Adds a fortress into the fortresses group and adds its health bar to the stage
+	 * @param xTilePos the X tile the fortress will be placed on
+	 * @param yTilePos the Y tile the fortress will be placed on
+	 * @param texture the texture for the fortress being added
+	 */
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
 		fortress.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
@@ -242,14 +280,27 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		fortresses.addActor(fortress);
 	}
 	
+	/**
+	 * Adds a FireStation to the game and stage
+	 * @param xTilePos
+	 * @param yTilePos
+	 */
 	public void addFireStation(int xTilePos, int yTilePos) { //Renders a Firestation at a specified XY location with a Texture allocated with in Resources.jv
 		firestation = new FireStation(game.res.firestation);
 		firestation.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(firestation);
 	}
 	
-	//Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in
-	//Then adds this fireEngine to the Engines group
+	/**
+	 * Adds a fireEngine with health/water bar into the game at the X,Y tile position passed in 
+	 * Then adds this fireEngine to the Engines group
+	 * Adds health and water bars to UI buttons
+	 * @param xTilePos
+	 * @param yTilePos
+	 * @param iD
+	 * @param yUIWater
+	 * @param yUIHealth
+	 */
 	public void addFireTruck(int xTilePos, int yTilePos, int iD, int yUIWater, int yUIHealth) {
 		Engine engine = new Engine();
 		FireEngine fireEngine = new FireEngine(game.res.firetruck, iD);
@@ -267,7 +318,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	}
 	
 	
-	
+	/**
+	 * This is called every game tick, it updates the stage and actors states
+	 * It also checks for fireEngines in range of fire station, the direction of fire engines, 
+	 * when engines break, when fortresses need to change targets and if the game has been won
+	 * @param delta
+	 */
 	public void update(float delta) {
 		
 		this.engines.setLastPostions();
@@ -292,19 +348,25 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			selectedEngines.getEngine(i).checkEngineBroken();
 		}
 		
+		//Checks all fortresses for if the target needs to be changed
 		for(int i=0; i<fortresses.getChildren().size; i++) {
 			fortresses.getFortress(i).changeFortressTarget(engines, selectedEngines);
 		}
 		
+		//Checks if the game has been won
 		checkWinCondition();
 		
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
 		
+		//Changes direction of fire engines
 		this.engines.updateDir();
 		this.selectedEngines.updateDir();
 	}
 
+	/**
+	 * Is called every frame. Renders everything on screen.
+	 */
 	@Override
 	public void render(float delta) {
 		
@@ -320,9 +382,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
 		gameStage.draw();
-		
 	}
-		
 	
 	@Override
 	public void resize(int width, int height) {
@@ -342,6 +402,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.keyDown(keycode);
 	}
 
+	/**
+	 * When a key is released it checks the value of that key
+	 * If C all engines are deselected
+	 * If X all currently selected engines stop attacking
+	 * If escape the game quits
+	 */
 	@Override
 	public boolean keyUp(int keycode) {
 		switch (keycode)
@@ -366,6 +432,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.keyTyped(character);
 	}
 
+	/**
+	 * If the left mouse button is clicked first and last touch are set to the pixel pressed
+	 */
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (button == Input.Buttons.LEFT) {
@@ -377,9 +446,15 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.touchDown(screenX, screenY, pointer, button);
 	}
 
+	/**
+	 * On the release of a left mouse click it either selects any engines in the selection box made
+	 * or if its released on the same place it was pressed it checks if that location is a road and then
+	 * moves all selected engines to that location on the road
+	 */
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (button == Input.Buttons.LEFT) {
+			//If a single click is on a road move the selected engines to that location
 			if (this.firstTouch == this.lastTouch) {
 				if (this.roadmap.isRoad(this.firstTouch) == true) {
 					if (this.selectedEngines.hasChildren()) {
@@ -390,10 +465,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 							child.clearActions();
 							Vector2 truckcoords = new Vector2(child.getX(), child.getY());
 							SequenceAction sequence = new SequenceAction();
-//							replace 0.2f with engine's speed
 							child.setTargetTile(checkTargetTile(new Vector2((float) Math.floor(this.lastTouch.x / 32),
 									(float) Math.floor(this.lastTouch.y / 32))));
-//							or set list of actions
 							List<Action> actions = this.roadmap.pathfind(truckcoords, child.getTargetTile(), child.getSpeed());
 							for (Action a : actions) {
 								sequence.addAction(a);
@@ -402,8 +475,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 						}
 					}
 				}
+				//If a single click is made on a fortress make all selected engines attack that fortress if they are in range
 				else if(fortresses.getFortressClicked(this.firstTouch)!=null) {
-					//Check if selected firetrucks are in range of attacking 
 					Fortress thisFortress = fortresses.getFortressClicked(this.firstTouch);
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
@@ -412,11 +485,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 						}	
 					}
 				}
-				//move actors in selectedEngines to this.firstTouch
-				//set move location for all actors in selectedEngines
 				return true;
 			}
 			else {
+				//If mouse was dragged between click and release deselect all engines before selecting new ones in selection range
 				deselectEngines();
 				selectEngines();
 			}
@@ -443,6 +515,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.scrolled(amount);
 	}
 	
+	/**
+	 * Selects all engines in between the firstTouch and lastTouch position
+	 * When a engine is selected it is moved from the Engines group to the selectedEngines group
+	 * and switches texture accordingly
+	 */
 	private void selectEngines() {
 		//select engines
 		SnapshotArray<Actor> children = this.engines.getChildren();
@@ -459,6 +536,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			}
 		}
 	}
+	
+	/**
+	 * Deselects all engines
+	 * When a engine is deselected it is moved from the selectedEngines group to the Engines group
+	 * and switches texture accordingly
+	 */
 	private void deselectEngines() {
 		SnapshotArray<Actor> children = this.selectedEngines.getChildren();
 		Actor[] actors = children.begin();
@@ -471,6 +554,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			this.engines.addActor(child);
 		}
 	}
+	
+	/**
+	 * 
+	 * @param tile
+	 * @return
+	 */
 	private Vector2 checkTargetTile(Vector2 tile){
 		if (checkIfTarget(tile.x, tile.y) == false) {
 			return tile;
@@ -480,6 +569,15 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return flood(queue, new Vector2(tile.x - 5, tile.y - 5), new Vector2(tile.x + 5, tile.y + 5), 0);
 		
 	}
+	
+	/**
+	 * 
+	 * @param queue
+	 * @param a
+	 * @param b
+	 * @param c
+	 * @return
+	 */
 	private Vector2 flood(List<Node> queue, Vector2 a, Vector2 b , int c) {
 		List<Node> list = new ArrayList<Node>();
 		for (int i = c, n = queue.size(); i < n; i++) {
@@ -507,6 +605,13 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		}
 		return flood(queue, a, b, c);
 	}
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean checkIfTarget(float x, float y) {
 		for (Actor actor : this.engines.getChildren()) {
 			Engine e = (Engine) actor;
