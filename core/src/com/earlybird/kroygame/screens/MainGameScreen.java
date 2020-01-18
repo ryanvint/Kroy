@@ -9,7 +9,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -58,9 +57,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private Vector2 lastTouch;
 	private boolean clicked;
 	
-	Texture selectionbox;
-	
-
 	public MainGameScreen(Kroy game) {
 		super(game);	
 		ExtendViewport viewport = new ExtendViewport(scrWidth, scrHeight);
@@ -70,18 +66,14 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(gameStage);
 		multiplexer.addProcessor(this);
-		
-		
 	}
 	
 	@Override
 	public void show() {
         Gdx.input.setInputProcessor(multiplexer);
-		selectionbox = new Texture("badlogic.jpg"); //Do we still need this?
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
-		//map = new TmxMapLoader().load("testroadmap.tmx");
 		map = new TmxMapLoader().load("MapOfYork.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
 		roadmap = new Map(this.map);
@@ -280,15 +272,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		
 		this.engines.setLastPostions();
 		this.selectedEngines.setLastPostions();
-		//loop through engines for target locations, if the same as another change it
-		
-		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
-		//check between enemies and enemies for junction halting
-		//check between engines and engines for junction halting
-		//check between units so they stop in adjacent tiles
-		//if engine is stopped, check if its moveToLocation tile is different to its current tile
-		//if so, check next tile to see if engine can move into it (sure if this is best)
-		
 
 		gameStage.act(delta);
 		userInterface.act(delta);
@@ -334,12 +317,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		renderer.setView(camera);
 		renderer.render();
 		
-		//change selectedEngines colour
-		
 		gameStage.getBatch().begin();
 		gameStage.getBatch().end();
 		gameStage.draw();
-		//userInterface.draw();
 		
 	}
 		
@@ -350,24 +330,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.getViewport().update(width, height, true);
 	}
 	
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -421,7 +383,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			if (this.firstTouch == this.lastTouch) {
 				if (this.roadmap.isRoad(this.firstTouch) == true) {
 					if (this.selectedEngines.hasChildren()) {
-//						---------stuff between '-' can go into its own method
 						SnapshotArray<Actor> children = this.selectedEngines.getChildren();
 						Actor[] actors = children.begin();
 						for (int i = 0, n = children.size; i < n; i++) {
@@ -439,8 +400,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 							}
 							child.addAction(sequence);
 						}
-						//deselectEngines();
-//						------------
 					}
 				}
 				else if(fortresses.getFortressClicked(this.firstTouch)!=null) {
@@ -470,7 +429,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		lastTouch = new Vector2(screenX, Gdx.graphics.getHeight()- screenY);
 		return true;
-//		return super.touchDragged(screenX, screenY, pointer);
 	}
 
 	@Override
