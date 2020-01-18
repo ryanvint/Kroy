@@ -24,6 +24,22 @@ public class Utils {
 		return drawable;
 	}
 	
+	public static int findDir(Vector2 a, Vector2 b) {
+		if (b.y > a.y) {
+			return 0;
+		}
+		if (b.x < a.x) {
+			return 1;
+		}
+		if (b.y < a.y) {
+			return 2;
+		}
+		if (b.x > a.x) {
+			return 3;
+		}
+		return -1;
+	}
+	
 	public static boolean isBetween(Vector2 point1, Vector2 point2, Vector2 point3) {
 		if(point1!=null && point2!=null && point3!=null) {
 			Vector2 big = new Vector2(0, 0);

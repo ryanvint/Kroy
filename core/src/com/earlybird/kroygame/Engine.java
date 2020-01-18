@@ -15,6 +15,20 @@ public class Engine extends Group{ 	//Class 'engine' which is an extension of 'G
 	public Engine() {
 	}
 
+	public void checkEngineBroken() {
+		if(!this.getFireEngine().isEnoughHealth()) {
+			this.setSpeed(1.2f);
+		}
+		else {
+			this.setSpeed(.4f);
+		}
+	}
+	
+	public FireEngine getFireEngine() {
+		FireEngine thisFireEngine = (FireEngine) this.getChild(0);
+		return thisFireEngine;
+	}
+	
 	@Override
 	public void setPosition(float x, float y) {
 		this.targetTile = new Vector2((float) Math.floor(x / 32), (float) Math.floor(y / 32));

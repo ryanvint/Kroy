@@ -1,10 +1,7 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 public class Fortress extends Entity{
 
@@ -32,22 +29,15 @@ public class Fortress extends Entity{
 		engine.changeHealth(-this.getDamage());					//that the fortress does
 	}
 	
-	public boolean isFortressinRange(Vector2 bottomLeft, Vector2 topRight) {  //Used to determine if a fortress is in range of a fire engine 
-		if(this.getX()>=bottomLeft.x && this.getX()<=topRight.x && this.getY()>=bottomLeft.y && this.getY()<=topRight.y) {
-			return true;
+	public void changeFortressTarget(Engines engines, Engines selectedEngines) {
+		if(this.isAttacking()) {
+			if(!this.isCurrentTargetValid(this.getCurrentTarget())) {
+				this.setNewTarget(engines, selectedEngines);
+			}
 		}
-		return false;
-	}
-	
-	public boolean canFortressAttackEngine(FireEngine engine) {
-		if(engine!=null) {
-			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
-			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange()+96, this.getRange()+96)));
-				if(engine.isEngineinRange(bottomLeft, topRight) && this.getCurrentHealth()!=0) {
-					return true;
-				}
+		else {
+			this.setNewTarget(engines, selectedEngines);
 		}
-		return false;
 	}
 	
 	public void setNewTarget(Engines engines, Engines selectedEngines) {
@@ -74,7 +64,7 @@ public class Fortress extends Entity{
 	}
 	
 	public boolean isCurrentTargetValid(FireEngine engine) {
-		if(!this.canFortressAttackEngine(engine) || engine.getCurrentHealth() == 0) {
+		if(!this.canEntityAttackEntity(engine) || engine.getCurrentHealth() == 0) {
 			return false;
 		}
 		else {

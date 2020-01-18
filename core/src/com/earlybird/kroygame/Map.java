@@ -9,8 +9,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.earlybird.kroygame.pathfinding.*;
 
 public class Map {
@@ -34,7 +32,6 @@ public class Map {
         		}
             }
         }
-        printMap();
 	}
 	public void printMap() {
 		for (int x = 0; x < this.grid.length; x++) {

@@ -3,7 +3,6 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.earlybird.kroygame.screens.MainGameScreen;
 import com.earlybird.kroygame.screens.StartScreen;
 
 public class Kroy extends Game {

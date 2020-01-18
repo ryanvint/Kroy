@@ -2,13 +2,12 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 public class FireEngine extends Unit {
 	
-	private int currentVolume, maxVolume, waterRate, iD; //Used for water statbars
+	private int currentVolume, maxVolume, waterRate, ID; //Used for water statbars
 	private boolean isRefilling, isSelected; //Status variables
 	private StatBar waterBar, userInterfaceWaterBar; //Used to create the statbar
 	
@@ -16,9 +15,9 @@ public class FireEngine extends Unit {
 
 	
 	
-	public FireEngine(TextureRegion texture, int iD) { //Instantiates a fire engine with a texture that you want assigned to it and gives it an
+	public FireEngine(TextureRegion texture, int ID) { //Instantiates a fire engine with a texture that you want assigned to it and gives it an
 		super();										//Identification number
-		this.iD = iD;
+		this.ID = ID;
 		this.texture = texture;
 		currentVolume = 200;
 		maxVolume = 200;
@@ -28,25 +27,6 @@ public class FireEngine extends Unit {
 		currentTarget = null;
 		this.waterBar = new StatBar(40,5, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
 		this.userInterfaceWaterBar = new StatBar(80,10, this.getMaxVolume(), Color.BLACK, Color.BLUE, Color.BLUE);
-	}
-	
-	public boolean isEngineinRange(Vector2 bottomLeft, Vector2 topRight) {  //Method
-		Vector2 currentLocation = new Vector2(this.localToStageCoordinates(new Vector2(0,0)));
-		if(currentLocation.x>=bottomLeft.x && currentLocation.x<=topRight.x && currentLocation.y>=bottomLeft.y && currentLocation.y<=topRight.y) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean canEngineAttackFortress(Fortress fortress) {
-		if(fortress!=null) {
-			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
-			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange(), this.getRange())));
-				if(fortress.isFortressinRange(bottomLeft, topRight)) {
-					return true;
-				}
-		}
-		return false;
 	}
 	
 	public boolean isEnoughWater() { //Method to check that a fire engines currentVolume is not empty 
@@ -79,7 +59,7 @@ public class FireEngine extends Unit {
 	
 
 	public void attackFortress() {
-		if(this.canEngineAttackFortress(currentTarget) && this.isEnoughWater() && this.isEnoughHealth()) {
+		if(this.canEntityAttackEntity(currentTarget) && this.isEnoughWater() && this.isEnoughHealth()) {
 			this.dealDamage();
 		}
 		else {
@@ -93,7 +73,7 @@ public class FireEngine extends Unit {
 	}
 
 	public boolean isInFireStationRange(FireStation station) { //Method to check how close the firestation is and whether it is in range and if it is returns True
-		if(this.isEngineinRange(new Vector2(station.getX(),station.getY()-32), new Vector2(station.getX()+96,station.getY()))) {
+		if(this.isEntityinRange(new Vector2(station.getX(),station.getY()-32), new Vector2(station.getX()+96,station.getY()))) {
 			return true;
 		}
 		return false;
@@ -129,8 +109,8 @@ public class FireEngine extends Unit {
 		return currentVolume;
 	}
 	
-	public int getiD() {
-		return iD;
+	public int getID() {
+		return ID;
 	}
 
 

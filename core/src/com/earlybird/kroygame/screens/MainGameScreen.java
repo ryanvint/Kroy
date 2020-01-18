@@ -1,20 +1,15 @@
 package com.earlybird.kroygame.screens;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -22,28 +17,15 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.earlybird.kroygame.Engines;
-import com.earlybird.kroygame.FireEngine;
-import com.earlybird.kroygame.FireStation;
-import com.earlybird.kroygame.Fortress;
-import com.earlybird.kroygame.Kroy;
-import com.earlybird.kroygame.Map;
-import com.earlybird.kroygame.Resources;
-import com.earlybird.kroygame.StatBar;
-import com.earlybird.kroygame.Unit;
-import com.earlybird.kroygame.Utils;
-import com.earlybird.kroygame.pathfinding.Node;
-import com.earlybird.kroygame.Engine;
-import com.earlybird.kroygame.Fortresses;
+import com.earlybird.kroygame.*;
+import com.earlybird.kroygame.pathfinding.*;
 
 
 public class MainGameScreen extends DefaultScreen implements InputProcessor {
@@ -75,7 +57,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private Vector2 firstTouch;
 	private Vector2 lastTouch;
 	private boolean clicked;
-	boolean click;
 	
 	Texture selectionbox;
 	
@@ -152,7 +133,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		quitButton.addListener(new InputListener(){ //Listens for any input on the quit Button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press Up");
+               
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -164,7 +145,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		pauseButton.addListener(new InputListener(){ //Listens for any input on the pause Button and executes accordingly
             @Override //Currently not implemented correctly
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press Up");
+                
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -184,38 +165,11 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engineOne.addListener(new InputListener() { //Listens for any input on the engine no.1 button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-            	System.out.println("Press Up");
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) { 
-            	if (checkInEngines(1)) {
-            		for (int i = 0; i<engines.getChildren().size; i++) {
-            			Engine thisEngine = (Engine)engines.getChild(i);
-            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-            			int var = thisFireEngine.getiD();
-            			if (var == 1) {
-            				thisFireEngine.setTexture(game.res.firetruckSelected);
-            				selectedEngines.addActor(engines.getChild(i));
-            				break;
-            			} else {
-            				continue;
-            			}	
-            		}
-            	} else {
-            		for (int i = 0; i<selectedEngines.getChildren().size; i++) {
-                   		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                        FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                        int var = thisFireEngine.getiD();
-                       	if (var == 1) {
-                       		thisFireEngine.setTexture(game.res.firetruck);
-                       		engines.addActor(selectedEngines.getChild(i));
-                       		break;
-                        } else {
-                       		continue;
-                       	}
-                    }
-            	}
-            return true;
+            	checkButtonEngineSelect(1);
+            	return true;
             }      
                    
 		});
@@ -223,76 +177,22 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		engineTwo.addListener(new InputListener() { //Listens for any input on the engine no.2 button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press Up");
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	if (checkInEngines(2)) {
-            		for (int i = 0; i<engines.getChildren().size; i++) {
-            			Engine thisEngine = (Engine)engines.getChild(i);
-            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-            			int var = thisFireEngine.getiD();
-            			if (var == 2) {
-            				thisFireEngine.setTexture(game.res.firetruckSelected);
-            				selectedEngines.addActor(engines.getChild(i));
-            				break;
-            			} else {
-            				continue;
-            			}	
-            		}
-            	} else {
-            		for (int i = 0; i<selectedEngines.getChildren().size; i++) {
-                   		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                        FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                        int var = thisFireEngine.getiD();
-                       	if (var == 2) {
-                       		thisFireEngine.setTexture(game.res.firetruck);
-                       		engines.addActor(selectedEngines.getChild(i));
-                       		break;
-                        } else {
-                       		continue;
-                       	}
-                    }
-            	}
-            		return true;       
+            	checkButtonEngineSelect(2);  
+            	return true;
             }
 		});
 		
 		engineThree.addListener(new InputListener(){ //Listens for any input on the engine no.3 button and executes accordingly
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press Up");
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            	if (checkInEngines(3)) {
-            		for (int i = 0; i<engines.getChildren().size; i++) {
-            			Engine thisEngine = (Engine)engines.getChild(i);
-            			FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-            			int var = thisFireEngine.getiD();
-            			if (var == 3) {
-            				thisFireEngine.setTexture(game.res.firetruckSelected);
-            				selectedEngines.addActor(engines.getChild(i));
-            				break;
-            			} else {
-            				continue;
-            			}	
-            		}
-            	} else {
-            		for (int i = 0; i<selectedEngines.getChildren().size; i++) {
-                   		Engine thisEngine = (Engine)selectedEngines.getChild(i);
-                        FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-                        int var = thisFireEngine.getiD();
-                       	if (var == 3) {
-                       		thisFireEngine.setTexture(game.res.firetruck);
-                       		engines.addActor(selectedEngines.getChild(i));
-                       		break;
-                        } else {
-                       		continue;
-                       	}
-                    }
-            	}            	               	  
-            return true;       
+            	checkButtonEngineSelect(3);       	               	  
+            	return true;       
             }
             
 		});
@@ -316,15 +216,18 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		
 	}
 	
-	public void checkEngineBroken(Engine engine) {
-		FireEngine thisFireEngine = (FireEngine) engine.getChild(0);
-		if(!thisFireEngine.isEnoughHealth()) {
-			engine.setSpeed(1.2f);
-		}
-		else {
-			engine.setSpeed(.4f);
-		}
-	}
+	private void checkButtonEngineSelect(int ID) {
+		if (engines.checkInEngines(ID)) {
+           		engines.getFireEngineByID(ID).setTexture(game.res.firetruckSelected);
+           		selectedEngines.addActor(engines.getEngineByID(ID));
+    	} else {
+               	if (selectedEngines.checkInEngines(ID)) {
+               		selectedEngines.getFireEngineByID(ID).setTexture(game.res.firetruck);
+               		engines.addActor(selectedEngines.getEngineByID(ID));
+                } 
+            }
+    	}
+
 	
 	public void checkWinCondition() {
 		boolean isAFortressAlive = false;
@@ -336,22 +239,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		}
 		if(!isAFortressAlive) {
 			//Do win stuff
-			System.out.println("WINNER WINNER CHICKEN MOTHAFUCKIN DIN DIN");
 		}
-	}
-
-	public boolean checkInEngines(int x) {
-		for (int i = 0; i<engines.getChildren().size; i++) {
-        	Engine thisEngine = (Engine)engines.getChild(i);
-        	FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
-        	int var = thisFireEngine.getiD();
-        	if (var == x) {
-        		return true;
-        	} else {
-        		continue;
-        	}
-        }
-		return false;
 	}
 	
 	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
@@ -390,8 +278,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	
 	public void update(float delta) {
 		
-		setLastPostions(this.engines);
-		setLastPostions(this.selectedEngines);
+		this.engines.setLastPostions();
+		this.selectedEngines.setLastPostions();
 		//loop through engines for target locations, if the same as another change it
 		
 		//for ever engine in engines and selected engines check(looping) if there is an engines in their tileTarget
@@ -411,18 +299,18 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			if(engines.getFireEngine(i).isInFireStationRange(firestation)) {
 				firestation.refillEngine(engines.getFireEngine(i));
 			}
-			checkEngineBroken((Engine)engines.getChild(i));
+			
+			engines.getEngine(i).checkEngineBroken();
 		}
 		for(int i=0; i<selectedEngines.getChildren().size; i++) {
 			if(selectedEngines.getFireEngine(i).isInFireStationRange(firestation)) {
 				firestation.refillEngine(selectedEngines.getFireEngine(i));
 			}
-			checkEngineBroken((Engine)selectedEngines.getChild(i));
+			selectedEngines.getEngine(i).checkEngineBroken();
 		}
 		
 		for(int i=0; i<fortresses.getChildren().size; i++) {
-			Fortress thisFortress = (Fortress) fortresses.getChild(i);
-			changeFortressTarget(thisFortress, engines, selectedEngines);
+			fortresses.getFortress(i).changeFortressTarget(engines, selectedEngines);
 		}
 		
 		checkWinCondition();
@@ -430,59 +318,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		gameStage.act(delta);
 		userInterface.act(Gdx.graphics.getDeltaTime());
 		
-		updateDir(this.engines);
-		updateDir(this.selectedEngines);
-	}
-
-	public void changeFortressTarget(Fortress fortress, Engines engines, Engines selectedEngines) {
-		if(fortress.isAttacking()) {
-			if(!fortress.isCurrentTargetValid(fortress.getCurrentTarget())) {
-				fortress.setNewTarget(engines, selectedEngines);
-			}
-		}
-		else {
-			fortress.setNewTarget(engines, selectedEngines);
-		}
-	}
-	
-	
-	private void setLastPostions(Engines engines) {
-		if (engines.hasChildren() == true) {
-			for (Actor a : engines.getChildren()) {
-				Engine e = (Engine) a;
-				Unit u = (Unit) e.getChild(0);
-				u.setLastPos(u.localToStageCoordinates(new Vector2(0,0)));
-			}
-		}
-	}
-	private void updateDir(Engines engines) {
-		if (engines.hasChildren() == true) {
-			for (Actor a : engines.getChildren()) {
-				Engine e = (Engine) a;
-				Unit u = (Unit) e.getChild(0);
-				int d = findDir(u.getLastPos(), u.localToStageCoordinates(new Vector2(0,0)));
-				if (d != -1) {
-					u.setDir(d);
-				}
-			}
-		}
-
-	}
-	
-	private int findDir(Vector2 a, Vector2 b) {
-		if (b.y > a.y) {
-			return 0;
-		}
-		if (b.x < a.x) {
-			return 1;
-		}
-		if (b.y < a.y) {
-			return 2;
-		}
-		if (b.x > a.x) {
-			return 3;
-		}
-		return -1;
+		this.engines.updateDir();
+		this.selectedEngines.updateDir();
 	}
 
 	@Override
@@ -547,12 +384,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	public boolean keyUp(int keycode) {
 		switch (keycode)
 	    {
-		case Keys.CONTROL_RIGHT:
-			info();
-			return true;
 		case Keys.C:
 			deselectEngines();
-			write("Deselected");
 			return true;
 		case Keys.X:
 			for(int i=0; i<selectedEngines.getChildren().size;i++) {
@@ -610,9 +443,9 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 //						------------
 					}
 				}
-				else if(fortresses.getFortress(this.firstTouch)!=null) {
+				else if(fortresses.getFortressClicked(this.firstTouch)!=null) {
 					//Check if selected firetrucks are in range of attacking 
-					Fortress thisFortress = fortresses.getFortress(this.firstTouch);
+					Fortress thisFortress = fortresses.getFortressClicked(this.firstTouch);
 					if (this.selectedEngines.hasChildren()) {
 						for(int i=0; i<selectedEngines.getChildren().size; i++) {
 						FireEngine thisFireEngine = selectedEngines.getFireEngine(i);
@@ -652,17 +485,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		return super.scrolled(amount);
 	}
 	
-	//to save time when debugging
-	private void write(String text) {
-		System.out.println(text);
-	}
-	private void info() {
-		write("--------------");
-		System.out.println(this.lastTouch);
-		System.out.println(roadmap.isRoad(lastTouch));
-		write(selectedEngines.toString());
-		write(engines.toString());
-	}
 	private void selectEngines() {
 		//select engines
 		SnapshotArray<Actor> children = this.engines.getChildren();
@@ -671,7 +493,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			Actor child = actors[i];
 			Vector2 childPos = new Vector2(child.getX(), child.getY());
 			if (Utils.isBetween(this.firstTouch, this.lastTouch, childPos) == true) {
-				write("Engine selected");
 				//switch texture
 				Engine thisEngine = (Engine) child;
 				FireEngine thisFireEngine = (FireEngine)thisEngine.getChild(0);
@@ -726,7 +547,6 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		for (Node n : list) {
 			queue.add(n);
 		}
-		System.out.println("ERROR");
 		return flood(queue, a, b, c);
 	}
 	private boolean checkIfTarget(float x, float y) {

@@ -10,9 +10,11 @@ public class Fortresses extends Group{
 	}						//can be performed on all actors within group
 							//The Fortress Group stores together all the Fortress on the map
 							
+	public Fortress getFortress(int index) {
+		return (Fortress) this.getChild(index);
+	}
 	
-	
-	public Fortress getFortress(Vector2 point) { 
+	public Fortress getFortressClicked(Vector2 point) { 
 		for(int i=0; i<this.getChildren().size; i++) {
 			Fortress thisFortress = (Fortress) this.getChild(i);
 			if(point != null) {

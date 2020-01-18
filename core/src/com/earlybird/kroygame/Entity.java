@@ -1,18 +1,12 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 //Used to import everything needed to port items over
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.earlybird.kroygame.screens.MainGameScreen;
 
 public abstract class Entity extends Actor{
 	TextureRegion texture;
@@ -48,6 +42,25 @@ public abstract class Entity extends Actor{
 		else if(this.getCurrentHealth()>this.getMaxHealth()) {
 			this.setCurrentHealth(this.getMaxHealth());
 		}
+	}
+	
+	public boolean isEntityinRange(Vector2 bottomLeft, Vector2 topRight) {  //Method
+		Vector2 currentLocation = new Vector2(this.localToStageCoordinates(new Vector2(0,0)));
+		if(currentLocation.x>=bottomLeft.x && currentLocation.x<=topRight.x && currentLocation.y>=bottomLeft.y && currentLocation.y<=topRight.y) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean canEntityAttackEntity(Entity entityToAttack) {
+		if(entityToAttack!=null) {
+			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
+			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange()+96, this.getRange()+96)));
+				if(entityToAttack.isEntityinRange(bottomLeft, topRight) && this.getCurrentHealth()!=0) {
+					return true;
+				}
+		}
+		return false;
 	}
 	
 	//Getters and Setters
