@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class FireEngine extends Unit {
 	
 	private int currentVolume, maxVolume, waterRate, iD; //Used for water statbars
-	public boolean isRefilling, isSelected; //Status variables
-	public StatBar waterBar, userInterfaceWaterBar; //Used to create the statbar
+	private boolean isRefilling, isSelected; //Status variables
+	private StatBar waterBar, userInterfaceWaterBar; //Used to create the statbar
 	
 	private Fortress currentTarget;
 

@@ -9,15 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 public class Fortress extends Entity{
 
 
-	public boolean hasBoss;			//Boolean variable to be used in latter stage of developement
+	private boolean hasBoss;			//Boolean variable to be used in latter stage of developement
 									//to implement mini-game
 
-	public FireEngine currentTarget;
+	private FireEngine currentTarget;
 	
 	public Fortress(TextureRegion texture) {	//Instantiates a Fortress with a texture parameter created in the resource class
 		this.texture = texture;					
 		hasBoss = false;
-		this.healthBar.setWidth(96);
+		this.getHealthBar().setWidth(96);
 		this.currentTarget = null;
 	}
 	

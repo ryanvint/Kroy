@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class FireStation extends Entity {
 	
-	public int currentRefilling;				//Boolean variable to signify if an individual fire engine is refilling
-	public int maxCapacity;						
+	private int currentRefilling;				//Boolean variable to signify if an individual fire engine is refilling
+	private int maxCapacity;						
 	private int refillRate;						//Shows how fast the engine can refill
 	
 	public FireStation(TextureRegion texture) {	//Instantiates a fire engine

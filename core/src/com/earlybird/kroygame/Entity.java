@@ -18,8 +18,8 @@ public abstract class Entity extends Actor{
 	TextureRegion texture;
 	
 	private int currentHealth, maxHealth, range, damage;
-	public StatBar healthBar, userInterfaceHealthBar;
-	public boolean notDestroyed = true;
+	private StatBar healthBar, userInterfaceHealthBar;
+	private boolean notDestroyed = true;
 	
 	public Entity(int currentHealth, int maxHealth, int range, int damage) {	//Constructor to instantiate Entity
 		this.setOrigin(this.getWidth()/2, this.getHeight()/2);
