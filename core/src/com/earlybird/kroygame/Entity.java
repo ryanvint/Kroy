@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-//Used to import everything needed to port items over
 import com.badlogic.gdx.graphics.Color;
 
 public abstract class Entity extends Actor{
@@ -15,17 +13,18 @@ public abstract class Entity extends Actor{
 	private StatBar healthBar, userInterfaceHealthBar;
 	private boolean notDestroyed = true;
 	
-	public Entity(int currentHealth, int maxHealth, int range, int damage) {	//Constructor to instantiate Entity
+	public Entity(int currentHealth, int maxHealth, int range, int damage) {
 		this.setOrigin(this.getWidth()/2, this.getHeight()/2);
 		this.currentHealth = currentHealth;
 		this.maxHealth = maxHealth;
 		this.range = range;
 		this.damage = damage;
+		//Creates a statbar of with a max value of maxhealth for the fireEngine and the UI
 		this.healthBar = new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 		this.userInterfaceHealthBar = new StatBar(80,10, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
-	public Entity() {	//Constructor to instantiate Entity
+	public Entity() {
 		currentHealth = 100;
 		maxHealth = 100;
 		range = 32*4;
@@ -34,6 +33,10 @@ public abstract class Entity extends Actor{
 		this.userInterfaceHealthBar = new StatBar(80,10, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN);
 	}
 	
+	/**
+	 * Changes the health of the entity but keeps it >0 and <max health
+	 * @param change amount to change health by. Negative to subtract health
+	 */
 	public void changeHealth(int change) {							//Changes the current health of a Entity via a change parameter 
 		this.setCurrentHealth(this.getCurrentHealth() + change);
 		if(this.getCurrentHealth()<0) {
@@ -44,6 +47,12 @@ public abstract class Entity extends Actor{
 		}
 	}
 	
+	/**
+	 * Checks if the entity is within the square range of the 2 Vector2 points passed in
+	 * @param bottomLeft Bottom left point of square range being checked
+	 * @param topRight Top Right point of square range being checked
+	 * @return boolean for if the entity is in range
+	 */
 	public boolean isEntityinRange(Vector2 bottomLeft, Vector2 topRight) {  //Method
 		Vector2 currentLocation = new Vector2(this.localToStageCoordinates(new Vector2(0,0)));
 		if(currentLocation.x>=bottomLeft.x && currentLocation.x<=topRight.x && currentLocation.y>=bottomLeft.y && currentLocation.y<=topRight.y) {
@@ -52,10 +61,15 @@ public abstract class Entity extends Actor{
 		return false;
 	}
 	
+	/**
+	 * Checks if a given entity is in range of this entity instance
+	 * @param entityToAttack
+	 * @return boolean of if the entity given is in the range of this entity
+	 */
 	public boolean canEntityAttackEntity(Entity entityToAttack) {
 		if(entityToAttack!=null) {
 			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
-			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange()+96, this.getRange()+96)));
+			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange(), this.getRange())));
 				if(entityToAttack.isEntityinRange(bottomLeft, topRight) && this.getCurrentHealth()!=0) {
 					return true;
 				}
@@ -123,6 +137,7 @@ public abstract class Entity extends Actor{
 	
 	@Override
 	public void draw(Batch batch, float parentAlpha) { //Draws entity 
+		//updates healthbar value
 		this.getHealthBar().setValue(this.getCurrentHealth());
 		batch.draw(texture, getX(), getY());
 	}

@@ -51,7 +51,7 @@ public class FireEngine extends Unit {
 	}
 	
 	public void dealDamage() { //Method used to deal Damage to enemies using the fire engines currentVolumen and WaterRate
-		if(currentTarget.getCurrentHealth()>0 && this.getCurrentVolume()>0) {
+		if(currentTarget.getCurrentHealth()>0 && isEnoughWater()) {
 			this.changeWater(-this.getWaterRate());
 			currentTarget.changeHealth(-this.getDamage());
 		}

@@ -2,31 +2,41 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class Fortress extends Entity{
-
-
-	private boolean hasBoss;			//Boolean variable to be used in latter stage of developement
-									//to implement mini-game
+	private boolean hasBoss;
 
 	private FireEngine currentTarget;
 	
-	public Fortress(TextureRegion texture) {	//Instantiates a Fortress with a texture parameter created in the resource class
+	public Fortress(TextureRegion texture) {
 		this.texture = texture;					
 		hasBoss = false;
 		this.getHealthBar().setWidth(96);
 		this.currentTarget = null;
 	}
 	
-	public Fortress(TextureRegion texture, boolean hasBoss) {	//Instantiates a Fortress with a texture parameter created in the resource class
-		super();												//but with parameter showing whether it has a boss in it or not.
+	public Fortress(TextureRegion texture, boolean hasBoss) {
+		super();
 		this.texture = texture;
 		this.hasBoss = hasBoss;
 		this.currentTarget = null;
 	}
 	
-	public void attackEngine(FireEngine engine) {				//Method used to attack fire engines, and reduce there health determined by damage		
-		engine.changeHealth(-this.getDamage());					//that the fortress does
+	public void attackEngine(FireEngine engine) {		
+		engine.changeHealth(-this.getDamage());
+	}
+	
+	@Override
+	public boolean canEntityAttackEntity(Entity entityToAttack) {
+		if(entityToAttack!=null) {
+			Vector2 bottomLeft = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).sub(new Vector2(this.getRange(), this.getRange())));
+			Vector2 topRight = new Vector2(this.localToStageCoordinates(new Vector2(0,0)).add(new Vector2(this.getRange()+96, this.getRange()+96)));
+				if(entityToAttack.isEntityinRange(bottomLeft, topRight) && this.getCurrentHealth()!=0) {
+					return true;
+				}
+		}
+		return false;
 	}
 	
 	public void changeFortressTarget(Engines engines, Engines selectedEngines) {
