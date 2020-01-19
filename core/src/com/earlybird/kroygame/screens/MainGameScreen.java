@@ -10,7 +10,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -225,7 +224,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		addFortress(4,12,game.res.railway);
 		
 		//Adds fire station to game
-		addFireStation(42,3);
+		addFireStation(41,3);
 		
 		//Adds all selected and unselected fire engines to the stage as well as all fortresses
 		gameStage.addActor(engines);
