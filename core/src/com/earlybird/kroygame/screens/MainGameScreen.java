@@ -561,7 +561,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	}
 	
 	/**
-	 * 
+	 * Checks the parameter tile to see if it is the target tile of another engine using checkIfTarget. If so, an array
+	 *  of nodes is created with a node corresponding to the tile as the first node. The flood method is then called
+	 *  passing in the array as well as two vectors for the bottom left and top right search area. If the tile is not
+	 *  the target tile of another engine it returns the same tile.
 	 * @param tile
 	 * @return
 	 */
@@ -576,11 +579,12 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	}
 	
 	/**
-	 * 
-	 * @param queue
-	 * @param a
-	 * @param b
-	 * @param c
+	 * recursively iterates through the nodes surrounds the nodes in queue until it finds a node that is not the
+	 * TargetTile of another engine.
+	 * @param queue	array of nodes
+	 * @param a		bottom left of search area
+	 * @param b		top right of search area
+	 * @param c		count
 	 * @return
 	 */
 	private Vector2 flood(List<Node> queue, Vector2 a, Vector2 b , int c) {
@@ -612,7 +616,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	}
 	
 	/**
-	 * 
+	 * checks if the tile at x,y is the TargetTile of an Engine in engines or selectedEngines
 	 * @param x
 	 * @param y
 	 * @return
