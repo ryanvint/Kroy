@@ -42,7 +42,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	private TextButton pauseButton, quitButton;
 	private TextField menuTitle, scoreTitle, engineTitle, shopTitle;
 	private Button engineOne, engineTwo, engineThree;
-	private Label score, nOne, nTwo, nThree;
+	private Label score, nOne, nTwo, nThree, gameEndTitle;
 	private Boolean paused;
 	
 	public Skin skin, engineSkin;
@@ -262,7 +262,10 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 			}
 		}
 		if(!isAFortressAlive) {
-			//Do win stuff
+			gameEndTitle = new Label("- YOU WIN -", skin, "default");
+			gameEndTitle.setBounds(750, 350, 100f, 200f);
+			gameEndTitle.setScale(10);
+			gameStage.addActor(gameEndTitle);
 		}
 	}
 	
