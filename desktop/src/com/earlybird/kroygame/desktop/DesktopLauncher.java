@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		settings.maxHeight = 2048;
 		settings.pot = true;
 		
-		TexturePacker.process("C:\\Users\\ryanv\\OneDrive\\Documents\\Kroy3\\core\\assets\\assets", "packed", "game");
+		TexturePacker.process("../core\\assets\\assets", "packed", "game");
 	}
 	
 	public static void main (String[] arg) {
