@@ -1,5 +1,6 @@
 package com.earlybird.kroygame.desktop;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
@@ -27,7 +28,7 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.foregroundFPS = 60;
 		config.backgroundFPS = 20;
-		
+		config.addIcon("firetruck.png", FileType.Internal);
 		
 		new LwjglApplication(new Kroy(), config);
 	}
