@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="fireEngineTests" project="Sepr2Assessment" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="Sepr2Assessment.fireEngineTests" time="0.0" displayname="fireEngineTests" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]">
+    <testcase name="UT_FIREENGINE_WATERCHANGE" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_WATERCHANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_WATERCHANGE()]"/>
+    <testcase name="UT_FIREENGINE_WATERCHANGE_LIMIT" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_WATERCHANGE_LIMIT()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_WATERCHANGE_LIMIT()]"/>
+    <testcase name="UT_FIREENGINE_ATTACKFORTRESS" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_ATTACKFORTRESS()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_ATTACKFORTRESS()]"/>
+    <testcase name="UT_FIREENGINE_DEALDAMAGE" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_DEALDAMAGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_DEALDAMAGE()]"/>
+  </testsuite>
+</testrun>

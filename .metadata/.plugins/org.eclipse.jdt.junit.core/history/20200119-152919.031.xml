@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="entityTests" project="Sepr2Assessment" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="Sepr2Assessment.entityTests" time="0.0" displayname="entityTests" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]">
+    <testcase name="UT_ENTITY_HEALTHCHANGE_LIMIT" classname="Sepr2Assessment.entityTests" time="0.0" displayname="UT_ENTITY_HEALTHCHANGE_LIMIT()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_HEALTHCHANGE_LIMIT()]"/>
+    <testcase name="UT_ENTITY_INRANGE" classname="Sepr2Assessment.entityTests" time="0.0" displayname="UT_ENTITY_INRANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_INRANGE()]"/>
+    <testcase name="UT_ENTITY_HEALTHCHANGE" classname="Sepr2Assessment.entityTests" time="0.0" displayname="UT_ENTITY_HEALTHCHANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_HEALTHCHANGE()]"/>
+    <testcase name="UT_ENTITY_CANENTITYATTACKENTITY" classname="Sepr2Assessment.entityTests" time="0.0" displayname="UT_ENTITY_CANENTITYATTACKENTITY()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_CANENTITYATTACKENTITY()]"/>
+  </testsuite>
+</testrun>

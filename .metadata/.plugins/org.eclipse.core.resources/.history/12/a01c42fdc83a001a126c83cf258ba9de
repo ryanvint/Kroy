@@ -1,0 +1,18 @@
+package Sepr2Assessment;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class entityTests {
+
+	@Test
+	void UT_ENTITY_HEALTHCHANGE() {
+		entityHealthTest changeTest = new entityHealthTest();
+		changeTest.setCurrentHealth(0);
+		changeTest.setMaxHealth(100);
+		changeTest.changeHealth(10);
+		assertEquals(changeTest.getCurrentHealth(), 10);
+	}
+
+}

@@ -1,0 +1,33 @@
+package Sepr2Assessment;
+
+public class entityHealthTest {
+	
+	int currentHealth = 100;
+	int maxHealth = 100;
+	
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
+
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+	}
+	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+	
+	public void changeHealth(int change) {							//Changes the current health of a Entity via a change parameter 
+		this.setCurrentHealth(this.getCurrentHealth() + change);
+		if(this.getCurrentHealth()<0) {
+			this.setCurrentHealth(0);
+		}
+		else if(this.getCurrentHealth()>this.getMaxHealth()) {
+			this.setCurrentHealth(this.getMaxHealth());
+		}
+	}
+}

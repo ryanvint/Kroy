@@ -1,0 +1,10 @@
+package Sepr2Assessment;
+
+public class fireEngineStationRange {
+	public boolean isInFireStationRange(FireStation station) {
+		if(this.isEntityinRange(new Vector2(station.getX(),station.getY()-32), new Vector2(station.getX()+96,station.getY()))) {
+			return true;
+		}
+		return false;
+	}
+}
