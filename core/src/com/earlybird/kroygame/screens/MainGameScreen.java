@@ -84,6 +84,8 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, scrWidth, scrHeight);
 		camera.update();
+		//If code errors on this it's an error with the gradle build
+		//Delete everything from the current workspace and re-import with gradle
 		map = new TmxMapLoader().load("MapOfYork.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map);
 		//Map of roads made as a matrix of 0's and 1's -- Check Map class

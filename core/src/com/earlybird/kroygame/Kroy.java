@@ -23,6 +23,8 @@ public class Kroy extends Game {
 	 */
 	@Override
 	public void create () { 
+		//If code errors on this it's an error with the gradle build
+		//Delete everything from the current workspace and re-import with gradle
 		musicBackground = Gdx.audio.newMusic(Gdx.files.internal("bensound-scifi.mp3"));
 		musicBackground.setLooping(true);
 		musicBackground.setVolume((float) 0.10);
