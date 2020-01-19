@@ -1,5 +1,8 @@
 package com.earlybird.kroygame.pathfinding;
 
+/**
+ * Used for calculating paths for path finding
+ */
 public class Node {
 
 	private int x;

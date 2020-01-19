@@ -2,6 +2,9 @@ package com.earlybird.kroygame.pathfinding;
 
 import java.util.*;
 
+/**
+ * Implements the AStar Algorithm for Unit movement
+ */
 public class AStar {
 	
 	private Node[][] map;
