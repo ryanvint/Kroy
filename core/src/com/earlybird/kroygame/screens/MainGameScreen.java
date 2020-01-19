@@ -26,7 +26,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.earlybird.kroygame.*;
 import com.earlybird.kroygame.pathfinding.*;
 
-
+/**
+ * Main Game Screen, the actual game is run on this screen
+ */
 public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	
 	public static final int scrWidth = 52 * Resources.TILE_SIZE;

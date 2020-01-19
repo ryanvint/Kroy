@@ -2,13 +2,18 @@ package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * FireStation is a Entity on the map
+ * When a fireEngine is near a FireStation it will refill the Engine's
+ * health and water
+ */
 public class FireStation extends Entity {
 	
-	private int currentRefilling;				//Boolean variable to signify if an individual fire engine is refilling
+	private int currentRefilling;
 	private int maxCapacity;						
-	private int refillRate;						//Shows how fast the engine can refill
+	private int refillRate;
 	
-	public FireStation(TextureRegion texture) {	//Instantiates a fire engine
+	public FireStation(TextureRegion texture) {
 		super();
 		this.texture = texture;
 		this.currentRefilling = 0;		
@@ -16,8 +21,12 @@ public class FireStation extends Entity {
 		this.refillRate = 1;
 	}
 	
-	public void refillEngine(FireEngine engine) {	//Method  to refill fire engine
-		engine.changeHealth(refillRate);			//Fire engine that is refilling needs to be passed through
+	/**
+	 * Refills the fireEngines by refill rate per tick
+	 * @param engine The fireEngine you want to refill
+	 */
+	public void refillEngine(FireEngine engine) {
+		engine.changeHealth(refillRate);
 		engine.changeWater(refillRate);
 	}
 	

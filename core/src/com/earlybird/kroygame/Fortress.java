@@ -1,9 +1,15 @@
 package com.earlybird.kroygame;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Fortress is an entity on the screen
+ * It attacks fireEngines one at a time when they are
+ * in range of it while it and they still have health. 
+ */
 public class Fortress extends Entity{
 	private boolean hasBoss;
 
@@ -12,8 +18,12 @@ public class Fortress extends Entity{
 	public Fortress(TextureRegion texture) {
 		this.texture = texture;					
 		hasBoss = false;
-		this.getHealthBar().setWidth(96);
 		this.currentTarget = null;
+		this.setMaxHealth(500);
+		this.setCurrentHealth(500);
+		this.setDamage(1);
+		this.setHealthBar(new StatBar(40,5, this.getMaxHealth(), Color.RED, Color.GREEN, Color.GREEN));
+		this.getHealthBar().setWidth(96);
 	}
 	
 	public Fortress(TextureRegion texture, boolean hasBoss) {
@@ -23,10 +33,17 @@ public class Fortress extends Entity{
 		this.currentTarget = null;
 	}
 	
+	/**
+	 * Attacks the engine passed in with the damage amount of that fortress
+	 * @param engine Engine to attack
+	 */
 	public void attackEngine(FireEngine engine) {		
 		engine.changeHealth(-this.getDamage());
 	}
 	
+	/**
+	 * Adds 96 to the topRight range to account for texture size
+	 */
 	@Override
 	public boolean canEntityAttackEntity(Entity entityToAttack) {
 		if(entityToAttack!=null) {
@@ -39,6 +56,11 @@ public class Fortress extends Entity{
 		return false;
 	}
 	
+	/**
+	 * Checks if the current target is valid, if not it gets and sets a new target
+	 * @param engines fireEngines to check if in range of becoming a target
+	 * @param selectedEngines fireEngines to check if in range of becoming a target
+	 */
 	public void changeFortressTarget(Engines engines, Engines selectedEngines) {
 		if(this.isAttacking()) {
 			if(!this.isCurrentTargetValid(this.getCurrentTarget())) {
@@ -50,6 +72,11 @@ public class Fortress extends Entity{
 		}
 	}
 	
+	/**
+	 * Finds any engines in range of the fortress and sets one to become the current target
+	 * @param engines fireEngines to check if in range of becoming a target
+	 * @param selectedEngines fireEngines to check if in range of becoming a target
+	 */
 	public void setNewTarget(Engines engines, Engines selectedEngines) {
 		boolean isTargetSet = false;
 		if(!this.isCurrentTargetValid(this.currentTarget)) {
@@ -73,6 +100,11 @@ public class Fortress extends Entity{
 		}
 	}
 	
+	/**
+	 * Checks if the currentTarget is valid by having more than 0 health and is in range
+	 * @param engine The FireEngine to check if valid
+	 * @return True if currentTarget has more than 0 health and is in range
+	 */
 	public boolean isCurrentTargetValid(FireEngine engine) {
 		if(!this.canEntityAttackEntity(engine) || engine.getCurrentHealth() == 0) {
 			return false;
@@ -82,17 +114,28 @@ public class Fortress extends Entity{
 		}
 	}
 	
+	/**
+	 * Checks if the Fortress has a target currently
+	 * @return True if currentTarget is not null
+	 */
 	public boolean isAttacking() {
 		if(this.getCurrentTarget() == null) return false;
 		else return true;
 	}
 	
+	/**
+	 * If the fortress is attacking, this deals damage to the current target
+	 */
 	public void attackEngine() {
 		if(this.isAttacking()) {
 			this.getCurrentTarget().changeHealth(-this.getDamage());
 		}
 	}
 
+	//Spawn patrol method created for development later ons
+	public void spawnPatrol() {
+		
+	}
 	//Getters and setters
 	public FireEngine getCurrentTarget() {
 		return this.currentTarget;
@@ -108,11 +151,6 @@ public class Fortress extends Entity{
 
 	public void setHasBoss(boolean hasBoss) {
 		this.hasBoss = hasBoss;
-	}
-	
-	//Methods 
-	public void spawnPatrol() { //Spawn patrol method created for development later on
-		
 	}
 	
 	@Override

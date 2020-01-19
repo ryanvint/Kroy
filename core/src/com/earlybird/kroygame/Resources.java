@@ -4,13 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Resources is used to create texture regions and build texture atlas's
+ * To add textures add the png you want to add into the Kroy assets folder
+ * Then define variables with findRegion("fileName")
+ */
 public class Resources {
-	
-	//Resource Class is used to create Texture Regions which define textures with in Texture atlas's that we've curated.
 	
 	TextureAtlas gameSprites; 
 	TextureAtlas gameLocations;
-	//Initialising "Texture Regions" which allow use to pull individual texture from the atlas PNGs and assign them to a variable.
+
 	public TextureRegion firetruck;
 	public TextureRegion firetruckSelected;
 	public TextureRegion fortress, centralHall, building, minister, railway;
@@ -19,18 +22,19 @@ public class Resources {
 	
 	public Resources()
 	{
-		gameLocations = new TextureAtlas(Gdx.files.internal("packed/GameLocation.txt")); //These texture sheets define each texture within the atlas PNG files
-		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas")); //Locations shows all textures used for FireStations and Fortress's 
-		//Sprites is where we get all textures for Fire Engines and Alien Patrols
+		//These texture sheets define each texture within the atlas PNG files locations shows all textures used for FireStations and Fortress's 
+		gameLocations = new TextureAtlas(Gdx.files.internal("packed/GameLocation.txt"));
+		//gameSprites atlas is auto generated from kroy assets folder
+		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas"));
 		
 		firetruckSelected = gameSprites.findRegion("firetruckSelected");
-		firetruck = gameSprites.findRegion("firetruck"); //Defining the texture for the Fire Trucks
-		fortress = gameLocations.findRegion("Fortress"); //Defining the texture for the Fortress's
+		firetruck = gameSprites.findRegion("firetruck");
+		fortress = gameLocations.findRegion("Fortress");
 		centralHall = gameLocations.findRegion("AlienCentralHall");
 		building = gameLocations.findRegion("Building2");
 		minister = gameSprites.findRegion("AlienYorkMinister");
 		railway = gameSprites.findRegion("RailwayAlien");
-		firestation = gameLocations.findRegion("FireStation"); //Defining the texture for the Fire Station
+		firestation = gameLocations.findRegion("FireStation");
 	}
 	
 	public void dispose()

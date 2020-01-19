@@ -13,59 +13,64 @@ import com.earlybird.kroygame.Engine;
 import com.earlybird.kroygame.FireEngine;
 import com.earlybird.kroygame.Kroy;
 
-//implements the Screen class
-//Screen to be shown at the start of the game
-
+/**
+ * Screen shown at start of game
+ * Allows starting and quitting the game
+ * Starting the game switches the screen to MainGameScreen
+ */
 public class StartScreen implements Screen {
 
-	private Stage stage; 										//creates a new instantiation of the Stage class
-	private TextButton startButton, optionsButton, quitButton;  //creates instantiations of Button class for each button needed on screen. 
-	public Skin skin; 											//creates a new instantiation of Skin class to allow for menu aesthetics 
-	public Kroy game; 											// creates a new instantiation of Kroy which allows us to run this screen through the base file.
-				
+	private Stage stage;
+	private TextButton startButton, quitButton;
+	public Skin skin;
+	public Kroy game;
 	
-	
-	public StartScreen(Kroy game) { 							//StartScreen Constructor which needs Kroy to be passed into it
+	public StartScreen(Kroy game) {
 		this.game = game;
 	}
 	
+	/**
+	 * On start of screen the buttons are displayed
+	 */
 	@Override
-	public void show() {													//Called when this screen becomes the current game screen
-		stage = new Stage();												//Creates a new instantiation of the Stage class
+	public void show() {
+		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);						
-		skin = new Skin(Gdx.files.internal("uiskin.json"));					//This creates a need Skin with contains all the assets needed to render the menu
-																			//allows for fonts and pictures
-		startButton = new TextButton("Start", skin, "default");				//These full instantiate the buttons on the menu with needed Text, Skin file and																			//font type
-		quitButton = new TextButton("Quit", skin, "default");				//style
+		skin = new Skin(Gdx.files.internal("uiskin.json"));
+															
+		startButton = new TextButton("Start", skin, "default");
+		quitButton = new TextButton("Quit", skin, "default");
 		
-		TextButton[] buttonArray = {startButton, quitButton};//Array of all buttons on the menu allows for easier addition of the wanted buttons
-																			//to the current stage and set there position and shape.
-		Float spacing = 25f;												//Spacing starting value
-		for (TextButton button: buttonArray) {								//For loop iteration through buttonArray
-			button.setWidth(200f);											//How the button is shaped X
-			button.setHeight(20f);											//How the button is shaped Y
-			button.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - spacing ); //Position of button on stage
-			stage.addActor(button);											//Adding the current button to the stage
-			spacing += 25f;													//Spacing incremeneted value
+		TextButton[] buttonArray = {startButton, quitButton};
+		
+		Float spacing = 25f;
+		for (TextButton button: buttonArray) {
+			button.setWidth(200f);
+			button.setHeight(20f);
+			button.setPosition(Gdx.graphics.getWidth() /2 - 100f, Gdx.graphics.getHeight()/2 - spacing );
+			stage.addActor(button);
+			spacing += 25f;
 		}
 	
 		
 	}
 
+	/*
+	 * Draws the buttons and checks if they have been pressed
+	 */
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		stage.act(Gdx.graphics.getDeltaTime());								//
-		stage.draw();														//Draws the stage in the current render() call
+		stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
 		
-		if (startButton.isPressed() == true){								//Action to take when startButton is pressed
-			game.setScreen(new MainGameScreen(game));						//Takes the current screen and closes it then sets the current screen to MainGame
-		}
+		if (startButton.isPressed() == true){
+			game.setScreen(new MainGameScreen(game));
+			}
 		
-		if (quitButton.isPressed() == true) {								//Action to take when quitButton is pressed
-			System.out.print("Quit Pressed"+"\n");
+		if (quitButton.isPressed() == true) {
 			Gdx.app.exit();
 		}
 	}
