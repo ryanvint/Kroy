@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Resources {
 	
 	TextureAtlas gameSprites; 
-	TextureAtlas gameLocations;
+	//TextureAtlas gameLocations;
 
 	public TextureRegion firetruck;
 	public TextureRegion firetruckSelected;
@@ -23,23 +23,20 @@ public class Resources {
 	public Resources()
 	{
 		//These texture sheets define each texture within the atlas PNG files locations shows all textures used for FireStations and Fortress's 
-		gameLocations = new TextureAtlas(Gdx.files.internal("packed/GameLocation.txt"));
+		//gameLocations = new TextureAtlas(Gdx.files.internal("GameLocation.txt"));
 		//gameSprites atlas is auto generated from kroy assets folder
 		gameSprites = new TextureAtlas(Gdx.files.internal("packed/game.atlas"));
 		
 		firetruckSelected = gameSprites.findRegion("firetruckSelected");
 		firetruck = gameSprites.findRegion("firetruck");
-		fortress = gameLocations.findRegion("Fortress");
-		centralHall = gameLocations.findRegion("AlienCentralHall");
-		building = gameLocations.findRegion("Building2");
+		centralHall = gameSprites.findRegion("AlienCentralHall");
 		minister = gameSprites.findRegion("AlienYorkMinister");
 		railway = gameSprites.findRegion("RailwayAlien");
-		firestation = gameLocations.findRegion("FireStation");
+		firestation = gameSprites.findRegion("FireStation");
 	}
 	
 	public void dispose()
 	{
 		gameSprites.dispose();
-		gameLocations.dispose();
 	}
 }

@@ -82,6 +82,13 @@ public abstract class Entity extends Actor{
 	}
 	
 	//Getters and Setters
+	public TextureRegion getTextureRegion() {
+		return this.texture;
+	}
+	
+	public void setTextureRegion(TextureRegion texture) {
+		this.texture = texture;
+	}
 	
 	public int getCurrentHealth() {
 		return currentHealth;
