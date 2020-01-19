@@ -41,20 +41,24 @@ public abstract class Unit extends Entity {
 	public void draw(Batch batch, float parentAlpha) {
 		this.getHealthBar().setValue(this.getCurrentHealth());
 		if (dir == 0) {
-			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getRegionWidth() / 2, this.texture.getRegionHeight() / 2,
-					this.texture.getRegionWidth(), this.texture.getRegionHeight(), 1, 1, 0);
+			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getWidth()/2, this.texture.getHeight()/2,
+					this.texture.getWidth(), this.texture.getHeight(), 1, 1, 0, 0, 0, 
+					this.texture.getWidth(), this.texture.getHeight(), false, false);
 		}
 		if (dir == 1) {
-			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getRegionWidth() / 2, this.texture.getRegionHeight() / 2,
-					this.texture.getRegionWidth(), this.texture.getRegionHeight(), 1, 1, 90);
+			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getWidth()/2, this.texture.getHeight()/2,
+					this.texture.getWidth(), this.texture.getHeight(), 1, 1, 90, 0, 0, 
+					this.texture.getWidth(), this.texture.getHeight(), false, false);
 		}
 		if (dir == 2) {
-			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getRegionWidth() / 2, this.texture.getRegionHeight() / 2,
-					this.texture.getRegionWidth(), this.texture.getRegionHeight(), 1, 1, 180);
+			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getWidth()/2, this.texture.getHeight()/2,
+					this.texture.getWidth(), this.texture.getHeight(), 1, 1, 180, 0, 0, 
+					this.texture.getWidth(), this.texture.getHeight(), false, false);
 		}
 		if (dir == 3) {
-			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getRegionWidth() / 2, this.texture.getRegionHeight() / 2,
-					this.texture.getRegionWidth(), this.texture.getRegionHeight(), 1, 1, 270);
+			batch.draw(this.texture, this.getX(), this.getY(), this.texture.getWidth()/2, this.texture.getHeight()/2,
+					this.texture.getWidth(), this.texture.getHeight(), 1, 1, 270, 0, 0, 
+					this.texture.getWidth(), this.texture.getHeight(), false, false);
 		}
 	}
 }

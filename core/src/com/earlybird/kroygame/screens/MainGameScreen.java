@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -277,7 +278,7 @@ public class MainGameScreen extends DefaultScreen implements InputProcessor {
 	 * @param yTilePos the Y tile the fortress will be placed on
 	 * @param texture the texture for the fortress being added
 	 */
-	public void addFortress(int xTilePos, int yTilePos, TextureRegion texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
+	public void addFortress(int xTilePos, int yTilePos, Texture texture) { //Renders a Fortress at a specified XY location with a Texture allocated with in Resources.jv
 		Fortress fortress = new Fortress(texture);
 		fortress.setPosition(xTilePos * Resources.TILE_SIZE, yTilePos * Resources.TILE_SIZE);
 		gameStage.addActor(fortress.getHealthBar());

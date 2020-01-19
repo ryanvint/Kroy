@@ -1,6 +1,7 @@
 package com.earlybird.kroygame;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +16,7 @@ public class Fortress extends Entity{
 
 	private FireEngine currentTarget;
 	
-	public Fortress(TextureRegion texture) {
+	public Fortress(Texture texture) {
 		this.texture = texture;					
 		hasBoss = false;
 		this.currentTarget = null;
@@ -26,7 +27,7 @@ public class Fortress extends Entity{
 		this.getHealthBar().setWidth(96);
 	}
 	
-	public Fortress(TextureRegion texture, boolean hasBoss) {
+	public Fortress(Texture texture, boolean hasBoss) {
 		super();
 		this.texture = texture;
 		this.hasBoss = hasBoss;

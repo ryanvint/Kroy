@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 
 /**
  * Entity is the main class for all actors on the screen that will have health values
  * Unit and Fortress extend from this
  */
 public abstract class Entity extends Actor{
-	TextureRegion texture;
+	Texture texture;
 	
 	private int currentHealth, maxHealth, range, damage;
 	private StatBar healthBar, userInterfaceHealthBar;
@@ -82,11 +83,11 @@ public abstract class Entity extends Actor{
 	}
 	
 	//Getters and Setters
-	public TextureRegion getTextureRegion() {
+	public Texture getTextureRegion() {
 		return this.texture;
 	}
 	
-	public void setTextureRegion(TextureRegion texture) {
+	public void setTextureRegion(Texture texture) {
 		this.texture = texture;
 	}
 	

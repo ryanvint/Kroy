@@ -1,5 +1,6 @@
 package com.earlybird.kroygame;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -13,7 +14,7 @@ public class FireStation extends Entity {
 	private int maxCapacity;						
 	private int refillRate;
 	
-	public FireStation(TextureRegion texture) {
+	public FireStation(Texture texture) {
 		super();
 		this.texture = texture;
 		this.currentRefilling = 0;		
