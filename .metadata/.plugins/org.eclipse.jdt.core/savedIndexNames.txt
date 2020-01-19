@@ -1,0 +1,19 @@
+INDEX VERSION 1.131+C:\Users\addly\git\Kroy\.metadata\.plugins\org.eclipse.jdt.core
+2842528100.index
+3365405919.index
+1006418175.index
+1966268840.index
+1138182453.index
+3478366107.index
+2961171849.index
+3417163092.index
+3128354054.index
+3355243121.index
+1297938450.index
+3374073397.index
+596374920.index
+3886349643.index
+310541504.index
+3361680993.index
+304437310.index
+2284280809.index

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="entityTests" project="Sepr2Assessment" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="Sepr2Assessment.entityTests" time="0.012" displayname="entityTests" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]">
+    <testcase name="UT_ENTITY_HEALTHCHANGE_LIMIT" classname="Sepr2Assessment.entityTests" time="0.003" displayname="UT_ENTITY_HEALTHCHANGE_LIMIT()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_HEALTHCHANGE_LIMIT()]"/>
+    <testcase name="UT_ENTITY_HEALTHCHANGE" classname="Sepr2Assessment.entityTests" time="0.009" displayname="UT_ENTITY_HEALTHCHANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.entityTests]/[method:UT_ENTITY_HEALTHCHANGE()]"/>
+  </testsuite>
+</testrun>

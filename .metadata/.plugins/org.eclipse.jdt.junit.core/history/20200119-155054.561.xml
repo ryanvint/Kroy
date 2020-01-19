@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="fireEngineTests" project="Sepr2Assessment" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="Sepr2Assessment.fireEngineTests" time="0.0" displayname="fireEngineTests" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]">
+    <testcase name="UT_ENTITY_WATERCHANGE" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_ENTITY_WATERCHANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_ENTITY_WATERCHANGE()]"/>
+  </testsuite>
+</testrun>

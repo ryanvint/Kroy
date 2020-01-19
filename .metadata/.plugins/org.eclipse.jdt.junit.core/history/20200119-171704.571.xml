@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="fireEngineTests" project="Sepr2Assessment" tests="4" started="4" failures="1" errors="0" ignored="0">
+  <testsuite name="Sepr2Assessment.fireEngineTests" time="0.001" displayname="fireEngineTests" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]">
+    <testcase name="UT_FIREENGINE_WATERCHANGE" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_WATERCHANGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_WATERCHANGE()]"/>
+    <testcase name="UT_FIREENGINE_WATERCHANGE_LIMIT" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_WATERCHANGE_LIMIT()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_WATERCHANGE_LIMIT()]"/>
+    <testcase name="UT_FIREENGINE_ATTACKFORTRESS" classname="Sepr2Assessment.fireEngineTests" time="0.001" displayname="UT_FIREENGINE_ATTACKFORTRESS()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_ATTACKFORTRESS()]">
+      <failure>org.opentest4j.AssertionFailedError: expected: &lt;false&gt; but was: &lt;true&gt;&#13;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)&#13;
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:40)&#13;
+	at org.junit.jupiter.api.AssertFalse.assertFalse(AssertFalse.java:35)&#13;
+	at org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:185)&#13;
+	at Sepr2Assessment.fireEngineTests.UT_FIREENGINE_ATTACKFORTRESS(fireEngineTests.java:91)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)&#13;
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:515)&#13;
+	at org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:115)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$6(TestMethodTestDescriptor.java:171)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:167)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:114)&#13;
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:59)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:105)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:71)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:110)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:71)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$5(NodeTestTask.java:110)&#13;
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:95)&#13;
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:71)&#13;
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)&#13;
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181)&#13;
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)&#13;
+	at org.eclipse.jdt.internal.junit5.runner.JUnit5TestReference.run(JUnit5TestReference.java:89)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:763)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:463)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="UT_FIREENGINE_DEALDAMAGE" classname="Sepr2Assessment.fireEngineTests" time="0.0" displayname="UT_FIREENGINE_DEALDAMAGE()" uniqueid="[engine:junit-jupiter]/[class:Sepr2Assessment.fireEngineTests]/[method:UT_FIREENGINE_DEALDAMAGE()]"/>
+  </testsuite>
+</testrun>

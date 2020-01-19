@@ -1,0 +1,18 @@
+package Sepr2Assessment;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class fireEngineTests {
+
+	@Test
+	void UT_ENTITY_WATERCHANGE() {
+		fireEngineWaterTest testEngine = new fireEngineWaterTest();
+		testEngine.setCurrentVolume(0);
+		testEngine.setMaxVolume(100);
+		testEngine.changeWater(10);
+		assertEquals(testEngine.getCurrentVolume(), 10);
+	}
+
+}
