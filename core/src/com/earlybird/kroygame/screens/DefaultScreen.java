@@ -3,7 +3,9 @@ package com.earlybird.kroygame.screens;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.earlybird.kroygame.Kroy;
-
+/**
+ * Allows checking for inputs across all screens
+ */
 public abstract class DefaultScreen implements Screen, InputProcessor{
 
 	protected Kroy game;

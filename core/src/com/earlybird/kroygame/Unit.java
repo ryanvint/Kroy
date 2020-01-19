@@ -3,6 +3,10 @@ package com.earlybird.kroygame;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Unit is an Entity that can move
+ * Thus additional functions are added for moving capabilities
+ */
 public abstract class Unit extends Entity {
 
 	private int dir = 0;
@@ -30,6 +34,9 @@ public abstract class Unit extends Entity {
 		this.lastPos = lastPos;
 	}
 
+	/**
+	 * Changes the direction that the sprite is facing to be accurate with the direction that it is moving
+	 */
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		this.getHealthBar().setValue(this.getCurrentHealth());

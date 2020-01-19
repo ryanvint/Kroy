@@ -6,6 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.Color;
 
+/**
+ * Entity is the main class for all actors on the screen that will have health values
+ * Unit and Fortress extend from this
+ */
 public abstract class Entity extends Actor{
 	TextureRegion texture;
 	

@@ -9,9 +9,19 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Contains utility functions that don't quite belong in any other class
+ */
 public class Utils {
 	private Utils() {}
 	
+	/**
+	 * Used in creating StatBars
+	 * @param width
+	 * @param height
+	 * @param color
+	 * @return
+	 */
 	public static Drawable getColoredDrawable(int width, int height, Color color) {
 		Pixmap pixmap = new Pixmap(width, height, Format.RGBA8888);
 		pixmap.setColor(color);
@@ -24,6 +34,12 @@ public class Utils {
 		return drawable;
 	}
 	
+	/**
+	 * Finds the direction between 2 points, used in changing texture directions in movement
+	 * @param a
+	 * @param b
+	 * @return int representing the direction 
+	 */
 	public static int findDir(Vector2 a, Vector2 b) {
 		if (b.y > a.y) {
 			return 0;
@@ -40,6 +56,13 @@ public class Utils {
 		return -1;
 	}
 	
+	/**
+	 * Checks if a point is between 2 others
+	 * @param point1
+	 * @param point2
+	 * @param point3 The point to check if it is between point1 and point2
+	 * @return True if point3 is between point1 and point2
+	 */
 	public static boolean isBetween(Vector2 point1, Vector2 point2, Vector2 point3) {
 		if(point1!=null && point2!=null && point3!=null) {
 			Vector2 big = new Vector2(0, 0);
